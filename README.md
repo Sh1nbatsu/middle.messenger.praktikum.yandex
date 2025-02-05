@@ -82,3 +82,7 @@ README — первое, что прочитает пользователь, к�
 - «[Вебпак](https://github.com/webpack/webpack)»,
 - «[ТДенгине](https://github.com/taosdata/TDengine)»,
 - «[Соул-хантинг](https://github.com/vladpereskokov/soul-hunting/)».
+
+### **Ссылка на дизнайн**
+
+https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0-1&p=f
