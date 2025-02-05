@@ -3,8 +3,8 @@ export default `<div class="login__container">
         <h1>Sign In</h1>
         <form action="" class="login__form">
           <div class="input__wrapper">
-            {{> loginInputPartial className="login" inputType="text" inputDesc="Login" errorMessage=""}} 
-            {{> loginInputPartial className="password" inputDesc="Password" inputType="password" errorMessage=""}}
+            {{> loginInputPartial className="login" inputType="text" inputDesc="Login" errorMessage="Invalid login"}} 
+            {{> loginInputPartial className="password" inputDesc="Password" inputType="password" errorMessage="Invalid password"}}
           </div>
           <button type="submit">Enter</button>
         </form>
