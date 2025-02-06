@@ -3,13 +3,13 @@ export default `<div class="login__container">
         <h1>Sign In</h1>
         <form action="" class="login__form">
           <div class="input__wrapper">
-            {{> loginInputPartial className="login" inputType="text" inputDesc="Login" errorMessage="Invalid login"}} 
-            {{> loginInputPartial className="password" inputDesc="Password" inputType="password" errorMessage="Invalid password"}}
+            {{> loginInputPartial inputDesc="Login" inputType="text" inputName="login" errorMessage="Invalid login"}}
+            {{> loginInputPartial inputDesc="Password" inputType="password" inputName="password" errorMessage="Invalid password"}}
           </div>
           <button type="submit">Enter</button>
         </form>
         <div class="register__link">
-          <a href="#">Create Account?</a>
+          <a href="signin">Create Account?</a>
         </div>
       </div>
     </div>`;

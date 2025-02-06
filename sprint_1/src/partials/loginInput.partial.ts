@@ -4,5 +4,3 @@ export default `
               <input type="{{inputType}}" name="{{inputName}}" required/>
               <p class="bottom__text">{{errorMessage}}</p>
             </div>`;
-
-// Думаю особенные классы пригодятся в будущем для верстки страницы регистрации
