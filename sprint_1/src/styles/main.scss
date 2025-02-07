@@ -6,3 +6,28 @@
   box-sizing: border-box;
   font-family: Inter;
 }
+
+.error__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  gap: 1.5rem;
+  padding-top: 16%;
+
+  h1 {
+    font-size: 40px;
+    font-weight: 500;
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 400;
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
+  }
+}

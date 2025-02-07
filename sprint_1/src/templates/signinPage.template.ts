@@ -11,7 +11,7 @@ export default `<div class="login__container">
             {{> loginInputPartial inputType="password" inputDesc="Password" inputName="password" errorMessage="Password too short"}}
             {{> loginInputPartial inputType="password" inputDesc="Password" inputName="password" errorMessage="Passwords dont match"}}
           </div>
-          <button type="submit">Create Account</button>
+          {{> mainButtonPartial buttonType="submit" buttonText="Sign up"}}
         </form>
         <div class="register__link">
           <a href="/">Enter?</a>

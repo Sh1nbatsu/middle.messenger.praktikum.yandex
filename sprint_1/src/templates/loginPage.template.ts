@@ -6,7 +6,7 @@ export default `<div class="login__container">
             {{> loginInputPartial inputDesc="Login" inputType="text" inputName="login" errorMessage="Invalid login"}}
             {{> loginInputPartial inputDesc="Password" inputType="password" inputName="password" errorMessage="Invalid password"}}
           </div>
-          <button type="submit">Enter</button>
+          {{> mainButtonPartial buttonType="submit" buttonText="Sign up"}}
         </form>
         <div class="register__link">
           <a href="signin">Create Account?</a>

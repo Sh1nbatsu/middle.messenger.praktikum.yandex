@@ -1,3 +1,5 @@
+// Не знал как назвать эту функцию, я посчитал нужным вынести всю эту логику в отдельный файл, что бы не перегружать index.ts, так как думаю что основное, что там должно быть - это роутер.
+
 export default function aliveLogin() {
   const inputDivList = document.querySelectorAll("#input-div");
 
