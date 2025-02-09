@@ -9,7 +9,7 @@ export default `<div class="login__container">
             {{> loginInputPartial inputType="text" inputDesc="Second name" inputName="second_name" errorMessage="Invalid Second name"}}
             {{> loginInputPartial inputType="phone" inputDesc="Phone number" inputName="phone" errorMessage="Invalid Phone number"}}
             {{> loginInputPartial inputType="password" inputDesc="Password" inputName="password" errorMessage="Password too short"}}
-            {{> loginInputPartial inputType="password" inputDesc="Password" inputName="password" errorMessage="Passwords dont match"}}
+            {{> loginInputPartial inputType="password" inputDesc="Confirm password" inputName="password" errorMessage="Passwords dont match"}}
           </div>
           {{> mainButtonPartial buttonType="submit" buttonText="Sign up"}}
         </form>

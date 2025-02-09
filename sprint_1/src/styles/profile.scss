@@ -1,0 +1,128 @@
+.profile__wrapper {
+  display: grid;
+  grid-template-columns: 4% auto;
+  grid-template-rows: 100%;
+}
+
+.left-block {
+  transform: translateX(-68%);
+  background-color: $secondary-color;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 150ms;
+
+  &:hover {
+    transform: translateX(0);
+  }
+
+  a {
+    border-radius: 50%;
+    img {
+      transform: rotate(180deg);
+      width: 28px;
+      height: 28px;
+      background-color: $base-color;
+      padding: 4px;
+      border-radius: 50%;
+      transition: 150ms;
+
+      &:hover {
+        background-color: darken($base-color, 10%);
+      }
+    }
+  }
+}
+
+.pfp__wrapper {
+  margin-top: 60px;
+  display: inline-block;
+  text-align: center;
+
+  div {
+    position: relative;
+    cursor: pointer;
+
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+    }
+
+    p {
+      position: absolute;
+      opacity: 0;
+      transition: 150ms;
+      color: white;
+      font-size: 1.2rem;
+      background-color: transparentize($color: #000000, $amount: 0.7);
+      inset: 0;
+      padding: 39% 20%;
+      border-radius: 50%;
+    }
+
+    &:hover p {
+      opacity: 1;
+    }
+  }
+
+  h2 {
+    margin-top: 20px;
+    font-weight: 500;
+  }
+}
+
+.main__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+
+  .data__wrapper {
+    width: 510px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 4px 0 10px;
+
+  span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 510px;
+    border-bottom: solid 1px $secondary-color;
+  }
+
+  p:last-of-type {
+    color: $secondary-font-color
+  }
+
+  &:last-of-type span {
+    display: none;
+  }
+}
+
+.edit__wrapper {
+  width: 510px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  
+  a {
+    text-decoration: none;
+    color: $base-color;
+  }
+
+  .data-item:last-of-type a{
+    color: $error-color;
+  }
+}
