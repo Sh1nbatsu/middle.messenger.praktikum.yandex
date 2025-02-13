@@ -2,34 +2,34 @@ export default `
     <div class="messenger__wrapper">
       <div class="navigation__wrapper">
         <div class="profile-link">
-          <a href="/profile">Profile<img src="../static/arrow_gray.svg" alt=""></a>
+          <a href="/profile">Profile<img src="/arrow_gray.svg" alt=""></a>
         </div>
         <div class="search-bar">
           <input type="text" placeholder="Search" name="chat_search">
-          <img src="../static/search_icon.svg" alt="">
+          <img src="/search_icon.svg" alt="">
         </div>
         <div class="chat-select__wrapper">
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Andrew" lastData="Image" lastTime="12:24" unreadAmount=1}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount=0}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="../static/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Andrew" lastData="Image" lastTime="12:24" unreadAmount=1}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount=0}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
         </div>
       </div>
         <div class="chat-main">
           <div class="top-block">
             <div>
-              <img src="../static/mock_pfp2.jpg" alt="">
+              <img src="/mock_pfp2.jpg" alt="">
               <p>Onryo</p>  
             </div>
-              <img src="../static/three_dots.svg" alt="">
+              <img src="/three_dots.svg" alt="">
           </div>
           <div class="messages">
             <div class="date">19 July</div>
@@ -52,10 +52,10 @@ export default `
           </div>
           <div class="bottom-block">
             <form action="">
-              <img src="../static/chat_attachment.svg" alt="">
+              <img src="/chat_attachment.svg" alt="">
               <input type="text" placeholder="Message">
               <button>
-                <img src="../static/arrow.svg" alt="">
+                <img src="/arrow.svg" alt="">
               </button>
             </form>
           </div>

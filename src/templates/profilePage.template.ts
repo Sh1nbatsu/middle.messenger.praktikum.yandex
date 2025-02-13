@@ -2,13 +2,13 @@ export default `
     <div class="profile__wrapper">
       <div class="left-block">
         <a href="/">
-            <img src="../static/arrow.svg" alt="">
+            <img src="/arrow.svg" alt="">
         </a>
       </div>
       <div class="main__wrapper">
         <div class="pfp__wrapper">
             <div>
-              <img src="../static/mock_pfp1.jpg" alt="">
+              <img src="/mock_pfp1.jpg" alt="">
               <p>Change avatar</p>
             </div>
             <h2>John</h2>
