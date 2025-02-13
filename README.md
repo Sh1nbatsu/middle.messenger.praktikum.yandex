@@ -30,3 +30,7 @@ Routing might be updated as the development goes on
 ### **Design link**
 
 https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0-1&p=f
+
+### **Netlify link** 
+
+https://eloquent-swan-527685.netlify.app/
