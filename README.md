@@ -33,4 +33,4 @@ https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0
 
 ### **Netlify link** 
 
-https://eloquent-swan-527685.netlify.app/
+https://melodious-dolphin-722b36.netlify.app/
