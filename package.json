@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "start": "vite build && node server.cjs"
+    "start": "vite build; node server.cjs"
   },
   "devDependencies": {
     "sass": "^1.84.0",
