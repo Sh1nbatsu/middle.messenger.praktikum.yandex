@@ -4,4 +4,4 @@ export default `
             <p>{{data}}</p>
             <span></span>
           </div>
-` 
+`;
