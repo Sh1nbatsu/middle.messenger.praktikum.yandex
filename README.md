@@ -27,6 +27,6 @@ On the current stage of development, routing is realised via change in url for s
 
 Routing might be updated as the development goes on
 
-### **Ссылка на дизнайн**
+### **Design link**
 
 https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0-1&p=f
