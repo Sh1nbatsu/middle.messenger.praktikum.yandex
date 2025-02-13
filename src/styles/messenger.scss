@@ -111,7 +111,6 @@
 .chat-info {
   width: 100%;
   display: flex;
-  // align-items: center;
   justify-content: space-between;
 
   .chat-paylod {
@@ -162,21 +161,12 @@
   }
 }
 
-.placeholder__wrapper {
-  position: relative;
-  z-index: -1;
-
-  p {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(60vh, 50vh);
-    color: $secondary-font-color;
-  }
-}
-
 .chat-main {
+  overflow: hidden;
+  height: 100vh;;
   padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .top-block {
@@ -207,6 +197,13 @@
   flex-direction: column;
   gap: 30px;
   padding: 30px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::--webkit-scrollbar {
+    display: none;
+  }
 
   .date {
     text-align: center;
@@ -214,27 +211,78 @@
     font-size: 14px;
   }
 
+  .message-date {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    color: $secondary-font-color;
+    font-size: 14px;
+  }
+
   .message {
     max-width: 400px;
     background: #fbfbfb;
-    padding: 11px 11px 16px;
+    padding: 11px 11px 24px;
     border-radius: 15px;
     position: relative;
     width: fit-content;
-
-    .message-date {
-      position: absolute;
-      right: 0.7rem;
-      bottom: 0.5rem;
-      color: $secondary-font-color;
-      font-size: 14px;
-    }
   }
 
   .sent-message {
     background: #e4edfd;
+    padding: 11px 11px 24px;
     border-radius: 15px;
     width: fit-content;
     max-width: 400px;
+    align-self: flex-end;
+    position: relative;
+  }
+}
+
+.bottom-block {
+  padding-top: 10px;
+  border-top: 1px solid $secondary-color;
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    img {
+      cursor: pointer;
+    }
+
+    input {
+      border: none;
+      outline: none;
+      background: $secondary-color;
+      padding: 10px 10px 10px 20px;
+      width: 100vw;
+      border-radius: 30px;
+
+      &::placeholder {
+        margin-left: 10px;
+      }
+    }
+
+    button {
+      border: none;
+      outline: none;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      padding: 6px 4px 6px 8px;
+      background: $base-color;
+      transition: 130ms;
+
+      img {
+        width: 22px;
+      }
+
+      &:hover {
+        background: lighten($base-color, $amount: 10%);
+      }
+    }
   }
 }

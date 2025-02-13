@@ -53,13 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
         errorDesc: "Internal server error",
       });
       break;
-    case "/404":
-      template = Handlebars.compile(errorPageTemplate);
-      root.innerHTML = template({
-        errorType: "404",
-        errorDesc: "How did you get here?",
-      });
-      break;
     case "/im":
       template = Handlebars.compile(messengerPageTemplate);
       root.innerHTML = template({});
@@ -69,5 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
       root.innerHTML = template({});
       break;
     default:
+      template = Handlebars.compile(errorPageTemplate);
+      root.innerHTML = template({
+        errorType: "404",
+        errorDesc: "How did you get here?",
+      });
+      break;
   }
 });
