@@ -16,10 +16,14 @@ On the current stage of development, routing is realised via change in url for s
 
 /register - registration page
 
-/im - main messenger page, with chat select and messaging blocks  
+/im - main messenger page, with chat select and messaging block
 *Info:* only way to get to this page is to manually type `/im` in address bar
 
 /profile - user profile page
+
+/edit_data - page for editing user's information
+
+/edit_password - page for editing user's password
 
 /404 - default page that will show up if someone tries to access not existing page
 
