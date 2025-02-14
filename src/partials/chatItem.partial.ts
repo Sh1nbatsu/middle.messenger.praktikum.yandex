@@ -15,5 +15,4 @@ export default `
                 {{/if}}
               </div>
             </div>
-          </div>
-`;
+          </div>`;

@@ -3,5 +3,4 @@ export default `
             <p>{{desc}}</p>
             <p>{{data}}</p>
             <span></span>
-          </div>
-`;
+          </div>`;
