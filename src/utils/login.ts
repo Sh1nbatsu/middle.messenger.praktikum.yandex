@@ -3,8 +3,6 @@
 export default function aliveLogin() {
   const inputDivList = document.querySelectorAll("#input-div");
 
-  console.log(inputDivList);
-
   inputDivList.forEach((inputDiv) => {
     const loginInput = inputDiv.querySelector("input")!;
 
@@ -33,5 +31,4 @@ export default function aliveLogin() {
       bottomText.style.transform = "translateY(-18px)";
     });
   });
-  console.log(window.location.pathname);
 }
