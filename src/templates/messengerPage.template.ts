@@ -2,11 +2,11 @@ export default `
     <div class="messenger__wrapper">
       <nav class="navigation__wrapper">
         <div class="profile-link">
-          <a href="/profile">Profile<img src="/arrow_gray.svg" alt=""></a>
+          <a href="/profile">Profile<img src="/arrow_gray.svg" alt="arrow"></a>
         </div>
         <div class="search-bar">
           <input type="text" placeholder="Search" name="chat_search">
-          <img src="/search_icon.svg" alt="">
+          <img src="/search_icon.svg" alt="search icon">
         </div>
         <ul class="chat-select__wrapper">
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Andrew" lastData="Image" lastTime="12:24" unreadAmount=1}}
@@ -23,13 +23,13 @@ export default `
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
         </ul>
       </nav>
-        <main class="chat-main">
+        <div class="chat-main">
           <div class="top-block">
             <div>
-              <img src="/mock_pfp2.jpg" alt="">
+              <img src="/mock_pfp2.jpg" alt="profile picture">
               <p>Onryo</p>  
             </div>
-              <img src="/three_dots.svg" alt="">
+              <img src="/three_dots.svg" alt="options">
           </div>
           <div class="messages">
             <div class="date">19 July</div>
@@ -52,12 +52,12 @@ export default `
           </div>
           <div class="bottom-block">
             <form action="">
-              <img src="/chat_attachment.svg" alt="">
+              <img src="/chat_attachment.svg" alt="chat attachment">
               <input type="text" placeholder="Message">
               <button>
-                <img src="/arrow.svg" alt="">
+                <img src="/arrow.svg" alt="send arrow">
               </button>
             </form>
           </div>
-        </main>
+        </div>
     </div>`;
