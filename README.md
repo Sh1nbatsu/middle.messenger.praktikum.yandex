@@ -17,7 +17,7 @@ On the current stage of development, routing is realised via change in url for s
 /register - registration page
 
 /im - main messenger page, with chat select and messaging blocks  
-*Info:* only way to get to this page is to manually type `/im` in address bar, or via clicking back button the left side of `/profile` page
+*Info:* only way to get to this page is to manually type `/im` in address bar
 
 /profile - user profile page
 
@@ -33,4 +33,4 @@ https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0
 
 ### **Netlify link** 
 
-https://eloquent-swan-527685.netlify.app/
+https://melodious-dolphin-722b36.netlify.app/

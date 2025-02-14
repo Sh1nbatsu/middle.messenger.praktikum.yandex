@@ -1,14 +1,14 @@
 export default `
     <div class="profile__wrapper">
       <div class="left-block">
-        <a href="/">
-            <img src="/arrow.svg" alt="">
+        <a href="/im">
+            <img src="/arrow.svg" alt="back arrow">
         </a>
       </div>
       <div class="main__wrapper">
         <div class="pfp__wrapper">
             <div>
-              <img src="/mock_pfp1.jpg" alt="">
+              <img src="/mock_pfp1.jpg" alt="profile picture">
               <p>Change avatar</p>
             </div>
             <h2>John</h2>
@@ -23,11 +23,11 @@ export default `
         </div>
         <div class="edit__wrapper">
           <div class="data-item">
-            <a href="">Change information</a>
+            <a href="edit_data">Change information</a>
             <span></span>
           </div>
           <div class="data-item">
-            <a href="">Change password</a>
+            <a href="edit_password">Change password</a>
             <span></span>
           </div>
           <div class="data-item">
@@ -35,5 +35,4 @@ export default `
           </div>
         </div>
       </div>
-    </div>
-`;
+    </div>`;
