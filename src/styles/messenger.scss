@@ -84,6 +84,7 @@
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  list-style: none;
 
   &::--webkit-scrollbar {
     display: none;

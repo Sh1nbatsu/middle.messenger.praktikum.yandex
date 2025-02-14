@@ -1,9 +1,9 @@
 export default `
-    <div class="profile__wrapper">
+    <main class="profile__wrapper">
       <div class="left-block">
-        <a href="/">
+        <button>
             <img src="/arrow.svg" alt="">
-        </a>
+        </button>
       </div>
       <div class="main__wrapper">
         <div class="pfp__wrapper">
@@ -35,4 +35,4 @@ export default `
           </div>
         </div>
       </div>
-    </div>`;
+    </main>`;

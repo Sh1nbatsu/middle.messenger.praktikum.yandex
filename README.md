@@ -17,7 +17,7 @@ On the current stage of development, routing is realised via change in url for s
 /register - registration page
 
 /im - main messenger page, with chat select and messaging blocks  
-*Info:* only way to get to this page is to manually type `/im` in address bar, or via clicking back button the left side of `/profile` page
+*Info:* only way to get to this page is to manually type `/im` in address bar
 
 /profile - user profile page
 

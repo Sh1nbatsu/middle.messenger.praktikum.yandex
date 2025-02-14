@@ -1,5 +1,5 @@
 export default `
-    <div class="login__container">
+    <main class="login__container">
       <div class="login__wrapper">
         <h1>Sign up</h1>
         <form action="" class="login__form">
@@ -18,4 +18,4 @@ export default `
           <a href="/">Enter?</a>
         </div>
       </div>
-    </div>`;
+    </main>`;

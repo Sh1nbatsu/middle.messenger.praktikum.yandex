@@ -1,5 +1,5 @@
 export default `
-          <div class="chat-select__item">
+          <li class="chat-select__item">
             <div class="chat-pfp">
               <img src="{{pfpUrl}}" alt="">
             </div>
@@ -15,4 +15,4 @@ export default `
                 {{/if}}
               </div>
             </div>
-          </div>`;
+          <li/>`;

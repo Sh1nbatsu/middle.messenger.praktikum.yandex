@@ -1,6 +1,6 @@
 export default `
     <div class="messenger__wrapper">
-      <div class="navigation__wrapper">
+      <nav class="navigation__wrapper">
         <div class="profile-link">
           <a href="/profile">Profile<img src="/arrow_gray.svg" alt=""></a>
         </div>
@@ -8,7 +8,7 @@ export default `
           <input type="text" placeholder="Search" name="chat_search">
           <img src="/search_icon.svg" alt="">
         </div>
-        <div class="chat-select__wrapper">
+        <ul class="chat-select__wrapper">
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Andrew" lastData="Image" lastTime="12:24" unreadAmount=1}}
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount=0}}
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
@@ -21,9 +21,9 @@ export default `
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
           {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-        </div>
-      </div>
-        <div class="chat-main">
+        </ul>
+      </nav>
+        <main class="chat-main">
           <div class="top-block">
             <div>
               <img src="/mock_pfp2.jpg" alt="">
@@ -59,5 +59,5 @@ export default `
               </button>
             </form>
           </div>
-        </div>
+        </main>
     </div>`;
