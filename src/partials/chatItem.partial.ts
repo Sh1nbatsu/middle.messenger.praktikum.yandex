@@ -1,7 +1,7 @@
 export default `
           <li class="chat-select__item">
             <div class="chat-pfp">
-              <img src="{{pfpUrl}}" alt="">
+              <img src="{{pfpUrl}}" alt="profile picture">
             </div>
             <div class="chat-info">
               <div class="chat-paylod">
