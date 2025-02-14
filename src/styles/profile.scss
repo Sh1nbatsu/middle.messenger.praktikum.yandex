@@ -94,6 +94,22 @@
     flex-direction: column;
     gap: 0.4rem;
   }
+
+  button {
+    outline: none;
+    border: none;
+    padding: 12px 5rem;
+    border-radius: 12px;
+    background-color: $base-color;
+    transition: 200ms;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($base-color, 5%);
+    }
+  }
 }
 
 .data-item {
@@ -116,40 +132,6 @@
 
   &:last-of-type span {
     display: none;
-  }
-}
-
-.edit__wrapper {
-  width: 510px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-
-  a {
-    text-decoration: none;
-    color: $base-color;
-  }
-
-  .data-item:last-of-type a {
-    color: $error-color;
-  }
-}
-
-.main__wrapper {
-  button {
-    outline: none;
-    border: none;
-    padding: 12px 5rem;
-    border-radius: 12px;
-    background-color: $base-color;
-    transition: 200ms;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-
-    &:hover {
-      background: darken($base-color, 5%);
-    }
   }
 }
 
