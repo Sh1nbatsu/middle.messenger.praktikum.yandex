@@ -25,7 +25,7 @@
       outline: none;
       border: none;
       padding: 0;
-      box-shadow: none; 
+      box-shadow: none;
     }
 
     img {
@@ -132,5 +132,64 @@
 
   .data-item:last-of-type a {
     color: $error-color;
+  }
+}
+
+.main__wrapper {
+  button {
+    outline: none;
+    border: none;
+    padding: 12px 5rem;
+    border-radius: 12px;
+    background-color: $base-color;
+    transition: 200ms;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($base-color, 5%);
+    }
+  }
+}
+
+.edit__input-div {
+  padding: 4px 0 10px;
+  border-bottom: 1px solid $secondary-color;
+  height: 34px;
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+
+  .top__text {
+    font-size: 16px;
+    margin-bottom: 2px;
+    // transform: translateY(21px);
+    pointer-events: none;
+    transition: 150ms;
+    padding-left: 4px;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    text-align: right;
+
+    &::placeholder {
+      text-align: right;
+    }
+  }
+
+  .bottom__text {
+    transform: translateY(-18px);
+    padding-left: 4px;
+    opacity: 0;
+    color: $error-color;
+    font-size: 14px;
+    position: absolute;
+    z-index: -1;
+    transition: 150ms;
+    width: 310px;
   }
 }

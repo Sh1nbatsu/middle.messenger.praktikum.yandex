@@ -10,6 +10,8 @@ import userDataPartial from "./partials/userData.partial.ts";
 
 import chatItemPartial from "./partials/chatItem.partial.ts";
 
+import editInputPartial from "./partials/editInput.partial.ts";
+
 import loginPageTemplate from "./templates/loginPage.template.ts";
 
 import signinPageTemplate from "./templates/signinPage.template.ts";
@@ -20,6 +22,10 @@ import messengerPageTemplate from "./templates/messengerPage.template.ts";
 
 import profilePageTemplate from "./templates/profilePage.template.ts";
 
+import editProfileDataTemplate from "./templates/editProfileData.template.ts";
+
+import editPasswordTemplate from "./templates/editPassword.template.ts";
+
 Handlebars.registerPartial("loginInputPartial", loginInputPartial);
 
 Handlebars.registerPartial("mainButtonPartial", mainButtonPartial);
@@ -27,6 +33,8 @@ Handlebars.registerPartial("mainButtonPartial", mainButtonPartial);
 Handlebars.registerPartial("userDataPartial", userDataPartial);
 
 Handlebars.registerPartial("chatItemPartial", chatItemPartial);
+
+Handlebars.registerPartial("editInputPartial", editInputPartial);
 
 import aliveLogin from "./utils/login.ts";
 
@@ -59,6 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
       break;
     case "/profile":
       template = Handlebars.compile(profilePageTemplate);
+      root.innerHTML = template({});
+      break;
+    case "/edit_data":
+      template = Handlebars.compile(editProfileDataTemplate);
+      root.innerHTML = template({});
+      break
+    case "/edit_password":
+      template = Handlebars.compile(editPasswordTemplate);
       root.innerHTML = template({});
       break;
     default:

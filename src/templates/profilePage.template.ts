@@ -23,11 +23,11 @@ export default `
         </div>
         <div class="edit__wrapper">
           <div class="data-item">
-            <a href="">Change information</a>
+            <a href="edit_data">Change information</a>
             <span></span>
           </div>
           <div class="data-item">
-            <a href="">Change password</a>
+            <a href="edit_password">Change password</a>
             <span></span>
           </div>
           <div class="data-item">
