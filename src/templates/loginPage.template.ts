@@ -2,7 +2,7 @@ export default `
     <div class="login__container">
       <div class="login__wrapper">
         <h1>Sign In</h1>
-        <form action="" class="login__form">
+        <form action="" class="login__form" id="login-form">
           <div class="input__wrapper">
             {{> loginInputPartial inputDesc="Login" inputType="text" inputName="login" errorMessage="Invalid login"}}
             {{> loginInputPartial inputDesc="Password" inputType="password" inputName="password" errorMessage="Invalid password"}}

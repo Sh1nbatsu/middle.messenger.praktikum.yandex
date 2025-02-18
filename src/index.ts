@@ -36,7 +36,9 @@ Handlebars.registerPartial("chatItemPartial", chatItemPartial);
 
 Handlebars.registerPartial("editInputPartial", editInputPartial);
 
-import aliveLogin from "./utils/login.ts";
+import loginLogic from "./utils/loginLogic.ts";
+
+import registerLogic from "./utils/registerLogic.ts";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.querySelector("#root") as HTMLElement;
@@ -47,12 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
     case "/":
       template = Handlebars.compile(loginPageTemplate);
       root.innerHTML = template({});
-      aliveLogin();
+      loginLogic();
       break;
     case "/signin":
       template = Handlebars.compile(signinPageTemplate);
       root.innerHTML = template({});
-      aliveLogin();
+      registerLogic();
       break;
     case "/500":
       template = Handlebars.compile(errorPageTemplate);
@@ -72,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     case "/edit_data":
       template = Handlebars.compile(editProfileDataTemplate);
       root.innerHTML = template({});
-      break
+      break;
     case "/edit_password":
       template = Handlebars.compile(editPasswordTemplate);
       root.innerHTML = template({});

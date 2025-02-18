@@ -1,5 +1,5 @@
 // Тут я пытался сделать роутинг. Он быстрее чем вариант в intex.ts, так как работает через spa(?), но он очень костыльный - не работает переход через ручной ввод в адресной строке.
-// В принципе и тот, что в index.ts тоже костыльный. 
+// В принципе и тот, что в index.ts тоже костыльный.
 
 import Handlebars from "handlebars";
 
@@ -17,7 +17,7 @@ import signinPageTemplate from "../templates/signinPage.template.ts";
 
 import errorPageTemplate from "../templates/errorPage.template.ts";
 
-import aliveLogin from "./login.ts";
+import aliveLogin from "./animateInputs.ts";
 
 Handlebars.registerPartial("loginInputPartial", loginInputPartial);
 
