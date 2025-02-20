@@ -35,8 +35,9 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
+
     &:hover {
-      background: darken($base-color, 5%);
+      background: color.adjust($base-color, $lightness: -10%);
     }
   }
 }
@@ -51,7 +52,7 @@
     margin-bottom: 2px;
     transform: translateY(21px);
     pointer-events: none;
-    color: #999999;
+    color: #999;
     transition: 150ms;
     padding-left: 4px;
   }
@@ -85,8 +86,9 @@
     text-decoration: none;
     transition: 200ms;
     color: $base-color;
+
     &:hover {
-      color: darken($base-color, 15%);
+      color: color.adjust($base-color, $lightness: -20%);
     }
   }
 }
