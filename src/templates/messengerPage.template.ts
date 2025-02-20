@@ -53,7 +53,7 @@ export default `
           <div class="bottom-block">
             <form action="">
               <img src="/chat_attachment.svg" alt="chat attachment">
-              <input type="text" placeholder="Message">
+              <input type="text" placeholder="Message" name="message">
               <button>
                 <img src="/arrow.svg" alt="send arrow">
               </button>
