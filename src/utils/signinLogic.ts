@@ -1,4 +1,4 @@
-import { signinValidation } from "./validation.ts";
+import { validateAll } from "./validation.ts";
 
 export default function registerLogic() {
   const inputDivList = document.querySelectorAll("#input-div");
@@ -6,9 +6,9 @@ export default function registerLogic() {
   const form = document.querySelector("#register-form") as HTMLFormElement;
 
   inputDivList.forEach((inputDiv) => {
-    const input = inputDiv.querySelector("input")!;
+    const input = inputDiv.querySelector("input")! as HTMLInputElement;
 
-    const topText = inputDiv.querySelector(".top__text");
+    const topText = inputDiv.querySelector(".top__text") as HTMLElement;
 
     const bottomText = inputDiv.querySelector(".bottom__text") as HTMLElement;
 
@@ -18,10 +18,9 @@ export default function registerLogic() {
         (topText as HTMLElement).style.transform = "translateY(20px)";
       }
     });
-    console.log(input.name);
 
     input.addEventListener("blur", () => {
-      if (!signinValidation(input)) {
+      if (!validateAll(input).isPassed) {
         bottomText.style.opacity = "1";
         bottomText.style.transform = "translateY(0)";
         setTimeout(() => {
@@ -45,7 +44,7 @@ export default function registerLogic() {
 
       const bottomText = inputDiv.querySelector(".bottom__text") as HTMLElement;
 
-      if (!signinValidation(input)) {
+      if (!validateAll(input).isPassed) {
         bottomText.style.opacity = "1";
         bottomText.style.transform = "translateY(0)";
         setTimeout(() => {
@@ -56,15 +55,17 @@ export default function registerLogic() {
       }
     });
 
-    if(!isValid) {
-      return
+    if (!isValid) {
+      event.preventDefault();
+      return;
+    } else {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      console.log(data);
     }
-    
-    event.preventDefault();
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
   });
 }
 
 // Достаточно много думал о том, как это все можно сократить, как можно уменьшить повторения кода с инпутами, их анимациями, но не нашел нормального способа это сделать.
+// Дефолтное поведение браузера не дает отправить форму если поле email заполнено некорректно, из за чего логика валидации инпутов внутри хендлера самбита формы не будет работать, если поле email заполнено некорректно. (насколько я это понял)

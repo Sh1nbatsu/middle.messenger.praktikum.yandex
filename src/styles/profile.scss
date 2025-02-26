@@ -87,6 +87,7 @@
   flex-direction: column;
   align-items: center;
   gap: 4rem;
+  position: relative;
 
   .data__wrapper {
     width: 510px;
@@ -117,7 +118,12 @@
 
   a {
     text-decoration: none;
-    color: #3369f3;
+    color: $base-color;
+    transition: 150ms;
+
+    &:hover {
+      color: color.adjust($base-color, $lightness: -20%);
+    }
   }
 }
 
@@ -145,6 +151,10 @@
 
   a:last-child {
     color: $error-color;
+
+    &:hover {
+      color: color.adjust($error-color, $lightness: -30%);
+    }
   }
 }
 
@@ -172,6 +182,10 @@
 
     &::placeholder {
       text-align: right;
+    }
+
+    &.error {
+      animation: error-shake 300ms;
     }
   }
 

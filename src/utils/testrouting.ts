@@ -3,15 +3,15 @@
 
 import Handlebars from "handlebars";
 
-import loginInputPartial from "../partials/loginInput.partial.ts";
+import loginInputPartial from "../partials/components/loginInput/loginInput.partial.ts";
 
-import mainButtonPartial from "../partials/mainButton.partial.ts";
+import mainButtonPartial from "../partials/components/mainButton/mainButton.partial.ts";
 
 import "../styles/main.scss";
 
 import "../styles/loginStyles.scss";
 
-import loginPageTemplate from "../templates/loginPage.template.ts";
+import loginPageTemplate from "../templates/loginPage/loginPage.template.ts";
 
 import signinPageTemplate from "../templates/signinPage.template.ts";
 

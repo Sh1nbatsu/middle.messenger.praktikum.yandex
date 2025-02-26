@@ -86,50 +86,56 @@ function validatePhone(phone: string): boolean {
   return true;
 }
 
-export function signinValidation(input: HTMLInputElement): boolean {
+export function validateAll(input: HTMLInputElement): {
+  isPassed: boolean;
+  inputType: string | null;
+} {
   const passwordInput = document.querySelector(
     "input[name='password']"
   ) as HTMLInputElement;
-
+  
   switch (input.name) {
     case "email":
       if (validateEmail(input.value)) {
-        return true;
+        return { isPassed: true, inputType: "email" };
       }
       break;
+    case "display_name":
     case "login":
       if (validateLogin(input.value)) {
-        return true;
+        return { isPassed: true, inputType: "email" };
       }
       break;
     case "first_name":
       if (validateName(input.value)) {
-        return true;
+        return { isPassed: true, inputType: "email" };
       }
       break;
     case "second_name":
       if (validateName(input.value)) {
-        return true;
+        return { isPassed: true, inputType: "email" };
       }
       break;
     case "phone":
       if (validatePhone(input.value)) {
-        return true;
+        return { isPassed: true, inputType: "email" };
       }
       break;
     case "password":
       if (validatePassword(input.value)) {
-        return true;
+        return { isPassed: true, inputType: "email" };
       }
       break;
     case "confirm_password":
       if (input.value === passwordInput.value) {
-        return true;
+        return { isPassed: true, inputType: "email" };
       }
       break;
     default:
-      return false;
+      return { isPassed: false, inputType: null };
   }
-  
-  return false;
+
+  return { isPassed: false, inputType: null };
 }
+
+// Функция validateAll возвращает объект с двумя полями: isPassed и inputType. Я пока оставлю функцию в таком виде, так как изначально планировал использовать ее же для валидации формы в edit_data, но решил изменить подход к демонстрации пользователю полей с ошибками, но пока оставлю функцию такой же, на случай если буду делать отдельную логику для браузеров без поддержки анимаций.
