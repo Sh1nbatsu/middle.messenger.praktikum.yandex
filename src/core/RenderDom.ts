@@ -10,5 +10,6 @@ export default function renderDOM(block: Block): HTMLElement {
   console.log(block.getContent());
   root.appendChild(block.getContent());
   block.dispatchComponentDidMount();
+  console.log("render")
   return root as HTMLElement;
 }

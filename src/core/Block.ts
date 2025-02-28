@@ -127,7 +127,7 @@ export default class Block {
   _renderChildren() {}
 
   _addEvents() {
-    console.log(this._children.loginInput)
+    document.querySelector("input")?.addEventListener("input", e => console.log(e))
   }
 
   _removeEvents() {
