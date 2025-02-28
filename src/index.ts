@@ -8,13 +8,13 @@ import userDataPartial from "./partials/components/userData/userData.partial.ts"
 import chatItemPartial from "./partials/components/chatItem/chatItem.partial.ts";
 import editInputPartial from "./partials/components/editInput/editInput.partial.ts";
 
-import loginPageTemplate from "./templates/loginPage/loginPage.template.ts";
-import signinPageTemplate from "./templates/signinPage.template.ts";
-import errorPageTemplate from "./templates/errorPage.template.ts";
-import messengerPageTemplate from "./templates/messengerPage.template.ts";
-import profilePageTemplate from "./templates/profilePage.template.ts";
-import editProfileDataTemplate from "./templates/editData.template.ts";
-import editPasswordTemplate from "./templates/editPassword.template.ts";
+import loginPageTemplate from "./pages/login/loginPage.template.ts";
+import signinPageTemplate from "./pages/signinPage.template.ts";
+import errorPageTemplate from "./pages/errorPage.template.ts";
+import messengerPageTemplate from "./pages/messengerPage.template.ts";
+import profilePageTemplate from "./pages/profilePage.template.ts";
+import editProfileDataTemplate from "./pages/editData.template.ts";
+import editPasswordTemplate from "./pages/editPassword.template.ts";
 
 Handlebars.registerPartial("loginInputPartial", loginInputPartial);
 Handlebars.registerPartial("mainButtonPartial", mainButtonPartial);

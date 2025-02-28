@@ -1,10 +1,10 @@
-import { View } from "../View";
-import loginPageTemplate from "../../templates/loginPage/loginPage.template.ts";
-// import loginLogic from '../../utils/loginLogic';
+import { View } from "../View.ts";
+import signinPageTemplate from "../../pages/signinPage.template.ts";
+// import signinLogic from '../../utils/loginLogic.ts';
 
-export class LoginView extends View {
+export class SigninView extends View {
   constructor(rootElement: HTMLElement) {
-    super(rootElement, loginPageTemplate);
+    super(rootElement, signinPageTemplate);
   }
 
   public render(): void {
@@ -20,6 +20,6 @@ export class LoginView extends View {
       contentElement.innerHTML = this.template({});
     }
 
-    // loginLogic();
+    // signinLogic();
   }
 }

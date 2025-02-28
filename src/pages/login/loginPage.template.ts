@@ -4,10 +4,10 @@ export default `
         <h1>Sign In</h1>
         <form action="" class="login__form" id="login-form">
           <div class="input__wrapper">
-            {{> loginInputPartial inputDesc="Login" inputType="text" inputName="login" errorMessage="Invalid login"}}
-            {{> loginInputPartial inputDesc="Password" inputType="password" inputName="password" errorMessage="Invalid password"}}
+            {{{ loginInput }}}
+            {{{ passwordInput }}}
           </div>
-          {{> mainButtonPartial buttonType="submit" buttonText="Sign up"}}
+            {{{ mainButton }}}
         </form>
         <div class="register__link">
           <a href="signin">Create Account?</a>

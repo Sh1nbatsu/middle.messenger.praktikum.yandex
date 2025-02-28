@@ -1,5 +1,5 @@
 import { View } from "../View.ts";
-import errorPageTemplate from "../../templates/errorPage.template.ts";
+import errorPageTemplate from "../../pages/errorPage.template.ts";
 
 export class ErrorView extends View {
   constructor(rootElement: HTMLElement) {

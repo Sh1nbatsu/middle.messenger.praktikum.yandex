@@ -3,7 +3,7 @@
 
 import Handlebars from "handlebars";
 
-import loginInputPartial from "../partials/components/loginInput/loginInput.partial.ts";
+import loginInputPartial from "../../components/loginInput/loginInput.partial.ts";
 
 import mainButtonPartial from "../partials/components/mainButton/mainButton.partial.ts";
 
@@ -11,11 +11,11 @@ import "../styles/main.scss";
 
 import "../styles/loginStyles.scss";
 
-import loginPageTemplate from "../templates/loginPage/loginPage.template.ts";
+import loginPageTemplate from "../pages/login/loginPage.template.ts";
 
-import signinPageTemplate from "../templates/signinPage.template.ts";
+import signinPageTemplate from "../pages/signinPage.template.ts";
 
-import errorPageTemplate from "../templates/errorPage.template.ts";
+import errorPageTemplate from "../pages/errorPage.template.ts";
 
 import aliveLogin from "./animateInputs.ts";
 

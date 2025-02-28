@@ -8,29 +8,23 @@ export default class Block {
     FLOW_RENDER: "flow:render",
   };
 
-  _element = null;
-  _meta: { tagName: string; props: Record<string, unknown> } | null = null;
+  _element: HTMLElement;
+  _meta;
+  eventBus;
+  props;
+  _isComponentMounted: boolean = false;
+  _children: Record<string, Block> = {};
 
-  eventBus: () => EventBus;
-  props
-
-  /** JSDoc
-   * @param {string} tagName
-   * @param {Object} props
-   *
-   * @returns {void}
-   */
   constructor(tagName = "div", props = {}) {
     const eventBus = new EventBus();
-    
     this._meta = {
       tagName,
       props,
     };
 
     this.props = this._makePropsProxy(props);
-
-    this.eventBus = () => eventBus;
+    this._element = this._createDocumentElement(tagName);
+    this.eventBus = eventBus;
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -44,34 +38,51 @@ export default class Block {
   }
 
   _createResources() {
-    const { tagName } = this._meta || {};
+    const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
   }
 
   init() {
     this._createResources();
+  }
 
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  registerChild(name: string, component: Block) {
+    this._children[name] = component;
+    this.props[name] = component;
   }
 
   _componentDidMount() {
+    if (this._isComponentMounted) {
+      return;
+    }
+
+    this._isComponentMounted = true;
     this.componentDidMount();
+
+    // Only render once after mounting
+    this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidMount(oldProps?) {
-    console.log("Компонент смонтирован", oldProps)
-  }
+  componentDidMount(oldProps?) {}
 
   dispatchComponentDidMount() {
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+    Object.values(this._children).forEach((child) => {
+      child.dispatchComponentDidMount();
+    });
+
+    this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
   _componentDidUpdate(oldProps, newProps) {
+    if (!this._isComponentMounted) {
+      return;
+    }
+
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
     }
-    this._render();
+    this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
   componentDidUpdate(oldProps, newProps) {
@@ -79,12 +90,15 @@ export default class Block {
   }
 
   setProps = (nextProps) => {
-    if (!nextProps) {
-      return;
-    }
-  
+    if (!nextProps) return;
+
+    const oldProps = { ...this.props };
+
     Object.assign(this.props, nextProps);
-    this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
+
+    if (this._isComponentMounted) {
+      this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
+    }
   };
 
   get element() {
@@ -92,8 +106,36 @@ export default class Block {
   }
 
   _render() {
+    console.log(
+      `Rendering ${this.constructor.name} with ${
+        Object.keys(this._children).length
+      } children`
+    );
+
     const block = this.render();
-    this._element.innerHTML = block;
+
+    if (block !== undefined) {
+      this._removeEvents();
+      this._element.innerHTML = block;
+      this._addEvents();
+    }
+
+    this._renderChildren();
+    this._addEvents();
+  }
+
+  _renderChildren() {}
+
+  _addEvents() {
+    console.log(this._children.loginInput)
+  }
+
+  _removeEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element.removeEventListener(eventName, events[eventName]);
+    });
   }
 
   render() {}
@@ -103,17 +145,24 @@ export default class Block {
   }
 
   _makePropsProxy(props) {
+    const self = this;
+
     return new Proxy(props, {
-      get: (target, prop) => {
+      get(target, prop) {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set: (target, prop, value) => {
+      set(target, prop, value) {
+        const oldValue = target[prop];
         target[prop] = value;
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+
+        // Only trigger updates for actual changes if component is mounted
+        if (oldValue !== value && self._isComponentMounted) {
+          self.eventBus.emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        }
         return true;
       },
-      deleteProperty: () => {
+      deleteProperty() {
         throw new Error("Нет доступа");
       },
     });
@@ -129,5 +178,16 @@ export default class Block {
 
   hide() {
     this.getContent().style.display = "none";
+  }
+
+  destroy() {
+    this._removeEvents();
+
+    Object.values(this._children).forEach((child) => {
+      child.destroy();
+    });
+
+    this._children = {};
+    this._element.remove();
   }
 }
