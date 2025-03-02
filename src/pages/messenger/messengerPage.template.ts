@@ -6,21 +6,12 @@ export default `
         </div>
         <div class="search-bar">
           <input type="text" placeholder="Search" name="chat_search">
-          <img src="/search_icon.svg" alt="search icon">
+          <img src="/search_icon.svg" class="search_icon" alt="search icon">
         </div>
         <ul class="chat-select__wrapper">
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Andrew" lastData="Image" lastTime="12:24" unreadAmount=1}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount=0}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
-          {{> chatItemPartial pfpUrl="/mock_pfp2.jpg" chatName="Wakizashi" youSend=true lastData="Image;glkl;skl;sdfksdl;fklsdf;ksdl;fkl;sdfsdf;kl" lastTime="12:24" unreadAmount="12"}}
+          {{{ ChatItem1  }}}
+          {{{ ChatItem2 }}}
+          {{{ ChatItem3 }}}
         </ul>
       </nav>
         <div class="chat-main">

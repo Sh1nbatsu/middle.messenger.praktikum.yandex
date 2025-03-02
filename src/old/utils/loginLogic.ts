@@ -1,4 +1,4 @@
-import { validateLogin } from "./validation";
+import { validateLogin } from "../../utils/validation";
 
 export default function loginLogic() {
   const form = document.querySelector("#login-form") as HTMLFormElement;
@@ -78,7 +78,7 @@ export default function loginLogic() {
       event.preventDefault();
       return;
     }
-    
+
     event.preventDefault();
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());

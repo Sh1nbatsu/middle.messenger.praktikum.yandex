@@ -145,9 +145,9 @@
     color: $secondary-font-color;
   }
 
-  &:last-of-type span {
-    display: none;
-  }
+  // &:last-of-type span {
+  //   display: none;
+  // }
 
   a:last-child {
     color: $error-color;
@@ -156,6 +156,14 @@
       color: color.adjust($error-color, $lightness: -30%);
     }
   }
+}
+
+
+.data__wrapper div:last-child:not(.data-item) {
+  // ...
+  span {
+      display: none;
+    }
 }
 
 .edit__input-div {

@@ -1,4 +1,4 @@
-import { validateAll } from "./validation";
+import { validateAll } from "../../utils/validation";
 
 export default function editDataLogic() {
   const inputDivList = document.querySelectorAll("#input-div");

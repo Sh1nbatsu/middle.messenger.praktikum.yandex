@@ -93,7 +93,7 @@ export function validateAll(input: HTMLInputElement): {
   const passwordInput = document.querySelector(
     "input[name='password']"
   ) as HTMLInputElement;
-  
+
   switch (input.name) {
     case "email":
       if (validateEmail(input.value)) {
@@ -138,4 +138,4 @@ export function validateAll(input: HTMLInputElement): {
   return { isPassed: false, inputType: null };
 }
 
-// Функция validateAll возвращает объект с двумя полями: isPassed и inputType. Я пока оставлю функцию в таком виде, так как изначально планировал использовать ее же для валидации формы в edit_data, но решил изменить подход к демонстрации пользователю полей с ошибками, но пока оставлю функцию такой же, на случай если буду делать отдельную логику для браузеров без поддержки анимаций.
+// Функция validateAll возвращает объект с двумя полями: isPassed и inputType. Я пока оставлю функцию в таком виде, так как изначально планировал использовать ее же для валидации формы в edit_data, но решил изменить подход к демонстрации пользователю полей с ошибками. Возвращать объект планировалось для указания пользователю в каком именно поле допущена ошибка. Если данная логика не понадобится в будущем - я ее удалю

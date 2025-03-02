@@ -10,7 +10,7 @@ export default `
             {{{ mainButton }}}
         </form>
         <div class="register__link">
-          <a href="signin">Create Account?</a>
+          <a href="signup">Create Account?</a>
         </div>
       </div>
     </div>`;

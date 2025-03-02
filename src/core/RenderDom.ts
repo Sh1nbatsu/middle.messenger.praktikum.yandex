@@ -6,8 +6,6 @@ export default function renderDOM(block: Block): HTMLElement {
     throw new Error(`Root element not found for selector: #root`);
   }
   root.innerHTML = "";
-  console.log(block)
-  console.log(block.getContent());
   root.appendChild(block.getContent());
   block.dispatchComponentDidMount();
   console.log("render")

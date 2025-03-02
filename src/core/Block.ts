@@ -1,5 +1,4 @@
 import EventBus from "./EventBus";
-
 export default class Block {
   static EVENTS = {
     INIT: "init",
@@ -59,11 +58,10 @@ export default class Block {
     this._isComponentMounted = true;
     this.componentDidMount();
 
-    // Only render once after mounting
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidMount(oldProps?) {}
+  componentDidMount(oldProps) {}
 
   dispatchComponentDidMount() {
     Object.values(this._children).forEach((child) => {
@@ -106,36 +104,60 @@ export default class Block {
   }
 
   _render() {
-    console.log(
-      `Rendering ${this.constructor.name} with ${
-        Object.keys(this._children).length
-      } children`
-    );
+    console.log(`Rendering ${this.constructor.name}`);
 
     const block = this.render();
+    this._removeEvents();
+    this._element.innerHTML = block;
 
-    if (block !== undefined) {
-      this._removeEvents();
-      this._element.innerHTML = block;
-      this._addEvents();
-    }
+    Object.entries(this._children).forEach(([name, child]) => {
+      const container = this._element.querySelector(
+        `[data-component-id="${name}"]`
+      );
+      if (container) {
+        container.replaceWith(child.getContent());
+      }
+    });
 
-    this._renderChildren();
     this._addEvents();
   }
 
   _renderChildren() {}
 
   _addEvents() {
-    document.querySelector("input")?.addEventListener("input", e => console.log(e))
+    const { events = [] } = this.props;
+
+    if (Array.isArray(events)) {
+      events.forEach(({ selector, event, handler }) => {
+
+        const boundHandler = (e) => {
+          handler.call(this, e, this._element);
+        };
+
+        const elements = this._element.querySelectorAll(selector);
+        elements.forEach((element) => {
+          element.addEventListener(event, boundHandler);
+        });
+      });
+    }
   }
 
   _removeEvents() {
-    const { events = {} } = this.props;
+    const { events = [] } = this.props;
 
-    Object.keys(events).forEach((eventName) => {
-      this._element.removeEventListener(eventName, events[eventName]);
-    });
+    if (Array.isArray(events)) {
+      events.forEach(({ selector, event, handler }) => {
+
+        const boundHandler = (e) => {
+          handler.call(this, e, this._element);
+        };
+
+        const elements = this._element.querySelectorAll(selector);
+        elements.forEach((element) => {
+          element.removeEventListener(event, boundHandler);
+        });
+      });
+    }
   }
 
   render() {}
@@ -156,7 +178,6 @@ export default class Block {
         const oldValue = target[prop];
         target[prop] = value;
 
-        // Only trigger updates for actual changes if component is mounted
         if (oldValue !== value && self._isComponentMounted) {
           self.eventBus.emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         }
@@ -170,14 +191,6 @@ export default class Block {
 
   _createDocumentElement(tagName) {
     return document.createElement(tagName);
-  }
-
-  show() {
-    this.getContent().style.display = "block";
-  }
-
-  hide() {
-    this.getContent().style.display = "none";
   }
 
   destroy() {

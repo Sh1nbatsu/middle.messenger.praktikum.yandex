@@ -14,12 +14,12 @@ export default `
             <h2>John</h2>
         </div>
         <div class="data__wrapper">
-          {{> userDataPartial desc="E-mail" data="mymail@mail.com"}}
-          {{> userDataPartial desc="Login" data="John Doe"}}
-          {{> userDataPartial desc="First name" data="John"}}
-          {{> userDataPartial desc="Second name" data="Doe"}}
-          {{> userDataPartial desc="Name in chat" data="Well, i guess"}}
-          {{> userDataPartial desc="Phone" data="8 (800) 555 35 35"}}
+          {{{ userEmail }}}
+          {{{ userLogin }}}
+          {{{ userFirstName }}}
+          {{{ userSecondName }}}
+          {{{ userDisplayName }}}
+          {{{ userPhone }}}
         </div>
         <div class="edit__wrapper">
           <div class="data-item">

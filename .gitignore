@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 animateInputs.ts
+src/old/
+src/old/utils/
+old/

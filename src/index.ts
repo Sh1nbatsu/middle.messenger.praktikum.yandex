@@ -1,74 +1,73 @@
-import Handlebars from "handlebars";
+import { Login } from "./pages/login";
+import { SignUp } from "./pages/signup";
+import { Error } from "./pages/error";
+import { EditData } from "./pages/editData";
+import { EditPassword } from "./pages/editPassword";
+import { ProfilePage } from "./pages/profile";
+import { Messenger } from "./pages/messenger";
+
+import renderDOM from "./core/RenderDom";
 
 import "./styles/main.scss";
 
-import loginInputPartial from "./partials/components/loginInput/loginInput.partial.ts";
-import mainButtonPartial from "./partials/components/mainButton/mainButton.partial.ts";
-import userDataPartial from "./partials/components/userData/userData.partial.ts";
-import chatItemPartial from "./partials/components/chatItem/chatItem.partial.ts";
-import editInputPartial from "./partials/components/editInput/editInput.partial.ts";
+const pages: Record<string, any> = {
+  login: [Login],
+  signUp: [SignUp],
+  error: [
+    Error,
+    {
+      errorType: 500,
+      errorDesc: "Something went wrong",
+    },
+  ],
+  notFound: [
+    Error,
+    {
+      errorType: 404,
+      errorDesc: "How did you get here?",
+    },
+  ],
+  editData: [EditData],
+  editPassword: [EditPassword],
+  profilePage: [ProfilePage],
+  messenger: [Messenger],
+};
 
-import loginPageTemplate from "./pages/login/loginPage.template.ts";
-import signinPageTemplate from "./pages/signinPage.template.ts";
-import errorPageTemplate from "./pages/errorPage.template.ts";
-import messengerPageTemplate from "./pages/messengerPage.template.ts";
-import profilePageTemplate from "./pages/profilePage.template.ts";
-import editProfileDataTemplate from "./pages/editData.template.ts";
-import editPasswordTemplate from "./pages/editPassword.template.ts";
-
-Handlebars.registerPartial("loginInputPartial", loginInputPartial);
-Handlebars.registerPartial("mainButtonPartial", mainButtonPartial);
-Handlebars.registerPartial("userDataPartial", userDataPartial);
-Handlebars.registerPartial("chatItemPartial", chatItemPartial);
-Handlebars.registerPartial("editInputPartial", editInputPartial);
-
-import editDataLogic from "./utils/editDataLogic.ts";
-// import { LoginView } from "./views/pages/loginView.ts";
-// import { SigninView } from "./views/pages/signinView.ts";
-// import { ErrorView } from "./views/pages/errorView.ts";
-// import { MessengerView } from "./views/pages/messengerView.ts";
+function navigate(page: string): void {
+  console.log("navigate");
+  const [Component, context] = pages[page];
+  if (typeof Component === "function") {
+    // console.log(new Component(context));
+    renderDOM(new Component(context));
+    console.log(context);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  const root = document.querySelector("#root") as HTMLElement;
-
-  let template: Handlebars.TemplateDelegate | undefined;
-
   switch (window.location.pathname) {
     case "/":
-      template = Handlebars.compile(loginPageTemplate);
-      root.innerHTML = template({});
+      navigate("login");
       break;
-    case "/signin":
-      template = Handlebars.compile(signinPageTemplate);
-      root.innerHTML = template({});
+    case "/signup":
+      navigate("signUp");
       break;
     case "/500":
-      template = Handlebars.compile(errorPageTemplate);
-      root.innerHTML = template({});
+      navigate("error");
       break;
     case "/im":
-      template = Handlebars.compile(messengerPageTemplate);
-      root.innerHTML = template({});
+      navigate("messenger");
       break;
     case "/profile":
-      template = Handlebars.compile(profilePageTemplate);
-      root.innerHTML = template({});
+      navigate("profilePage");
       break;
     case "/edit_data":
-      template = Handlebars.compile(editProfileDataTemplate);
-      root.innerHTML = template({});
-      editDataLogic();
+      navigate("editData");
       break;
     case "/edit_password":
-      template = Handlebars.compile(editPasswordTemplate);
-      root.innerHTML = template({});
+      navigate("editPassword");
       break;
     default:
-      template = Handlebars.compile(errorPageTemplate);
-      root.innerHTML = template({
-        errorType: "404",
-        errorDesc: "How did you get here?",
-      });
+      navigate("notFound");
       break;
   }
 });

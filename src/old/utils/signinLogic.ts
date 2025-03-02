@@ -1,4 +1,4 @@
-import { validateAll } from "./validation.ts";
+import { validateAll } from "../../utils/validation.ts";
 
 export default function registerLogic() {
   const inputDivList = document.querySelectorAll("#input-div");
