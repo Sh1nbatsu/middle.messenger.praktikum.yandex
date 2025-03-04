@@ -24,7 +24,6 @@ transport
     console.error(error);
   });
 
-
 const pages: Record<string, unknown> = {
   login: [Login],
   signUp: [SignUp],
@@ -48,16 +47,24 @@ const pages: Record<string, unknown> = {
   messenger: [Messenger],
 };
 
-function navigate(page: string): void {
+function navigate(page: string) {
   console.log("navigate");
-  const [Component, context] = pages[page];
+  const Page = pages[page];
+  const Component = Array.isArray(Page) ? Page[0] : Page;
+  const context = Array.isArray(Page) ? Page[1] : undefined;
+
   if (typeof Component === "function") {
-    // console.log(new Component(context));
-    renderDOM(new Component(context));
-    console.log(context);
+    const componentInstance = context
+      ? new Component(context)
+      : new Component();
+
+    renderDOM(componentInstance);
+
+    if (context) {
+      console.log(context);
+    }
   }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   switch (window.location.pathname) {
     case "/":
