@@ -29,7 +29,7 @@ export default class Login extends Block {
             alert("Invalid data");
             return;
           }
-          const formData = new FormData(e.target);
+          const formData = new FormData(e.target as HTMLFormElement);
           const login = formData.get("login");
           const password = formData.get("password");
           console.log("Login:", login, "Password:", password);
@@ -52,9 +52,16 @@ export default class Login extends Block {
           selector: 'input[name="login"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement?.querySelector(".top__text");
-            topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            const topText = componentElement?.querySelector(
+              ".top__text"
+            ) as HTMLElement;
+            if (topText) {
+              topText.style.transform = "translate(-8%, 0) scale(0.8)";
+            }
+
+            const target = e.target as HTMLInputElement;
+
+            if (!target.value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -63,9 +70,14 @@ export default class Login extends Block {
           selector: 'input[name="login"]',
           event: "blur",
           handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(`.bottom__text`);
-            if (e.target.value) {
-              if (!validateLogin(e.target.value)) {
+            const bottomText = componentElement.querySelector(
+              `.bottom__text`
+            ) as HTMLElement;
+
+            const target = e.target as HTMLInputElement;
+
+            if (target.value) {
+              if (!validateLogin(target.value)) {
                 bottomText.style.opacity = "1";
                 bottomText.style.transform = "translateY(0)";
               }
@@ -90,9 +102,11 @@ export default class Login extends Block {
           selector: 'input[name="password"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -110,9 +124,9 @@ export default class Login extends Block {
   }
 
   render(): string {
-    const context = {};
+    const context: Record<string, string> = {};
 
-    Object.entries(this._children).forEach(([name, component]) => {
+    Object.entries(this._children).forEach(([name]) => {
       console.log(name);
       context[name] = `<div data-component-id="${name}"></div>`;
     });

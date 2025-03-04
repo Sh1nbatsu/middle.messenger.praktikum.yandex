@@ -2,11 +2,7 @@ import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import loginInputPartial from "./loginInput.partial.ts";
 
-interface Event {
-  selector: string;
-  event: string;
-  handler: (e: Event, componentElement?: HTMLElement) => void;
-}
+import { CustomEvent } from "../../../core/Block.ts";
 
 export interface LoginInputProps {
   inputDesc?: string;
@@ -14,7 +10,7 @@ export interface LoginInputProps {
   inputName: string;
   errorMessage?: string;
   listeningElement?: string;
-  events?: Event[];
+  events?: CustomEvent[];
 }
 
 export default class LoginInput extends Block {

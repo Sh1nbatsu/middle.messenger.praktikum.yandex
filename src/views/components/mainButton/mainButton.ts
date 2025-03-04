@@ -1,17 +1,13 @@
 import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import mainButtonPartial from "./mainButton.partial.ts";
+import { CustomEvent } from "../../../core/Block.ts";
 
-interface Event {
-  selector: string;
-  event: string;
-  handler: (e: Event, componentElement?: HTMLElement) => void;
-}
 
 export interface MainButtonProps {
   buttonType: string;
   buttonText: string;
-  events?: Event[];
+  events?: CustomEvent[];
 }
 
 export default class MainButton extends Block {

@@ -2,11 +2,7 @@ import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import editInputPartial from "./editInput.partial.ts";
 
-interface Event {
-  selector: string;
-  event: string;
-  handler: (e: Event, componentElement?: HTMLElement) => void;
-}
+import { CustomEvent } from "../../../core/Block.ts";
 
 export interface EditInputProps {
   inputDesc?: string;
@@ -16,7 +12,7 @@ export interface EditInputProps {
   errorMessage?: string;
   listeningElement?: string;
   required?: boolean;
-  events?: Event[];
+  events?: CustomEvent[];
 }
 
 export default class EditInput extends Block {

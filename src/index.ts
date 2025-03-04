@@ -16,7 +16,8 @@ const transport = new HTTPTransport();
 
 transport
   .get("https://jsonplaceholder.typicode.com/posts/1")
-  .then((xhr) => {
+  .then((value: unknown) => {
+    const xhr = value as XMLHttpRequest;
     console.log(xhr.responseText);
   })
   .catch((error) => {
@@ -24,7 +25,7 @@ transport
   });
 
 
-const pages: Record<string, any> = {
+const pages: Record<string, unknown> = {
   login: [Login],
   signUp: [SignUp],
   error: [

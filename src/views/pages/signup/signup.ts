@@ -58,7 +58,7 @@ export default class SignUp extends Block {
           console.log(isValid);
 
           if (isValid) {
-            const formData = new FormData(e.target);
+            const formData = new FormData(e.target as HTMLFormElement);
             const login = formData.get("login");
             const password = formData.get("password");
             console.log("Login:", login, "Password:", password);
@@ -84,9 +84,11 @@ export default class SignUp extends Block {
           selector: 'input[name="email"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -94,9 +96,13 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="email"]',
           event: "blur",
-          handler: (e, componentElement) => {
-            const input = componentElement.querySelector("input");
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const input = componentElement.querySelector(
+              "input"
+            ) as HTMLInputElement;
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             if (!validateAll(input).isPassed && input.value) {
               bottomText.style.opacity = "1";
               bottomText.style.transform = "translateY(0)";
@@ -111,8 +117,10 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="email"]',
           event: "focus",
-          handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             bottomText.style.opacity = "0";
             bottomText.style.transform = "translateY(-18px)";
           },
@@ -130,9 +138,11 @@ export default class SignUp extends Block {
           selector: 'input[name="login"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -140,9 +150,13 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="login"]',
           event: "blur",
-          handler: (e, componentElement) => {
-            const input = componentElement.querySelector("input");
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const input = componentElement.querySelector(
+              "input"
+            ) as HTMLInputElement;
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             if (!validateAll(input).isPassed && input.value) {
               bottomText.style.opacity = "1";
               bottomText.style.transform = "translateY(0)";
@@ -156,8 +170,10 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="login"]',
           event: "focus",
-          handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             bottomText.style.opacity = "0";
             bottomText.style.transform = "translateY(-18px)";
           },
@@ -175,9 +191,11 @@ export default class SignUp extends Block {
           selector: 'input[name="first_name"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -185,9 +203,13 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="first_name"]',
           event: "blur",
-          handler: (e, componentElement) => {
-            const input = componentElement.querySelector("input");
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const input = componentElement.querySelector(
+              "input"
+            ) as HTMLInputElement;
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             if (!validateAll(input).isPassed && input.value) {
               bottomText.style.opacity = "1";
               bottomText.style.transform = "translateY(0)";
@@ -201,8 +223,10 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="first_name"]',
           event: "focus",
-          handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             bottomText.style.opacity = "0";
             bottomText.style.transform = "translateY(-18px)";
           },
@@ -220,9 +244,11 @@ export default class SignUp extends Block {
           selector: 'input[name="second_name"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -230,9 +256,13 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="second_name"]',
           event: "blur",
-          handler: (e, componentElement) => {
-            const input = componentElement.querySelector("input");
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const input = componentElement.querySelector(
+              "input"
+            ) as HTMLInputElement;
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             if (!validateAll(input).isPassed && input.value) {
               bottomText.style.opacity = "1";
               bottomText.style.transform = "translateY(0)";
@@ -246,8 +276,10 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="second_name"]',
           event: "focus",
-          handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             bottomText.style.opacity = "0";
             bottomText.style.transform = "translateY(-18px)";
           },
@@ -265,9 +297,11 @@ export default class SignUp extends Block {
           selector: 'input[name="phone"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -275,9 +309,13 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="phone"]',
           event: "blur",
-          handler: (e, componentElement) => {
-            const input = componentElement.querySelector("input");
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const input = componentElement.querySelector(
+              "input"
+            ) as HTMLInputElement;
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             if (!validateAll(input).isPassed && input.value) {
               bottomText.style.opacity = "1";
               bottomText.style.transform = "translateY(0)";
@@ -291,8 +329,10 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="phone"]',
           event: "focus",
-          handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             bottomText.style.opacity = "0";
             bottomText.style.transform = "translateY(-18px)";
           },
@@ -310,9 +350,11 @@ export default class SignUp extends Block {
           selector: 'input[name="password"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -320,9 +362,13 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="password"]',
           event: "blur",
-          handler: (e, componentElement) => {
-            const input = componentElement.querySelector("input");
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const input = componentElement.querySelector(
+              "input"
+            ) as HTMLInputElement;
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             if (!validateAll(input).isPassed && input.value) {
               bottomText.style.opacity = "1";
               bottomText.style.transform = "translateY(0)";
@@ -336,8 +382,10 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="password"]',
           event: "focus",
-          handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             bottomText.style.opacity = "0";
             bottomText.style.transform = "translateY(-18px)";
           },
@@ -355,9 +403,11 @@ export default class SignUp extends Block {
           selector: 'input[name="confirm_password"]',
           event: "input",
           handler: (e, componentElement) => {
-            const topText = componentElement.querySelector(".top__text");
+            const topText = componentElement.querySelector(
+              ".top__text"
+            ) as HTMLElement;
             topText.style.transform = "translate(-8%, 0) scale(0.8)";
-            if (!e.target.value) {
+            if (!(e.target as HTMLInputElement).value) {
               topText.style.transform = "translateY(20px)";
             }
           },
@@ -365,9 +415,13 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="confirm_password"]',
           event: "blur",
-          handler: (e, componentElement) => {
-            const input = componentElement.querySelector("input");
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const input = componentElement.querySelector(
+              "input"
+            ) as HTMLInputElement;
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             if (!validateAll(input).isPassed && input.value) {
               bottomText.style.opacity = "1";
               bottomText.style.transform = "translateY(0)";
@@ -381,8 +435,10 @@ export default class SignUp extends Block {
         {
           selector: 'input[name="confirm_password"]',
           event: "focus",
-          handler: (e, componentElement) => {
-            const bottomText = componentElement.querySelector(".bottom__text");
+          handler: (_e, componentElement) => {
+            const bottomText = componentElement.querySelector(
+              ".bottom__text"
+            ) as HTMLElement;
             bottomText.style.opacity = "0";
             bottomText.style.transform = "translateY(-18px)";
           },
@@ -401,7 +457,7 @@ export default class SignUp extends Block {
   }
 
   render(): string {
-    const context = {};
+    const context: { [key: string]: string } = {};
 
     Object.entries(this._children).forEach(([name, component]) => {
       console.log(component);

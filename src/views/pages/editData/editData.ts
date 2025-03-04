@@ -28,7 +28,7 @@ export default class EditData extends Block {
           let isValid = true;
           let isEmpty = true;
 
-          e.preventDefault();
+          (e as SubmitEvent).preventDefault();
 
           const Components = [
             this._children.emailInput.element,
@@ -41,7 +41,6 @@ export default class EditData extends Block {
 
           Components.forEach((component) => {
             const input = component.querySelector("input") as HTMLInputElement;
-            console.log(input.value);
             if (input) {
               if (input.value && !validateAll(input).isPassed) {
                 isValid = false;
@@ -51,7 +50,7 @@ export default class EditData extends Block {
             }
           });
 
-          const formData = new FormData(e.target);
+          const formData = new FormData(e.target as HTMLFormElement);
 
           if (isValid && !isEmpty) {
             const formValues: Record<string, string> = {};
@@ -80,7 +79,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="email"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -97,7 +96,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="email"]',
           event: "input",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -118,7 +117,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="login"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -135,7 +134,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="login"]',
           event: "input",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -156,7 +155,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="first_name"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -173,7 +172,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="first_name"]',
           event: "input",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -194,7 +193,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="second_name"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -213,7 +212,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="second_name"]',
           event: "input",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -234,7 +233,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="display_name"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -253,7 +252,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="display_name"]',
           event: "input",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -274,7 +273,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="phone"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -293,7 +292,7 @@ export default class EditData extends Block {
         {
           selector: 'input[name="phone"]',
           event: "input",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -310,7 +309,7 @@ export default class EditData extends Block {
     });
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./public/mock_pfp1.jpg",
+      pfpUrl: "./mock_pfp1.jpg",
       username: "John",
       events: [
         {
@@ -334,9 +333,9 @@ export default class EditData extends Block {
   }
 
   render(): string {
-    const context = {};
+    const context: Record<string, string> = {};
 
-    Object.entries(this._children).forEach(([name, component]) => {
+    Object.entries(this._children).forEach(([name]) => {
       console.log(name);
       context[name] = `<div data-component-id="${name}"></div>`;
     });

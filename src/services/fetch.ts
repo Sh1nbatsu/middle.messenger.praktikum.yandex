@@ -8,12 +8,12 @@ enum METHOD {
 
 interface Options {
   timeout?: number;
-  headers?: {};
+  headers?: Record<string, string>;
   method?: METHOD;
   data?: unknown;
 }
 
-function queryStringify(data) {
+function queryStringify(data: Record<string, string | number | boolean>) {
   if (typeof data !== "object") {
     throw new Error("Data must be object");
   }
@@ -25,7 +25,7 @@ function queryStringify(data) {
 }
 
 export default class HTTPTransport {
-  get = (url, options: Options = {}) => {
+  get = (url: string, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.GET },
@@ -33,7 +33,7 @@ export default class HTTPTransport {
     );
   };
 
-  post = (url, options: Options = {}) => {
+  post = (url: string, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.POST },
@@ -41,7 +41,7 @@ export default class HTTPTransport {
     );
   };
 
-  put = (url, options: Options = {}) => {
+  put = (url: string, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.PUT },
@@ -49,7 +49,7 @@ export default class HTTPTransport {
     );
   };
 
-  delete = (url, options: Options = {}) => {
+  delete = (url: string, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.DELETE },
@@ -57,7 +57,7 @@ export default class HTTPTransport {
     );
   };
 
-  request = (url, options: Options = {}, timeout = 5000) => {
+  request = (url: string, options: Options = {}, timeout = 5000) => {
     const { headers = {}, method, data } = options;
 
     return new Promise(function (resolve, reject) {
@@ -69,7 +69,7 @@ export default class HTTPTransport {
       const xhr = new XMLHttpRequest();
       const isGet = method === METHOD.GET;
 
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
+      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data as Record<string, string | number | boolean>)}` : url);
 
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
@@ -88,7 +88,7 @@ export default class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(data ? JSON.stringify(data) : null);
       }
     });
   };

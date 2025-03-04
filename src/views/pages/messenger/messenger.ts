@@ -23,7 +23,7 @@ export default class Messenger extends Block {
           const searchIcon = this.element.querySelector(
             ".search_icon"
           ) as HTMLImageElement;
-          if (e.target.value && searchIcon) {
+          if (!(e.target as HTMLInputElement).value && searchIcon) {
             searchIcon.style.transform = "translateX(-92px)";
           }
         },
@@ -35,7 +35,7 @@ export default class Messenger extends Block {
           const searchIcon = this.element.querySelector(
             ".search_icon"
           ) as HTMLImageElement;
-          if (!e.target.value && searchIcon) {
+          if (!(e.target as HTMLInputElement).value && searchIcon) {
             searchIcon.style.transform = "translateX(0)";
           }
         },
@@ -47,7 +47,7 @@ export default class Messenger extends Block {
           const searchIcon = this.element.querySelector(
             ".search_icon"
           ) as HTMLImageElement;
-          if (!e.target.value && searchIcon) {
+          if (!(e.target as HTMLInputElement).value && searchIcon) {
             searchIcon.style.transform = "translateX(-92px)";
           }
         },
@@ -57,7 +57,7 @@ export default class Messenger extends Block {
         event: "submit",
         handler: (e) => {
           e.preventDefault();
-          const formData = new FormData(e.target);
+          const formData = new FormData(e.target as HTMLFormElement);
           const search = formData.get("chat_search");
           if (!search) {
             console.log("empty");
@@ -131,7 +131,7 @@ export default class Messenger extends Block {
   }
 
   render(): string {
-    const context: { children?: string[] } = {};
+    const context: { [key: string]: string | string[] } = {};
 
     Object.entries(this._children).forEach(([name]) => {
       context[name] = `<div data-component-id="${name}"></div>`;
@@ -143,13 +143,19 @@ export default class Messenger extends Block {
 
     // Оно работает, но я абсолютно не понимаю как это типизировать
 
-    contextEntries.forEach((child: [string, string]) => {
+    contextEntries.forEach((child: [string, string | string[]]) => {
       console.log(child);
 
-      childrenList.push(child[1]);
+      if (typeof child[1] === "string") {
+        childrenList.push(child[1]);
+      } else {
+        childrenList.push(...child[1]);
+      }
     });
 
     context.children = childrenList;
+
+    console.log(context);
 
     return Handlebars.compile(messengerPageTemplate)(context);
   }

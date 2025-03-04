@@ -1,17 +1,13 @@
 import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import pfpBlockPartial from "./pfpBlock.partial.ts";
+import { CustomEvent } from "../../../core/Block.ts";
 
-interface Event {
-  selector: string;
-  event: string;
-  handler: (e: Event, componentElement?: HTMLElement) => void;
-}
 
 export interface PfpBlockProps {
   pfpUrl: string;
   username: string;
-  events?: Event[];
+  events?: CustomEvent[];
 }
 
 export default class PfpBlock extends Block {

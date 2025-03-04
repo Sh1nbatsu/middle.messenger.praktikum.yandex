@@ -70,9 +70,9 @@ export default class ProfilePage extends Block {
   }
 
   render(): string {
-    const context = {};
+    const context: { [key: string]: string } = {};
 
-    Object.entries(this._children).forEach(([name, component]) => {
+    Object.entries(this._children).forEach(([name]) => {
       console.log(name);
       context[name] = `<div data-component-id="${name}"></div>`;
     });

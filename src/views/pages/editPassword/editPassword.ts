@@ -49,7 +49,7 @@ export default class EditPassword extends Block {
           if (!isValid) {
             alert("Wrong.");
           } else {
-            const formData = new FormData(e.target);
+            const formData = new FormData(e.target as HTMLFormElement);
 
             console.log(formData);
           }
@@ -82,7 +82,7 @@ export default class EditPassword extends Block {
         {
           selector: 'input[name="password"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -109,7 +109,7 @@ export default class EditPassword extends Block {
         {
           selector: 'input[name="confirm_password"]',
           event: "blur",
-          handler: (e, componentElement) => {
+          handler: (_e, componentElement) => {
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;
@@ -128,7 +128,7 @@ export default class EditPassword extends Block {
     });
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./public/mock_pfp1.jpg",
+      pfpUrl: "./mock_pfp1.jpg",
       username: "John",
       events: [
         {
@@ -149,9 +149,9 @@ export default class EditPassword extends Block {
   }
 
   render(): string {
-    const context = {};
+    const context: Record<string, string> = {};
 
-    Object.entries(this._children).forEach(([name, component]) => {
+    Object.entries(this._children).forEach(([name]) => {
       console.log(name);
       context[name] = `<div data-component-id="${name}"></div>`;
     });

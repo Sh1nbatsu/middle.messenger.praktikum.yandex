@@ -1,4 +1,15 @@
 import EventBus from "./EventBus";
+
+export interface CustomEvent {
+  selector: string;
+  event: string;
+  handler: (e: SubmitEvent | InputEvent, componentElement: HTMLElement) => void;
+}
+
+interface BlockProps {
+  events?: CustomEvent[];
+  [key: string]: unknown;
+}
 export default class Block {
   static EVENTS = {
     INIT: "init",
@@ -9,7 +20,7 @@ export default class Block {
 
   private _element: HTMLElement;
   private _meta;
-  eventBus;
+  eventBus: EventBus;
   props;
   private _isComponentMounted: boolean = false;
   _children: Record<string, Block> = {};
@@ -29,7 +40,7 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _registerEvents(eventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -61,7 +72,7 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidMount(oldProps?) {}
+  componentDidMount() {}
 
   dispatchComponentDidMount() {
     Object.values(this._children).forEach((child) => {
@@ -71,7 +82,8 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps, newProps) {
+  private _componentDidUpdate(...args: unknown[]) {
+    const [oldProps, newProps] = args as [BlockProps, BlockProps];
     if (!this._isComponentMounted) {
       return;
     }
@@ -83,11 +95,11 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidUpdate(oldProps, newProps) {
-    return true;
+  componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
+    return { oldProps, newProps };
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps: BlockProps) => {
     if (!nextProps) return;
 
     const oldProps = { ...this.props };
@@ -127,7 +139,7 @@ export default class Block {
 
     if (Array.isArray(events)) {
       events.forEach(({ selector, event, handler }) => {
-        const boundHandler = (e) => {
+        const boundHandler = (e: Event) => {
           handler.call(this, e, this._element);
         };
 
@@ -144,7 +156,7 @@ export default class Block {
 
     if (Array.isArray(events)) {
       events.forEach(({ selector, event, handler }) => {
-        const boundHandler = (e) => {
+        const boundHandler = (e: Event) => {
           handler.call(this, e, this._element);
         };
 
@@ -164,17 +176,17 @@ export default class Block {
     return this.element;
   }
 
-  private _makePropsProxy(props) {
+  private _makePropsProxy(props: BlockProps) {
     const self = this;
 
     return new Proxy(props, {
       get(target, prop) {
-        const value = target[prop];
+        const value = target[prop as keyof typeof target];
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, prop, value) {
-        const oldValue = target[prop];
-        target[prop] = value;
+        const oldValue = target[prop as keyof typeof target];
+        target[prop as keyof typeof target] = value;
 
         if (oldValue !== value && self._isComponentMounted) {
           self.eventBus.emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
@@ -187,7 +199,7 @@ export default class Block {
     });
   }
 
-  private _createDocumentElement(tagName) {
+  private _createDocumentElement(tagName: string) {
     return document.createElement(tagName);
   }
 
