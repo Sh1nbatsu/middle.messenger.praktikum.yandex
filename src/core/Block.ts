@@ -139,13 +139,13 @@ export default class Block {
 
     if (Array.isArray(events)) {
       events.forEach(({ selector, event, handler }) => {
-        const boundHandler = (e: Event) => {
+        const boundHandler = (e: SubmitEvent | InputEvent) => {
           handler.call(this, e, this._element);
         };
 
         const elements = this._element.querySelectorAll(selector);
         elements.forEach((element) => {
-          element.addEventListener(event, boundHandler);
+          element.addEventListener(event, boundHandler as EventListener);
         });
       });
     }
@@ -156,13 +156,13 @@ export default class Block {
 
     if (Array.isArray(events)) {
       events.forEach(({ selector, event, handler }) => {
-        const boundHandler = (e: Event) => {
+        const boundHandler = (e: SubmitEvent | InputEvent) => {
           handler.call(this, e, this._element);
         };
 
         const elements = this._element.querySelectorAll(selector);
         elements.forEach((element) => {
-          element.removeEventListener(event, boundHandler);
+          element.removeEventListener(event, boundHandler as EventListener);
         });
       });
     }

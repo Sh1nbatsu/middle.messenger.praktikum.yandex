@@ -46,7 +46,7 @@ export default class ProfilePage extends Block {
     });
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./public/mock_pfp1.jpg",
+      pfpUrl: "./mock_pfp1.jpg",
       username: "John",
       events: [
         {
@@ -66,7 +66,6 @@ export default class ProfilePage extends Block {
     this.registerChild("userSecondName", userSecondName);
     this.registerChild("userDisplayName", userDisplayName);
     this.registerChild("userPhone", userPhone);
-    
   }
 
   render(): string {
