@@ -6,6 +6,13 @@ enum METHOD {
   DELETE = "DELETE",
 }
 
+interface Options {
+  timeout?: number;
+  headers?: {};
+  method?: METHOD;
+  data?: unknown;
+}
+
 function queryStringify(data) {
   if (typeof data !== "object") {
     throw new Error("Data must be object");
@@ -18,7 +25,7 @@ function queryStringify(data) {
 }
 
 export default class HTTPTransport {
-  get = (url, options = {}) => {
+  get = (url, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.GET },
@@ -26,7 +33,7 @@ export default class HTTPTransport {
     );
   };
 
-  post = (url, options = {}) => {
+  post = (url, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.POST },
@@ -34,7 +41,7 @@ export default class HTTPTransport {
     );
   };
 
-  put = (url, options = {}) => {
+  put = (url, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.PUT },
@@ -42,7 +49,7 @@ export default class HTTPTransport {
     );
   };
 
-  delete = (url, options = {}) => {
+  delete = (url, options: Options = {}) => {
     return this.request(
       url,
       { ...options, method: METHOD.DELETE },
@@ -50,7 +57,7 @@ export default class HTTPTransport {
     );
   };
 
-  request = (url, options = {}, timeout = 5000) => {
+  request = (url, options: Options = {}, timeout = 5000) => {
     const { headers = {}, method, data } = options;
 
     return new Promise(function (resolve, reject) {

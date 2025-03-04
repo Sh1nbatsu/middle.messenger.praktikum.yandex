@@ -62,7 +62,7 @@ export default class EditData extends Block {
               }
             });
 
-            console.log("Form values:", formValues);
+            console.log(formValues);
           } else if (isValid && isEmpty) {
             alert("Заполните хотя бы одно поле");
           }
@@ -81,8 +81,6 @@ export default class EditData extends Block {
           selector: 'input[name="email"]',
           event: "blur",
           handler: (e, componentElement) => {
-            console.log("here");
-
             const input = componentElement?.querySelector(
               "input"
             ) as HTMLInputElement;

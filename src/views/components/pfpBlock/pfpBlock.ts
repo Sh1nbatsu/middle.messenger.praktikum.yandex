@@ -2,20 +2,20 @@ import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import pfpBlockPartial from "./pfpBlock.partial.ts";
 
-export interface pfpBlockProps {
+interface Event {
+  selector: string;
+  event: string;
+  handler: (e: Event, componentElement?: HTMLElement) => void;
+}
+
+export interface PfpBlockProps {
   pfpUrl: string;
   username: string;
-  events?: [
-    {
-      selector: string;
-      event: string;
-      handler: (e: unknown, componentElement?: HTMLElement) => void;
-    }
-  ];
+  events?: Event[];
 }
 
 export default class PfpBlock extends Block {
-  constructor(props: pfpBlockProps) {
+  constructor(props: PfpBlockProps) {
     super("div", props);
   }
 

@@ -2,7 +2,7 @@ import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import chatItemPartial from "./chatItem.partial.ts";
 
-export interface chatItemProps {
+export interface ChatItemProps {
   pfpUrl: string;
   chatName: string;
   youSend?: boolean;
@@ -12,7 +12,7 @@ export interface chatItemProps {
 }
 
 export default class ChatItem extends Block {
-  constructor(props: chatItemProps) {
+  constructor(props: ChatItemProps) {
     super("div", {
       ...props,
     });
