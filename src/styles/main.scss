@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "variables";
+
+@import "login";
+
+@import "messenger";
+
+@import "profile";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter;
+}
+
+.error__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  gap: 1.5rem;
+  padding-top: 16%;
+
+  h1 {
+    font-size: 40px;
+    font-weight: 500;
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 400;
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
+  }
+}
