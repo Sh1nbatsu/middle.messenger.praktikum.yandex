@@ -7,11 +7,11 @@ export default class Block {
     FLOW_RENDER: "flow:render",
   };
 
-  _element: HTMLElement;
-  _meta;
+  private _element: HTMLElement;
+  private _meta;
   eventBus;
   props;
-  _isComponentMounted: boolean = false;
+  private _isComponentMounted: boolean = false;
   _children: Record<string, Block> = {};
 
   constructor(tagName = "div", props = {}) {
@@ -29,14 +29,14 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus) {
+  private _registerEvents(eventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
+  private _createResources() {
     const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
   }
@@ -50,7 +50,7 @@ export default class Block {
     this.props[name] = component;
   }
 
-  _componentDidMount() {
+  private _componentDidMount() {
     if (this._isComponentMounted) {
       return;
     }
@@ -61,7 +61,7 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidMount(oldProps) {}
+  componentDidMount(oldProps?) {}
 
   dispatchComponentDidMount() {
     Object.values(this._children).forEach((child) => {
@@ -71,7 +71,7 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps, newProps) {
+  private _componentDidUpdate(oldProps, newProps) {
     if (!this._isComponentMounted) {
       return;
     }
@@ -103,11 +103,11 @@ export default class Block {
     return this._element;
   }
 
-  _render() {
+  private _render() {
     console.log(`Rendering ${this.constructor.name}`);
 
-    const block = this.render();
     this._removeEvents();
+    const block = this.render();
     this._element.innerHTML = block;
 
     Object.entries(this._children).forEach(([name, child]) => {
@@ -122,14 +122,11 @@ export default class Block {
     this._addEvents();
   }
 
-  _renderChildren() {}
-
-  _addEvents() {
+  private _addEvents() {
     const { events = [] } = this.props;
 
     if (Array.isArray(events)) {
       events.forEach(({ selector, event, handler }) => {
-
         const boundHandler = (e) => {
           handler.call(this, e, this._element);
         };
@@ -142,12 +139,11 @@ export default class Block {
     }
   }
 
-  _removeEvents() {
+  private _removeEvents() {
     const { events = [] } = this.props;
 
     if (Array.isArray(events)) {
       events.forEach(({ selector, event, handler }) => {
-
         const boundHandler = (e) => {
           handler.call(this, e, this._element);
         };
@@ -160,13 +156,15 @@ export default class Block {
     }
   }
 
-  render() {}
+  render(): string {
+    return "";
+  }
 
   getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props) {
+  private _makePropsProxy(props) {
     const self = this;
 
     return new Proxy(props, {
@@ -189,7 +187,7 @@ export default class Block {
     });
   }
 
-  _createDocumentElement(tagName) {
+  private _createDocumentElement(tagName) {
     return document.createElement(tagName);
   }
 

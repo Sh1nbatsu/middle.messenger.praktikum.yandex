@@ -1,14 +1,28 @@
-import { Login } from "./pages/login";
-import { SignUp } from "./pages/signup";
-import { Error } from "./pages/error";
-import { EditData } from "./pages/editData";
-import { EditPassword } from "./pages/editPassword";
-import { ProfilePage } from "./pages/profile";
-import { Messenger } from "./pages/messenger";
+import { Login } from "./views/pages/login";
+import { SignUp } from "./views/pages/signup";
+import { Error } from "./views/pages/error";
+import { EditData } from "./views/pages/editData";
+import { EditPassword } from "./views/pages/editPassword";
+import { ProfilePage } from "./views/pages/profile";
+import { Messenger } from "./views/pages/messenger";
 
 import renderDOM from "./core/RenderDom";
 
 import "./styles/main.scss";
+
+import HTTPTransport from "./services/fetch";
+
+const transport = new HTTPTransport();
+
+transport
+  .get("https://jsonplaceholder.typicode.com/posts/1")
+  .then((xhr) => {
+    console.log(xhr.responseText);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
 
 const pages: Record<string, any> = {
   login: [Login],

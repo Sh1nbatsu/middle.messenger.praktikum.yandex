@@ -8,6 +8,6 @@ export default function renderDOM(block: Block): HTMLElement {
   root.innerHTML = "";
   root.appendChild(block.getContent());
   block.dispatchComponentDidMount();
-  console.log("render")
+  console.log("render");
   return root as HTMLElement;
 }

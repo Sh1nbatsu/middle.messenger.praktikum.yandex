@@ -1,14 +1,14 @@
-export default  class EventBus {
-  private listeners: Record<string, Array<(...args: any[]) => void>> = {};
+export default class EventBus {
+  private listeners: Record<string, Array<(...args: unknown[]) => void>> = {};
 
-  public on(event: string, callback: (...args: any[]) => void) {
+  public on(event: string, callback: (...args: unknown[]) => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
     this.listeners[event].push(callback);
   }
 
-  public off(event: string, callback: (...args: any[]) => void) {
+  public off(event: string, callback: (...args: unknown[]) => void) {
     if (!this.listeners[event]) {
       return;
     }
@@ -17,7 +17,7 @@ export default  class EventBus {
     );
   }
 
-  public emit(event: string, ...args: any[]) {
+  public emit(event: string, ...args: unknown[]) {
     if (!this.listeners[event]) {
       return;
     }
