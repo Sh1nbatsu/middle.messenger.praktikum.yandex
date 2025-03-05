@@ -40,7 +40,7 @@ export default class Login extends Block {
     const mainButton = new MainButton({
       buttonType: "submit",
       buttonText: "Enter",
-    });
+    } as const);
 
     const loginInput = new LoginInput({
       inputType: "text",
@@ -90,7 +90,7 @@ export default class Login extends Block {
           },
         },
       ],
-    });
+    } as const);
 
     const passwordInput = new LoginInput({
       inputType: "password",
@@ -112,7 +112,7 @@ export default class Login extends Block {
           },
         },
       ],
-    });
+    } as const);
 
     this.registerChild("mainButton", mainButton);
     this.registerChild("loginInput", loginInput);

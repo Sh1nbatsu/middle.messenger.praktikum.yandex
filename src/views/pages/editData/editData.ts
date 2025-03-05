@@ -306,7 +306,7 @@ export default class EditData extends Block {
     const mainButton = new MainButton({
       buttonType: "submit",
       buttonText: "Sumbit",
-    });
+    } as const);
 
     const pfpBlock = new PfpBlock({
       pfpUrl: "./mock_pfp1.jpg",

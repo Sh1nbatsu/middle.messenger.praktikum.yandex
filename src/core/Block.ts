@@ -6,6 +6,8 @@ export interface CustomEvent {
   handler: (e: SubmitEvent | InputEvent, componentElement: HTMLElement) => void;
 }
 
+// Я пытался билдится на осове базового блока, данного в учебнике, но из за особенностей рендера(встаки элементов как html строк, а не node элементов) функционал event listenerов вообще не работал(на моменте монтирования компонента по логике блока из теории пытались вешаться эвенты - по понятой причине оно не работало). Так же нужно будет убрать логику с созданием обертки div для каждого компонента, но сейчас я не считаю это срочным
+
 interface BlockProps {
   events?: CustomEvent[];
   [key: string]: unknown;
@@ -126,6 +128,8 @@ export default class Block {
       const container = this._element.querySelector(
         `[data-component-id="${name}"]`
       );
+      console.log(name, child);
+      console.log(container, child.getContent());
       if (container) {
         container.replaceWith(child.getContent());
       }

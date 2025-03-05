@@ -54,13 +54,13 @@ export default class EditPassword extends Block {
             console.log(formData);
           }
         },
-      },
+      } as const,
     ];
 
     const mainButton = new MainButton({
       buttonText: "Submit",
       buttonType: "submit",
-    });
+    } as const);
 
     const oldPasswordInput = new EditInput({
       inputDesc: "Old password",
@@ -69,7 +69,7 @@ export default class EditPassword extends Block {
       errorMessage: "Invalid password",
       placeholder: "●●●●●●●●●",
       required: true,
-    });
+    } as const);
 
     const newPasswordInput = new EditInput({
       inputDesc: "New password",
@@ -96,7 +96,7 @@ export default class EditPassword extends Block {
           },
         },
       ],
-    });
+    } as const);
 
     const confirmPasswordInput = new EditInput({
       inputDesc: "Confirm password",
@@ -125,7 +125,7 @@ export default class EditPassword extends Block {
           },
         },
       ],
-    });
+    } as const);
 
     const pfpBlock = new PfpBlock({
       pfpUrl: "./mock_pfp1.jpg",

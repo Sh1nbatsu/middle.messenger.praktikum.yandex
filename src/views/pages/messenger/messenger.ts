@@ -2,8 +2,9 @@ import Block from "../../../core/Block";
 import Handlebars from "handlebars";
 import messengerPageTemplate from "./messengerPage.template";
 
-import { ChatItem } from "../../components/chatItem";
-
+import { ChatTop } from "../../components/chatTop";
+import { ChatList } from "../../components/chatList";
+import { MessageList } from "../../components/messageList";
 export default class Messenger extends Block {
   constructor(props = {}) {
     super("div", {
@@ -66,68 +67,40 @@ export default class Messenger extends Block {
           }
         },
       },
+      {
+        selector: "#send-message",
+        event: "submit",
+        handler: (e) => {
+          event?.preventDefault();
+          const formData = new FormData(e.target as HTMLFormElement);
+          const message = formData.get("message");
+          if (!message) {
+            alert("empty");
+          } else {
+            console.log(message);
+          }
+        },
+      },
     ];
 
     // Тут будет приходить массив, надо будет по нему проходить и создавать на его основе компоненты, а в шаблоне перебирать через each, но в данном спринте эта логика не нужна
 
-    const chatItems = [
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-        youSend: true,
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-        unreadAmount: 12,
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-    ];
+    const chatlist = new ChatList({});
 
-    let count = 0;
+    this.registerChild("ChatList", chatlist);
 
-    chatItems.forEach((item) => {
-      const chatItem = new ChatItem({
-        pfpUrl: item.pfpUrl,
-        chatName: item.chatName,
-        lastData: item.lastData,
-        lastTime: item.lastTime,
-        youSend: item.youSend,
-        unreadAmount: item.unreadAmount,
-      });
+    const messageList = new MessageList({});
 
-      this.registerChild(`ChatItem${count}`, chatItem);
-      count++;
-    });
+    this.registerChild("MessageList", messageList);
 
     // По клику на chat item должен уходить запрос на получение списка сообщений, и на основании этого будут отображаться сообщения. Можно это сделать как через прослушиватель событий, пока эту логику трогать не буду, написал ради примера и собственного понимания
+
+    const chatTop = new ChatTop({
+      name: "Onryo",
+      pfpUrl: "./mock_pfp2.jpg",
+    });
+
+    this.registerChild("ChatTop", chatTop);
   }
 
   render(): string {
@@ -136,24 +109,6 @@ export default class Messenger extends Block {
     Object.entries(this._children).forEach(([name]) => {
       context[name] = `<div data-component-id="${name}"></div>`;
     });
-
-    const contextEntries = Object.entries(context);
-
-    const childrenList: string[] = [];
-
-    // Оно работает, но я абсолютно не понимаю как это типизировать
-
-    contextEntries.forEach((child: [string, string | string[]]) => {
-      console.log(child);
-
-      if (typeof child[1] === "string") {
-        childrenList.push(child[1]);
-      } else {
-        childrenList.push(...child[1]);
-      }
-    });
-
-    context.children = childrenList;
 
     console.log(context);
 
