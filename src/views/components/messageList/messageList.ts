@@ -6,7 +6,7 @@ import Message from "../message/message.ts";
 
 import { MessageProps } from "../message/message.ts";
 export default class MessageList extends Block {
-  constructor(props: MessageProps[]) {
+  constructor(props: { messages: MessageProps[] }) {
     super("div", props);
   }
 
