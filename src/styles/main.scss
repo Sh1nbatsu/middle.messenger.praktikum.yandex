@@ -1,18 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-
+@use "sass:color";
+@import "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap";
 @import "variables";
-
 @import "login";
-
 @import "messenger";
-
 @import "profile";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Inter;
+  font-family: Inter, sans-serif;
 }
 
 .error__container {
@@ -37,5 +34,28 @@
     cursor: default;
     user-select: none;
     pointer-events: none;
+  }
+}
+
+@keyframes error-shake {
+  0% {
+    transform: translateY(0);
+    color: $error-color;
+  }
+  10% {
+    transform: translateY(2px);
+  }
+  25% {
+    transform: translateY(-3px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  75% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+    color: unset;
   }
 }
