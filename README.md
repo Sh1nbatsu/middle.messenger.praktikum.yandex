@@ -1,6 +1,6 @@
 ### **Overview**
 
-Sprint_2, migrated project to MVC architecture, created base Block and used component approach.
+Sprint_2, migrated project to MVC architecture, created base Block and used component approach
 Added validation logic to inputs
 
 To install dependencies use `npm install`
@@ -13,7 +13,7 @@ To run linters use `npm run lint`
 
 ### **Routing**
 
-On the current stage of development, routing is realised via change in url for some links and <a> tags.
+On the current stage of development, routing is realised via change in url for some links and <a> tags
 
 / - login page
 
