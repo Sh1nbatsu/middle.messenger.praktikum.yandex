@@ -1,6 +1,7 @@
 ### **Overview**
 
-Sprint_1, created layout and some logic for input on registration and login page
+Sprint_2, migrated project to MVC architecture, created base Block and used component approach.
+Added validation logic to inputs
 
 To install dependencies use `npm install`
 
@@ -8,16 +9,18 @@ To run project in development mode use `npm run dev`
 
 To build and start project locally `npm run start`
 
+To run linters use `npm run lint`
+
 ### **Routing**
 
-On the current stage of development, routing is realised via change in url for some links
+On the current stage of development, routing is realised via change in url for some links and <a> tags.
 
 / - login page
 
 /register - registration page
 
 /im - main messenger page, with chat select and messaging block
-*Info:* only way to get to this page is to manually type `/im` in address bar
+_Info:_ only way to get to this page is to manually type `/im` in address bar
 
 /profile - user profile page
 
@@ -35,6 +38,6 @@ Routing might be updated as the development goes on
 
 https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0-1&p=f
 
-### **Netlify link** 
+### **Netlify link**
 
 https://melodious-dolphin-722b36.netlify.app/

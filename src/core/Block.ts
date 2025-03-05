@@ -181,7 +181,7 @@ export default class Block {
   }
 
   private _makePropsProxy(props: BlockProps) {
-    const self = this;
+    const self = JSON.parse(JSON.stringify(this));
 
     return new Proxy(props, {
       get(target, prop) {
