@@ -7,7 +7,7 @@ import ChatItem from "../chatItem/chatItem.ts";
 import { ChatItemProps } from "../chatItem/chatItem.ts";
 
 export default class ChatList extends Block {
-  constructor(props: { chatItems: ChatItemProps[] }) {
+  constructor(props?: ChatItemProps[]) {
     super("div", {
       ...props,
     });

@@ -83,11 +83,11 @@ export default class Messenger extends Block {
       },
     ];
 
-    const chatlist = new ChatList({});
+    const chatlist = new ChatList();
 
     this.registerChild("ChatList", chatlist);
 
-    const messageList = new MessageList({});
+    const messageList = new MessageList();
 
     this.registerChild("MessageList", messageList);
 
