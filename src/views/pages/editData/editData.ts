@@ -1,7 +1,7 @@
 import Block from "../../../core/Block";
 import editDataTemplate from "./editData.template";
 import Handlebars from "handlebars";
-import { validateAll } from "../../../utils/validation";
+import { validateAll } from "../../../services/validation";
 
 import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";

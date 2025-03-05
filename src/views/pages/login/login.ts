@@ -1,7 +1,7 @@
 import Block from "../../../core/Block";
 import loginPageTemplate from "./loginPage.template";
 import Handlebars from "handlebars";
-import { validateLogin } from "../../../utils/validation";
+import { validateLogin } from "../../../services/validation";
 
 import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";

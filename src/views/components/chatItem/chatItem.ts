@@ -2,6 +2,7 @@ import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import chatItemPartial from "./chatItem.partial.ts";
 
+
 export interface ChatItemProps {
   pfpUrl: string;
   chatName: string;

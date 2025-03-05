@@ -71,7 +71,7 @@ export default class Messenger extends Block {
         selector: "#send-message",
         event: "submit",
         handler: (e) => {
-          event?.preventDefault();
+          e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const message = formData.get("message");
           if (!message) {
@@ -83,8 +83,6 @@ export default class Messenger extends Block {
       },
     ];
 
-    // Тут будет приходить массив, надо будет по нему проходить и создавать на его основе компоненты, а в шаблоне перебирать через each, но в данном спринте эта логика не нужна
-
     const chatlist = new ChatList({});
 
     this.registerChild("ChatList", chatlist);
@@ -92,8 +90,6 @@ export default class Messenger extends Block {
     const messageList = new MessageList({});
 
     this.registerChild("MessageList", messageList);
-
-    // По клику на chat item должен уходить запрос на получение списка сообщений, и на основании этого будут отображаться сообщения. Можно это сделать как через прослушиватель событий, пока эту логику трогать не буду, написал ради примера и собственного понимания
 
     const chatTop = new ChatTop({
       name: "Onryo",

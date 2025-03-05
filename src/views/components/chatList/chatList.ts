@@ -4,9 +4,10 @@ import chatListPartial from "./chatList.partial.ts";
 
 import ChatItem from "../chatItem/chatItem.ts";
 
+import { ChatItemProps } from "../chatItem/chatItem.ts";
 
 export default class ChatList extends Block {
-  constructor(props) {
+  constructor(props: ChatItemProps[]) {
     super("div", {
       ...props,
     });
@@ -80,8 +81,6 @@ export default class ChatList extends Block {
     const contextEntries = Object.entries(context);
 
     const childrenList: string[] = [];
-
-    // Оно работает, но я абсолютно не понимаю как это типизировать
 
     contextEntries.forEach((child: [string, string | string[]]) => {
       console.log(child);

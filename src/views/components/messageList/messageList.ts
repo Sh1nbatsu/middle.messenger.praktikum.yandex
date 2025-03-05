@@ -4,8 +4,9 @@ import messageListPartial from "./messageList.partial.ts";
 
 import Message from "../message/message.ts";
 
+import { MessageProps } from "../message/message.ts";
 export default class MessageList extends Block {
-  constructor(props) {
+  constructor(props: MessageProps[]) {
     super("div", props);
   }
 
@@ -50,8 +51,6 @@ export default class MessageList extends Block {
 
     const childrenList: string[] = [];
 
-    // Оно работает, но я абсолютно не понимаю как это типизировать
-
     contextEntries.forEach((child: [string, string | string[]]) => {
       console.log(child);
 
@@ -62,7 +61,7 @@ export default class MessageList extends Block {
       }
     });
 
-    // Ненужная логика из за устаревшего подхода, я разберусь с ней потом, надеюсь.
+    // Ненужная логика из за устаревшего подхода, я разберусь с ней потом, надеюсь
 
     context.children = childrenList;
 
