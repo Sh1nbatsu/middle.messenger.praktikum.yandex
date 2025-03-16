@@ -128,7 +128,7 @@ export default class EditPassword extends Block {
     } as const);
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./mock_pfp1.jpg",
+      pfpUrl: "./../mock_pfp1.jpg",
       username: "John",
       events: [
         {

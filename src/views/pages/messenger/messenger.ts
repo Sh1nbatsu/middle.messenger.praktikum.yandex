@@ -5,6 +5,8 @@ import messengerPageTemplate from "./messengerPage.template";
 import { ChatTop } from "../../components/chatTop";
 import { ChatList } from "../../components/chatList";
 import { MessageList } from "../../components/messageList";
+import { getUserController } from "../../../domain/auth/controller";
+
 export default class Messenger extends Block {
   constructor(props = {}) {
     super("div", {
@@ -14,6 +16,8 @@ export default class Messenger extends Block {
 
   init() {
     super.init();
+
+    getUserController();
 
     this.props.events = [
       ...(this.props.events || []),

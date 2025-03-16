@@ -7,6 +7,7 @@ import { CustomEvent } from "../../../core/Block.ts";
 export interface MainButtonProps {
   buttonType: string;
   buttonText: string;
+  isLoading?: boolean;
   events?: CustomEvent[];
 }
 

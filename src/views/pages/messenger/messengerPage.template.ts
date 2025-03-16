@@ -2,7 +2,7 @@ export default `
     <div class="messenger__wrapper">
       <nav class="navigation__wrapper">
         <div class="profile-link">
-          <a href="/profile">Profile<img src="/arrow_gray.svg" alt="arrow"></a>
+          <a href="/settings">Profile<img src="/arrow_gray.svg" alt="arrow"></a>
         </div>
         <form class="search-bar" id="search-bar">
           <input type="text" placeholder="Search" name="chat_search">

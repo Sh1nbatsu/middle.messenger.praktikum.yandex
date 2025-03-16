@@ -4,12 +4,22 @@
 @import "login";
 @import "messenger";
 @import "profile";
+@import "modal";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Inter, sans-serif;
+}
+
+button:disabled,
+button[disabled] {
+  &:hover {
+    cursor: not-allowed;
+    background-color: gray;
+  }
+  background-color: gray;
 }
 
 .error__container {

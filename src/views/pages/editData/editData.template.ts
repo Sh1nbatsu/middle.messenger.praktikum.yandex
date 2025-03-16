@@ -1,8 +1,8 @@
 export default `
     <div class="profile__wrapper">
       <div class="left-block">
-        <a href="/im">
-            <img src="/arrow.svg" alt="back arrow">
+        <a href="/settings">
+            <img src="/arrow.svg" alt="back arrow" href="/settings">
         </a>
       </div>
       <form class="main__wrapper" id="edit-form">

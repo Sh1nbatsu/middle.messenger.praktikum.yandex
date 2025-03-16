@@ -5,8 +5,10 @@ import { validateLogin } from "../../../services/validation";
 
 import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";
+import { connect } from "../../../utils/connect";
+import { loginService } from "../../../domain/auth/controller";
 
-export default class Login extends Block {
+export class Login extends Block {
   constructor(props = {}) {
     super("div", {
       ...props,
@@ -23,16 +25,18 @@ export default class Login extends Block {
         event: "submit",
         handler: (e) => {
           e.preventDefault();
-          console.log("Form submitted");
           const inputs = this.element.querySelectorAll("input");
           if (!validateLogin(inputs[0].value) || !inputs[1].value) {
             alert("Invalid data");
             return;
+          } else {
+            const formData = new FormData(e.target as HTMLFormElement);
+            const data = {
+              login: formData.get("login") as string,
+              password: formData.get("password") as string,
+            };
+            loginService(data);
           }
-          const formData = new FormData(e.target as HTMLFormElement);
-          const login = formData.get("login");
-          const password = formData.get("password");
-          console.log("Login:", login, "Password:", password);
         },
       },
     ];
@@ -40,7 +44,8 @@ export default class Login extends Block {
     const mainButton = new MainButton({
       buttonType: "submit",
       buttonText: "Enter",
-    } as const);
+      isLoading: this.props.isLoading as boolean | undefined,
+    });
 
     const loginInput = new LoginInput({
       inputType: "text",
@@ -112,7 +117,7 @@ export default class Login extends Block {
           },
         },
       ],
-    } as const);
+    });
 
     this.registerChild("mainButton", mainButton);
     this.registerChild("loginInput", loginInput);
@@ -123,6 +128,17 @@ export default class Login extends Block {
     console.log("Login component mounted");
   }
 
+  componentDidUpdate(oldProps, newProps) {
+    console.log("componentDidUpdate", oldProps, newProps);
+    if (oldProps.isLoading !== newProps.isLoading) {
+      console.log("Updating MainButton with isLoading:", newProps.isLoading);
+      this._children.mainButton.setProps({
+        isLoading: newProps.isLoading,
+      });
+    }
+    return true;
+  }
+
   render(): string {
     const context: Record<string, string> = {};
 
@@ -131,6 +147,19 @@ export default class Login extends Block {
       context[name] = `<div data-component-id="${name}"></div>`;
     });
 
+    context.loginError = this.props.loginError as string;
+
+    console.log("context and props ! ", context, this.props.loginError);
+
     return Handlebars.compile(loginPageTemplate)(context);
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.isLoading,
+    loginError: state.loginError,
+  };
+};
+
+export default connect(mapStateToProps)(Login);

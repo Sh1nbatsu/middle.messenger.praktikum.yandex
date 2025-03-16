@@ -5,8 +5,10 @@ import { validateAll } from "../../../services/validation";
 
 import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";
+import { connect } from "../../../utils/connect";
+import { signUpSerivce } from "../../../domain/auth/controller";
 
-export default class SignUp extends Block {
+export class SignUp extends Block {
   constructor(props = {}) {
     super("div", {
       ...props,
@@ -55,13 +57,18 @@ export default class SignUp extends Block {
             }
           });
 
-          console.log(isValid);
-
           if (isValid) {
             const formData = new FormData(e.target as HTMLFormElement);
-            const login = formData.get("login");
-            const password = formData.get("password");
-            console.log("Login:", login, "Password:", password);
+            const data = {
+              first_name: formData.get("first_name") as string,
+              second_name: formData.get("second_name") as string,
+              login: formData.get("login") as string,
+              email: formData.get("email") as string,
+              password: formData.get("password") as string,
+              phone: formData.get("phone") as string,
+            };
+            console.log(JSON.stringify(data));
+            signUpSerivce(data);
           } else {
             console.log("Form is not valid");
           }
@@ -456,6 +463,17 @@ export default class SignUp extends Block {
     this.registerChild("confirmPasswordInput", confirmPasswordInput);
   }
 
+  componentDidUpdate(oldProps, newProps) {
+    console.log("componentDidUpdate", oldProps, newProps);
+    if (oldProps.isLoading !== newProps.isLoading) {
+      console.log("Updating MainButton with isLoading:", newProps.isLoading);
+      this._children.mainButton.setProps({
+        isLoading: newProps.isLoading,
+      });
+    }
+    return true;
+  }
+
   render(): string {
     const context: { [key: string]: string } = {};
 
@@ -467,3 +485,12 @@ export default class SignUp extends Block {
     return Handlebars.compile(signinPageTemplate)(context);
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.isLoading,
+    loginError: state.loginError,
+  };
+};
+
+export default connect(mapStateToProps)(SignUp);

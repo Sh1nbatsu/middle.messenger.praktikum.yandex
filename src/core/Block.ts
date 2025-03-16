@@ -98,7 +98,7 @@ export default class Block {
   }
 
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
-    return { oldProps, newProps };
+    return true
   }
 
   setProps = (nextProps: BlockProps) => {

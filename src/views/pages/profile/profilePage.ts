@@ -4,8 +4,11 @@ import Handlebars from "handlebars";
 
 import { UserData } from "../../components/userData";
 import { PfpBlock } from "../../components/pfpBlock";
+import { connect } from "../../../utils/connect";
+import { modalPfp } from "../../components/modalPfp";
+import { getUserController } from "../../../domain/auth/controller";
 
-export default class ProfilePage extends Block {
+export class ProfilePage extends Block {
   constructor(props = {}) {
     super("div", {
       ...props,
@@ -17,32 +20,32 @@ export default class ProfilePage extends Block {
 
     const userEmail = new UserData({
       desc: "Email",
-      data: "mymail@mail.com",
+      data: `${window.store.getState().user.email}`,
     });
 
     const userLogin = new UserData({
       desc: "Login",
-      data: "JohnDoey",
+      data: `${window.store.getState().user.login}`,
     });
 
     const userFirstName = new UserData({
       desc: "First Name",
-      data: "John",
+      data: `${window.store.getState().user.first_name}`,
     });
 
     const userSecondName = new UserData({
       desc: "Second Name",
-      data: "Doe",
+      data: `${window.store.getState().user.second_name}`,
     });
 
     const userDisplayName = new UserData({
       desc: "Name in chat",
-      data: "while(true}",
+      data: `${window.store.getState().user.display_name ?? "Not set"}`,
     });
 
     const userPhone = new UserData({
       desc: "Phone number",
-      data: "8-800-555-35-35",
+      data: `${window.store.getState().user.phone}`,
     });
 
     const pfpBlock = new PfpBlock({
@@ -59,6 +62,8 @@ export default class ProfilePage extends Block {
       ],
     });
 
+    const ModalPfp = new modalPfp({});
+
     this.registerChild("pfpBlock", pfpBlock);
     this.registerChild("userEmail", userEmail);
     this.registerChild("userLogin", userLogin);
@@ -66,6 +71,7 @@ export default class ProfilePage extends Block {
     this.registerChild("userSecondName", userSecondName);
     this.registerChild("userDisplayName", userDisplayName);
     this.registerChild("userPhone", userPhone);
+    this.registerChild("modalPfp", ModalPfp);
   }
 
   render(): string {
@@ -79,3 +85,11 @@ export default class ProfilePage extends Block {
     return Handlebars.compile(profilePageTemplate)(context);
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ProfilePage);
