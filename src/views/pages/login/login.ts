@@ -6,7 +6,7 @@ import { validateLogin } from "../../../services/validation";
 import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";
 import { connect } from "../../../utils/connect";
-import { loginService } from "../../../domain/auth/controller";
+import { loginService } from "../../../domain/auth/authController";
 
 export class Login extends Block {
   constructor(props = {}) {
@@ -17,6 +17,23 @@ export class Login extends Block {
 
   init() {
     super.init();
+
+    const handleError = (error) => {
+      const inputDiv = document
+        .querySelector("input[type='password']")
+        ?.closest("div") as HTMLInputElement;
+      const bottomText = inputDiv.querySelector(".bottom__text") as HTMLElement;
+      if (bottomText) {
+        bottomText.textContent = error;
+        bottomText.style.opacity = "1";
+        bottomText.style.transform = "translateY(0)";
+
+        setTimeout(() => {
+          bottomText.style.opacity = "0";
+          bottomText.style.transform = "translateY(-18px)";
+        }, 500);
+      }
+    };
 
     this.props.events = [
       ...(this.props.events || []),
@@ -137,6 +154,7 @@ export class Login extends Block {
       });
     }
     return true;
+    // Оно дожно работать без этого, но оно не работает. Пытался разобраться как исправить - ничего не вышло.
   }
 
   render(): string {
@@ -149,7 +167,7 @@ export class Login extends Block {
 
     context.loginError = this.props.loginError as string;
 
-    console.log("context and props ! ", context, this.props.loginError);
+    console.log("Context and props:", context, this.props.loginError);
 
     return Handlebars.compile(loginPageTemplate)(context);
   }

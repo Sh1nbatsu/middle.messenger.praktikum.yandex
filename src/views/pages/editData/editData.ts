@@ -6,10 +6,10 @@ import { validateAll } from "../../../services/validation";
 import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";
 import { PfpBlock } from "../../components/pfpBlock";
+import { connect } from "../../../utils/connect";
+import { updateData } from "../../../domain/profile/profileController";
 
-// Вынести смену аватарки в отдельный компонент
-
-export default class EditData extends Block {
+export class EditData extends Block {
   constructor(props = {}) {
     super("div", {
       ...props,
@@ -53,15 +53,18 @@ export default class EditData extends Block {
           const formData = new FormData(e.target as HTMLFormElement);
 
           if (isValid && !isEmpty) {
-            const formValues: Record<string, string> = {};
+            const data = {
+              email: formData.get("email") || "",
+              login: formData.get("login") || "",
+              first_name: formData.get("first_name") || "",
+              second_name: formData.get("second_name") || "",
+              display_name: formData.get("display_name") || "",
+              phone: formData.get("phone") || "",
+            };
 
-            formData.forEach((value, key) => {
-              if (value) {
-                formValues[key] = value as string;
-              }
-            });
+            console.log(data);
 
-            console.log(formValues);
+            updateData(data);
           } else if (isValid && isEmpty) {
             alert("Заполните хотя бы одно поле");
           }
@@ -75,6 +78,7 @@ export default class EditData extends Block {
       inputName: "email",
       errorMessage: "Invalid email",
       placeholder: "mymail@mail.com",
+      value: window.store.getState().user.email || "",
       events: [
         {
           selector: 'input[name="email"]',
@@ -113,6 +117,7 @@ export default class EditData extends Block {
       inputName: "login",
       errorMessage: "Invalid login",
       placeholder: "John Doe",
+      value: window.store.getState().user.login || "",
       events: [
         {
           selector: 'input[name="login"]',
@@ -151,6 +156,7 @@ export default class EditData extends Block {
       inputName: "first_name",
       errorMessage: "Invalid first name",
       placeholder: "John",
+      value: window.store.getState().user.first_name || "",
       events: [
         {
           selector: 'input[name="first_name"]',
@@ -189,6 +195,7 @@ export default class EditData extends Block {
       inputName: "second_name",
       errorMessage: "Invalid second name",
       placeholder: "Doe",
+      value: window.store.getState().user.second_name || "",
       events: [
         {
           selector: 'input[name="second_name"]',
@@ -229,6 +236,7 @@ export default class EditData extends Block {
       inputName: "display_name",
       errorMessage: "Invalid name",
       placeholder: "Will, i guess",
+      value: window.store.getState().user.display_name || "",
       events: [
         {
           selector: 'input[name="display_name"]',
@@ -269,6 +277,7 @@ export default class EditData extends Block {
       inputName: "phone",
       errorMessage: "Invalid phone number",
       placeholder: "8-800-555-35-35",
+      value: window.store.getState().user.phone || "",
       events: [
         {
           selector: 'input[name="phone"]',
@@ -309,7 +318,9 @@ export default class EditData extends Block {
     } as const);
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./../mock_pfp1.jpg",
+      pfpUrl: `https://ya-praktikum.tech/api/v2/resources${
+        window.store.getState().user.avatar
+      }`,
       username: "John",
       events: [
         {
@@ -343,3 +354,15 @@ export default class EditData extends Block {
     return Handlebars.compile(editDataTemplate)(context);
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditData);
+
+// Поведение инпутов можно поменять. Можно вынести логику в контроллер, и отсутствующие поля formdata заполнять через window.store, таким образом можно поменять одно поле, не заполняя остальные.
+// Можно вставить текущие значения в плейсхолдеры.
+// Пока оставлю так

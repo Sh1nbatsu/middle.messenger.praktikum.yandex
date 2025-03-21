@@ -15,13 +15,29 @@
 
 .profile-link {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 23px;
   padding: 0 10px;
 
   img {
     width: 10px;
+  }
+
+  #chat_create {
+    background-color: $shadow-color;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 150ms;
+
+    p {
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: color.adjust($shadow-color, $blackness: 10%);
+    }
   }
 
   a {
@@ -290,20 +306,114 @@
   border-bottom: 1px solid $secondary-color;
   padding-bottom: 10px;
 
-  div {
+  div:not(.chat-dropdown):not(.chat-dropdown div) {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
   }
 
-  div img:not(.options) {
+  div img:not(.options):not(.chat-dropdown img) {
     width: 34px;
     border-radius: 100%;
   }
 
+  // Этот код появился тут из за метода рендера компонентов, который подразумевает создание div обертки вокруг компонента, что не оптимально, но исправлять это сейчас будет слишком проблематично
+
   .options {
     cursor: pointer;
-    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 999px;
+    height: 24px;
+    padding: 0 10px;
+    position: relative;
+
+    &:hover {
+      background-color: $shadow-color;
+    }
+  }
+}
+
+.chat-dropdown {
+  position: absolute;
+  // display: none;
+  top: 5vh;
+  right: 1vw;
+  display: flex;
+  flex-direction: column;
+  background-color: #e4edfd;
+  width: 210px;
+  z-index: 1;
+  border-radius: 12px;
+  gap: 0.2rem;
+  visibility: hidden;
+
+  div {
+    display: flex;
+    padding: 6px;
+    border-radius: 12px;
+    height: 30px;
+    transition: 150ms;
+    cursor: pointer;
+    gap: 0.2rem;
+
+    &:hover {
+      background-color: #fbfbfb;
+    }
+
+    &:first-of-type img {
+      transform: rotate(45deg);
+    }
+  }
+
+  img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+#chat_create_popup {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    background-color: $shadow-color;
+    padding: 35px 25px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    input {
+      padding: 4px;
+      outline: none;
+      border: none;
+      font-size: 16px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      border: none;
+      background-color: $base-color;
+      padding: 4px;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: 150ms;
+
+      &:hover {
+        background-color: color.adjust($base-color, $blackness: 45%);
+      }
+    }
   }
 }

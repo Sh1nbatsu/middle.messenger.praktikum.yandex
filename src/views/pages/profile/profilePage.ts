@@ -5,13 +5,23 @@ import Handlebars from "handlebars";
 import { UserData } from "../../components/userData";
 import { PfpBlock } from "../../components/pfpBlock";
 import { connect } from "../../../utils/connect";
-import { modalPfp } from "../../components/modalPfp";
-import { getUserController } from "../../../domain/auth/controller";
-
+import { ModalPfp } from "../../components/modalPfp";
+import { logoutController } from "../../../domain/auth/authController";
+import { updatePfp } from "../../../domain/profile/profileController";
 export class ProfilePage extends Block {
   constructor(props = {}) {
     super("div", {
       ...props,
+      events: [
+        {
+          selector: ".logout",
+          event: "click",
+          handler: (e) => {
+            e.preventDefault();
+            logoutController();
+          },
+        },
+      ],
     });
   }
 
@@ -49,20 +59,75 @@ export class ProfilePage extends Block {
     });
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./mock_pfp1.jpg",
+      pfpUrl: `https://ya-praktikum.tech/api/v2/resources${
+        window.store.getState().user.avatar
+      }`,
       username: "John",
       events: [
         {
           selector: "p",
           event: "click",
           handler: (e) => {
-            console.log(e);
+            const modalContainer = document.querySelector(
+              ".pfpmodal-wrapper"
+            ) as HTMLDivElement;
+            if (modalContainer) {
+              modalContainer.style.opacity = "1";
+              modalContainer.style.visibility = "visible";
+            }
           },
         },
       ],
     });
 
-    const ModalPfp = new modalPfp({});
+    const modalPfp = new ModalPfp({
+      isLoading: this.props.isLoading,
+      events: [
+        {
+          selector: ".pfpmodal-wrapper",
+          event: "click",
+          handler: (e) => {
+            const eventTarget = e.target as HTMLElement;
+            console.log("here");
+            if (eventTarget && eventTarget.className == "pfpmodal-wrapper") {
+              const modalContainer = document.querySelector(
+                ".pfpmodal-wrapper"
+              ) as HTMLDivElement;
+              modalContainer.style.opacity = "0";
+              modalContainer.style.visibility = "hidden";
+            }
+          },
+        },
+        {
+          selector: "form",
+          event: "submit",
+          handler: (e, componentElement) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileInput = componentElement.querySelector(
+              "input[type=file]"
+            ) as HTMLInputElement;
+            if (fileInput) {
+              const files = fileInput.files as FileList;
+              console.log(formData, files);
+              if (files?.length > 1) {
+                alert("More than one image loaded, abort");
+                return;
+              } else if (files?.length === 1) {
+                updatePfp({ avatar: files[0] });
+                // const modalContainer = document.querySelector(
+                //   ".pfpmodal-wrapper"
+                // ) as HTMLDivElement;
+                // setTimeout(() => {
+                //   modalContainer.style.opacity = "0";
+                //   modalContainer.style.visibility = "hidden";
+                // }, 1500);
+              }
+            }
+          },
+        },
+      ],
+    });
 
     this.registerChild("pfpBlock", pfpBlock);
     this.registerChild("userEmail", userEmail);
@@ -71,7 +136,11 @@ export class ProfilePage extends Block {
     this.registerChild("userSecondName", userSecondName);
     this.registerChild("userDisplayName", userDisplayName);
     this.registerChild("userPhone", userPhone);
-    this.registerChild("modalPfp", ModalPfp);
+    this.registerChild("modalPfp", modalPfp);
+  }
+
+  componentDidUpdate(oldProps, newProps) {
+    return true;
   }
 
   render(): string {
@@ -89,6 +158,7 @@ export class ProfilePage extends Block {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    isLoading: state.isLoading,
   };
 };
 

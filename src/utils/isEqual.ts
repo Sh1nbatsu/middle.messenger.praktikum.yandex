@@ -19,26 +19,53 @@ function isArrayOrObject(value: unknown): value is [] | PlainObject {
   return isPlainObject(value) || isArray(value);
 }
 
-function isEqual(lhs: PlainObject, rhs: PlainObject) {
-  if (Object.keys(lhs).length !== Object.keys(rhs).length) {
-    return false;
+function isEqual(lhs: any, rhs: any): boolean {
+  // Проверка на примитивы
+  if (typeof lhs !== 'object' || lhs === null || typeof rhs !== 'object' || rhs === null) {
+    return lhs === rhs;
   }
-
-  for (const [key, value] of Object.entries(lhs)) {
-    const rightValue = rhs[key];
-    if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-      if (isEqual(value, rightValue)) {
-        continue;
+  
+  // Проверка на массивы
+  if (Array.isArray(lhs) && Array.isArray(rhs)) {
+    if (lhs.length !== rhs.length) {
+      return false;
+    }
+    
+    for (let i = 0; i < lhs.length; i++) {
+      if (!isEqual(lhs[i], rhs[i])) {
+        return false;
       }
-      return false;
     }
-
-    if (value !== rightValue) {
-      return false;
-    }
+    
+    return true;
   }
-
-  return true;
+  
+  // Объекты проверяем только если оба значения - объекты
+  if (isPlainObject(lhs) && isPlainObject(rhs)) {
+    const lhsKeys = Object.keys(lhs);
+    const rhsKeys = Object.keys(rhs);
+    
+    if (lhsKeys.length !== rhsKeys.length) {
+      return false;
+    }
+    
+    // Проверяем, что все ключи из lhs существуют в rhs
+    if (!lhsKeys.every(key => key in rhs)) {
+      return false;
+    }
+    
+    // Проверяем значения для каждого ключа
+    for (const key of lhsKeys) {
+      if (!isEqual(lhs[key], rhs[key])) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
+  
+  // Если один объект, а другой массив - они не равны
+  return false;
 }
 
 export default isEqual;

@@ -10,76 +10,40 @@ import { Messenger } from "./views/pages/messenger";
 
 import Router from "./core/Router";
 import Store, { StoreEvents } from "./core/Store";
-import HTTPTransport from "./core/httpTransport";
-
-const http = new HTTPTransport();
-
-http
-  .get("https://jsonplaceholder.typicode.com/posts/1")
-  .then((xhr: XMLHttpRequest) => {
-    console.log(xhr.responseText);
-  });
+import { getUserController } from "./domain/auth/authController";
+import { GetChats } from "./domain/chats/chatsController";
 
 window.router = new Router();
-
 window.store = new Store({
   isLoading: false,
-  user: null,
+  user: await null,
   loginError: null,
+  chats: null,
+  currentChat: null,
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   window.store.on(StoreEvents.Updated, (prevState, nextState) => {
     console.log("prevState", prevState);
     console.log("nextState", nextState);
   });
 
-  async function begin() {
-    try {
-      const response = await http.get(
-        "https://ya-praktikum.tech/api/v2/auth/user"
-      );
+  await getUserController();
 
-      let user = null;
+  await GetChats();
 
-      switch (response.status) {
-        case 401:
-          window.router.go("/login");
-          break;
-
-        case 200:
-          user = JSON.parse(response.response);
-          window.store.setState({ user });
-          break;
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      window.router
-        .use("/", Login)
-        .use("/sign-up", SignUp)
-        .use("/settings", ProfilePage)
-        .use("/settings/edit-data", EditData)
-        .use("/settings/edit-password", EditPassword)
-        .use("/messenger", Messenger)
-        .use("/404", Error, {
-          errorType: 404,
-          errorDesc: "How did you get here?",
-        })
-        .start();
-
-      if (window.location.pathname === "/" && window.store.getState().user) {
-        window.router.go("/messenger");
-      }
-
-      // Костыльная логика связанная с работой роутера(при вводе в адресной строке страницы логина или любой другой страницы браузер вызывает перезапуск страницы), но это не является критичным
-      // Кажется
-      // Так что пока я это оставлю
-      // По грамотному надо вообще добавить так же работу с hashchange в роутере, тогда надо будет думать как делать проверки и редирект в случае если пользователь авторизован
-      // А асинхронщина в начале нужна для того, что бы при рендере страниц приложение не падало ввиду того, что компоненты не могут получить данные из store(например о пользователе), которых еще нет
-      // Однажды мне предстоит ответить за свои грехи
-    }
-  }
-
-  begin();
+  window.router
+    .use("/", Login)
+    .use("/sign-up", SignUp)
+    .use("/settings", ProfilePage)
+    .use("/settings/edit-data", EditData)
+    .use("/settings/edit-password", EditPassword)
+    .use("/messenger", Messenger)
+    .use("/404", Error, {
+      errorType: 404,
+      errorDesc: "How did you get here?",
+    })
+    .start();
 });
+
+// Has my judgement come so soon?

@@ -6,7 +6,7 @@ import { validateAll } from "../../../services/validation";
 import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";
 import { connect } from "../../../utils/connect";
-import { signUpSerivce } from "../../../domain/auth/controller";
+import { signUpSerivce } from "../../../domain/auth/authController";
 
 export class SignUp extends Block {
   constructor(props = {}) {

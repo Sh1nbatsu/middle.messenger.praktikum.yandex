@@ -5,8 +5,9 @@ import chatListPartial from "./chatList.partial.ts";
 import ChatItem from "../chatItem/chatItem.ts";
 
 import { ChatItemProps } from "../chatItem/chatItem.ts";
+import { connect } from "../../../utils/connect.ts";
 
-export default class ChatList extends Block {
+export class ChatList extends Block {
   constructor(props?: ChatItemProps[]) {
     super("div", {
       ...props,
@@ -16,55 +17,29 @@ export default class ChatList extends Block {
   init() {
     super.init();
 
-    const chatItems = [
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-        youSend: true,
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-        unreadAmount: 12,
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-      {
-        pfpUrl: "/mock_pfp2.jpg",
-        chatName: "Andrew",
-        lastData: "image",
-        lastTime: "13:37",
-      },
-    ];
+    const chatItems = window.store.getState().chats;
 
     chatItems.forEach((item, index) => {
       const chatItem = new ChatItem({
-        pfpUrl: item.pfpUrl,
-        chatName: item.chatName,
-        lastData: item.lastData,
-        lastTime: item.lastTime,
-        youSend: item.youSend,
-        unreadAmount: item.unreadAmount,
+        pfpUrl: item.avatar || "./mock_avatar.png",
+        chatName: item.title || null,
+        lastData: item.last_message || null,
+        lastTime: item.lastTime || null,
+        youSend: item.youSend || null,
+        unreadAmount: item.unread_count || null,
+        id: item.id || null,
+        events: [
+          {
+            selector: "li",
+            event: "click",
+            handler: (e) => {
+              const target = e.target as HTMLElement;
+              const li = target.closest(".chat-select__item") as HTMLElement;
+              const id = li.dataset.id;
+              console.log(id);
+            },
+          },
+        ],
       });
 
       this.registerChild(`ChatItem${index}`, chatItem);
@@ -96,6 +71,16 @@ export default class ChatList extends Block {
 
     console.log(context);
 
+    console.log(this._children);
+
     return Handlebars.compile(chatListPartial)(context);
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    chats: state.chats,
+  };
+};
+
+export default connect(mapStateToProps)(ChatList);

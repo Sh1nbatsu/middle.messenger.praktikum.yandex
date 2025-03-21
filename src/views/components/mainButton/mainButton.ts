@@ -17,7 +17,7 @@ export default class MainButton extends Block {
   }
 
   render(): string {
-    const compiledTemplate = Handlebars.compile(mainButtonPartial);
-    return compiledTemplate(this.props);
+    const compiledTemplate = Handlebars.compile(mainButtonPartial)(this.props);
+    return compiledTemplate;
   }
 }

@@ -4,7 +4,7 @@ class Router {
   private static __instance: Router;
   private routes: Route[] = [];
   private history = window.history;
-  // private _currentRoute: Route | null = null;
+  private _currentRoute: Route | null = null;
 
   constructor() {
     if (Router.__instance) {
@@ -46,7 +46,7 @@ class Router {
 
       if (link && link.getAttribute("href")) {
         event.preventDefault();
-        const path = target.getAttribute("href");
+        const path = link.getAttribute("href");
         if (path) {
           this.go(path);
         }
@@ -63,7 +63,9 @@ class Router {
    *  - вызываем _onRoute для нового pathname
    */
   public go(pathname: string): void {
-    this.history.pushState({}, "", pathname);
+    if (window.location.pathname !== pathname) {
+      this.history.pushState({}, "", pathname);
+    }
     this._onRoute(pathname);
   }
 
@@ -93,15 +95,23 @@ class Router {
    */
   private _onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
-    if (!route) {
-      if (pathname !== "/404") {
-        this.go("/404");
-        return;
-      }
+    const user = window.store?.getState()?.user;
+
+    if ((pathname === "/" || pathname === "/sign-up") && user) {
+      this.go("/messenger");
       return;
     }
 
-    this._currentRoute = route;
+    if (!(pathname == "/" || pathname == "/sign-up") && !user) {
+      this.go("/");
+      return;
+    }
+
+    if (!route) {
+      this.go("/404");
+      return;
+    }
+
     route.render();
   }
 }

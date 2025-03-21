@@ -55,9 +55,7 @@ export default class HTTPTransport {
     timeout = 5000
   ): Promise<XMLHttpRequest> => {
     const {
-      headers = {
-        "Content-Type": "application/json",
-      },
+      headers = {},
       method,
       data,
       credentials = "include",
@@ -93,14 +91,20 @@ export default class HTTPTransport {
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
 
+      console.log(data);
+      console.log(data instanceof FormData);
+
       if (isGet || !data) {
         xhr.send();
       } else {
-        // Если заголовок Content-Type — application/json, преобразуем данные в JSON
-        if (headers["Content-Type"] === "application/json") {
-          xhr.send(JSON.stringify(data)); // Преобразуем объект в строку JSON
+        // Проверяем, является ли data объектом FormData
+        if (data instanceof FormData) {
+          console.log("formData");
+          xhr.send(data); // Отправляем FormData напрямую, Content-Type установится автоматически
         } else {
-          xhr.send(data); // Для других форматов (например, FormData)
+          // Для остальных данных (например, JSON) устанавливаем Content-Type и преобразуем в JSON
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.send(JSON.stringify(data));
         }
       }
     });

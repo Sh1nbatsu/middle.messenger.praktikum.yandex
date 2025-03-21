@@ -2,6 +2,9 @@ export default `
     <div class="messenger__wrapper">
       <nav class="navigation__wrapper">
         <div class="profile-link">
+          <div id="chat_create">
+            <p>Create chat</p>
+          </div>
           <a href="/settings">Profile<img src="/arrow_gray.svg" alt="arrow"></a>
         </div>
         <form class="search-bar" id="search-bar">
@@ -30,5 +33,11 @@ export default `
               </button>
             </form>
           </div>
+        </div>
+        <div id="chat_create_popup">
+          <form action="" id="chat_create_form">
+            <input type="text" placeholder="Enter chat name" name="title">
+            <button>Create chat</button>
+          </form>
         </div>
     </div>`;

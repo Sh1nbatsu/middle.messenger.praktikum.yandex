@@ -1,4 +1,4 @@
-import Auth from "./model";
+import Auth from "./authModel";
 
 const authApi = new Auth();
 
@@ -8,15 +8,18 @@ export const loginService = async (data) => {
   console.log(data);
 
   try {
-    window.store.setState({ isLoading: true });
-
     const response = await authApi.login(data);
 
+    if (response.status == 401) {
+      console.log(JSON.parse(response.responseText));
+      // errorHandler(response.responseText);
+    }
     if (response.status >= 400) {
       const errorData = JSON.parse(response.responseText);
       console.log(errorData);
     } else if (response.status === 200) {
-      window.router.go("messenger");
+      await getUserController();
+      window.router.go("/messenger");
     }
   } catch (error) {
     console.log(error);
@@ -55,17 +58,28 @@ export const getUserController = async () => {
     return;
   }
 
-  window.store.setState({ isLoading: true });
-
   try {
     const response = await authApi.profile();
-    const user = JSON.parse(response.responseText);
-    console.log(user);
-    // window.router.go("messenger");
-    window.store.setState({ user });
+    if (response.status === 200) {
+      const user = JSON.parse(response.responseText);
+      console.log(user);
+      window.store.setState({ user });
+    }
   } catch (error) {
     console.error(error);
-  } finally {
-    window.store.setState({ isLoading: false });
   }
 };
+
+export const logoutController = async () => {
+  window.store.setState({ user: null });
+
+  try {
+    authApi.logout();
+  } catch (error) {
+    console.log(error);
+  } finally {
+    window.router.go("/");
+  }
+};
+
+// Я запутался в моменте с неймингом

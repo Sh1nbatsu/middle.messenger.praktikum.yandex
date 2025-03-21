@@ -6,9 +6,7 @@ export default `
         </a>
       </div>
       <form class="main__wrapper" id="password-form">
-        <div class="pfp__wrapper">
           {{{ pfpBlock }}}
-        </div>
         <div class="data__wrapper">
           {{{ oldPasswordInput }}}
           {{{ newPasswordInput }}}

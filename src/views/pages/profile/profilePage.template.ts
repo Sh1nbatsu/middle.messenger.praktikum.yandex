@@ -26,7 +26,7 @@ export default `
             <span></span>
           </div>
           <div class="data-item">
-            <a href="">Exit account</a>
+            <a class="logout" href="">Exit account</a>
           </div>
         </div>
       </div>

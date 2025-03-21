@@ -52,6 +52,8 @@
   div {
     position: relative;
     cursor: pointer;
+    border-radius: 999px;
+    height: 200px;
 
     img {
       width: 200px;
@@ -158,12 +160,11 @@
   }
 }
 
-
 .data__wrapper div:last-child:not(.data-item) {
   // ...
   span {
-      display: none;
-    }
+    display: none;
+  }
 }
 
 .edit__input-div {
@@ -207,5 +208,22 @@
     z-index: -1;
     transition: 150ms;
     width: 310px;
+  }
+}
+
+form .pfp__wrapper {
+  div {
+    cursor: default;
+  }
+
+  p {
+    display: none;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  img {
+    pointer-events: none;
+    cursor: default;
   }
 }

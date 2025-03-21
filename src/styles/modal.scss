@@ -1,0 +1,45 @@
+.pfpmodal-wrapper {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+
+.pfpmodal-container {
+  background-color: white;
+  display: flex;
+  padding: 40px 30px;
+  border-radius: 20px;
+
+  p {
+    font-size: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 43px;
+    width: 280px;
+    align-items: center;
+
+    label {
+      text-decoration: underline;
+      color: $base-color
+    }
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .custom-file-upload {
+    cursor: pointer;
+  }
+}

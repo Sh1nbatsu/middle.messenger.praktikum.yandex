@@ -2,6 +2,7 @@ import Block from "../../../core/Block";
 import editPasswordTemplate from "./editPassword.template";
 import Handlebars from "handlebars";
 import { validateAll } from "../../../services/validation";
+import { updatePassword } from "../../../domain/profile/profileController";
 
 import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";
@@ -32,8 +33,6 @@ export default class EditPassword extends Block {
             this._children.confirmPasswordInput.element,
           ];
 
-          // Тут должна быть логика по проверке соответствия oldPassword с актуальным паролем, сохраненным на сервере
-
           Components.forEach((component) => {
             const input = component.querySelector("input") as HTMLInputElement;
 
@@ -51,7 +50,9 @@ export default class EditPassword extends Block {
           } else {
             const formData = new FormData(e.target as HTMLFormElement);
 
-            console.log(formData);
+            formData.delete("password");
+
+            updatePassword(formData)
           }
         },
       } as const,
@@ -128,7 +129,9 @@ export default class EditPassword extends Block {
     } as const);
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./../mock_pfp1.jpg",
+      pfpUrl: `https://ya-praktikum.tech/api/v2/resources${
+        window.store.getState().user.avatar
+      }`,
       username: "John",
       events: [
         {

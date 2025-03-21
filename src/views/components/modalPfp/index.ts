@@ -1,1 +1,1 @@
-export {default as modalPfp} from "./modalPfp";
+export {default as ModalPfp} from "./modalPfp";

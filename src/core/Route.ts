@@ -7,7 +7,7 @@ function isEqual(lhs: unknown, rhs: unknown) {
 export default class Route {
   private _pathname: string;
   private _blockClass: any;
-  private _block: any;
+  public _block: any;
   private _props: any;
 
   constructor(pathname: string, PageClass: any, props?: Record<string, any>) {

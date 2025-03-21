@@ -1,7 +1,7 @@
 import Block from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import chatItemPartial from "./chatItem.partial.ts";
-
+import { CustomEvent } from "../../../core/Block.ts";
 
 export interface ChatItemProps {
   pfpUrl: string;
@@ -10,6 +10,8 @@ export interface ChatItemProps {
   lastData: string;
   unreadAmount?: number;
   lastTime: string;
+  id: number;
+  events?: CustomEvent[];
 }
 
 export default class ChatItem extends Block {
