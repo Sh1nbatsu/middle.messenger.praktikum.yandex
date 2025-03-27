@@ -131,9 +131,9 @@ export class ChatList extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    chats: state.chats,
+    chats:  (state as StoreTypes).chats,
   };
 };
 

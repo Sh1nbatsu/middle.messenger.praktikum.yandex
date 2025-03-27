@@ -355,9 +355,9 @@ export class EditData extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    user: state .user,
+    user: (state as StoreTypes).user,
   };
 };
 

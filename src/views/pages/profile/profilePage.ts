@@ -155,10 +155,10 @@ export class ProfilePage extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    user: state.user,
-    isLoading: state.isLoading,
+    user: (state as StoreTypes).user,
+    isLoading: (state as StoreTypes).isLoading,
   };
 };
 

@@ -486,10 +486,10 @@ export class SignUp extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    isLoading: state.isLoading,
-    loginError: state.loginError,
+    isLoading: (state as StoreTypes).isLoading,
+    loginError: (state as StoreTypes).loginError,
   };
 };
 

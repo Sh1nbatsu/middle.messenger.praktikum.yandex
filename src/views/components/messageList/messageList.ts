@@ -192,9 +192,9 @@ export class MessageList extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    currentChat: state.currentChat,
+    currentChat: (state as StoreTypes).currentChat,
   };
 };
 

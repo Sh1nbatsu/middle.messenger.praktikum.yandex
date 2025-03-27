@@ -11,7 +11,6 @@ export interface ChatTopProps extends BlockProps {
   events?: CustomEvent[];
 }
 
-
 export class ChatTop extends Block {
   constructor(props: ChatTopProps) {
     super("div", {
@@ -96,9 +95,9 @@ export class ChatTop extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    currentChat: state.currentChat,
+    currentChat: (state as StoreTypes).currentChat,
   };
 };
 

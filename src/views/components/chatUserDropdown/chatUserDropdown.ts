@@ -45,7 +45,7 @@ export class ChatUserDropdown extends Block {
     if (users) {
       users.forEach((item: StoreTypes["user"] | null, index: number) => {
         if (!item) return;
-        
+
         let avatar: string;
 
         if (item.avatar) {
@@ -111,9 +111,9 @@ export class ChatUserDropdown extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    currentChat: state.currentChat,
+    currentChat: (state as StoreTypes).currentChat,
   };
 };
 

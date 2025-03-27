@@ -23,9 +23,9 @@ export class MainButton extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    isLoading: state.isLoading,
+    isLoading: (state as StoreTypes).isLoading,
   };
 };
 
