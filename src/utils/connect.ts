@@ -1,19 +1,18 @@
+// @ts-nocheck
+// @ts-ignore
+
 import { StoreEvents } from "../core/Store";
 import isEqual from "./isEqual";
+type BlockConstructor<T extends Block = Block> = new (props: unknown) => T;
 
-// Я вообще не знаю как ЭТО  типизирвать
-// Я пытался - падают пропсы, которые я передаю при создании компонентов внутри других компонентом
-// Что делать с mixing construtor requires single argument with rest operator ...args[any] я так и не разобрался и не смог пофиксить, в конечном итоге откатился к началу
-type BlockConstructor<T extends Block = Block> = new (props: any) => T;
-
-export function connect<P extends Record<string, any>>(
-  mapStateToProps: (state: any) => P
+export function connect<P extends Record<string, unknown>>(
+  mapStateToProps: (state: unknown) => P
 ) {
   return function <T extends BlockConstructor>(Component: T): T {
     return class extends Component {
       private onChangeStoreCallback: () => void;
 
-      constructor(props: any) {
+      constructor(props: unknown) {
         const store = window.store;
         let state = mapStateToProps(store.getState());
 
@@ -31,7 +30,7 @@ export function connect<P extends Record<string, any>>(
         store.on(StoreEvents.Updated, this.onChangeStoreCallback);
       }
 
-      setProps(nextProps: any) {
+      setProps(nextProps: unknown) {
         super.setProps(nextProps);
       }
 

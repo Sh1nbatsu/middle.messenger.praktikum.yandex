@@ -287,11 +287,11 @@ export class Messenger extends Block {
 
     this.registerChild("MessageList", messageList);
 
-    const userDropdown = new UserDropdown({});
+    const userDropdown = new UserDropdown();
 
     this.registerChild("UserDropdown", userDropdown);
 
-    const chatUserDropdown = new ChatUserDropdown({});
+    const chatUserDropdown = new ChatUserDropdown();
 
     this.registerChild("ChatUserDropdown", chatUserDropdown);
 

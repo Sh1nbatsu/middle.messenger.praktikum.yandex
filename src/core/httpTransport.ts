@@ -14,8 +14,7 @@ interface Options {
   timeout?: number;
 }
 
-// Не знаю как типизировать data что бы избежать ошибок
-function queryStringify(data) {
+function queryStringify(data: Record<string, unknown>) {
   if (typeof data !== "object") {
     throw new Error("Data must be object");
   }
@@ -79,12 +78,17 @@ export default class HTTPTransport {
         xhr.withCredentials = true;
       }
 
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
+      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data as Record<string, unknown>)}` : url);
 
-      Object.keys(headers).forEach((key) => {
-        xhr.setRequestHeader(key, headers[key]);
-      });
-      // Не знаю как типизировать это
+      if (headers instanceof Headers) {
+        headers.forEach((value, key) => {
+          xhr.setRequestHeader(key, value);
+        });
+      } else {
+        Object.keys(headers).forEach((key) => {
+          xhr.setRequestHeader(key, headers[key]);
+        });
+      }
 
       xhr.onload = function () {
         resolve(xhr);

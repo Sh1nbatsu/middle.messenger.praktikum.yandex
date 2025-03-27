@@ -32,7 +32,7 @@ export default class Chats {
     });
   }
 
-  async deleteChat(data: Record<string, string>): Promise<XMLHttpRequest> {
+  async deleteChat(data: number): Promise<XMLHttpRequest> {
     return profileApi.delete("https://ya-praktikum.tech/api/v2/chats", {
       data: { chatId: data },
     });
@@ -78,7 +78,7 @@ export default class Chats {
     });
   }
 
-  async getChatToken(data: Record<string, string>): Promise<XMLHttpRequest> {
+  async getChatToken(data: Record<string, number>): Promise<XMLHttpRequest> {
     return profileApi.post(
       `https://ya-praktikum.tech/api/v2/chats/token/${data.chatId}`
     );

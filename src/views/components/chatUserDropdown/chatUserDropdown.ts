@@ -8,7 +8,7 @@ import { connect } from "../../../utils/connect.ts";
 import { StoreTypes } from "../../../core/Store.ts";
 
 export class ChatUserDropdown extends Block {
-  constructor(props: BlockProps) {
+  constructor(props?: BlockProps) {
     super("div", {
       ...props,
     });
@@ -33,7 +33,7 @@ export class ChatUserDropdown extends Block {
     Object.values(this._children).forEach((child) => child.destroy());
     this._children = {};
 
-    if (!currentChat.id) {
+    if (!currentChat || !currentChat.id) {
       return;
     }
 
@@ -43,7 +43,9 @@ export class ChatUserDropdown extends Block {
     console.log(users);
 
     if (users) {
-      users.forEach((item: StoreTypes["user"], index: number) => {
+      users.forEach((item: StoreTypes["user"] | null, index: number) => {
+        if (!item) return;
+        
         let avatar: string;
 
         if (item.avatar) {

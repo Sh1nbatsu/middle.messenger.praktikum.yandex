@@ -5,7 +5,7 @@ import { CustomEvent } from "../../../core/Block.ts";
 import { connect } from "../../../utils/connect.ts";
 import { StoreTypes } from "../../../core/Store.ts";
 
-export interface ChatTopProps {
+export interface ChatTopProps extends BlockProps {
   name: string;
   pfpUrl: string;
   events?: CustomEvent[];
@@ -13,7 +13,7 @@ export interface ChatTopProps {
 
 
 export class ChatTop extends Block {
-  constructor(props: BlockProps = {}) {
+  constructor(props: ChatTopProps) {
     super("div", {
       ...props,
       events: [

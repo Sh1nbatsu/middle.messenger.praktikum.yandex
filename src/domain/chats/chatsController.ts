@@ -36,7 +36,14 @@ export const GetChats = async (data?: Record<string, string>) => {
 };
 
 export const DeleteChat = async () => {
-  const chatId = window.store.getState().currentChat.id;
+  const currentChat = window.store.getState().currentChat;
+  if (!currentChat) {
+    throw new Error("Current chat is not set.");
+  }
+  const chatId = currentChat.id;
+  if (chatId === null) {
+    throw new Error("Chat id is null.");
+  }
 
   console.log(chatId);
 
@@ -57,7 +64,14 @@ export const DeleteChat = async () => {
 export const AddUser = async (data: Record<string, number>) => {
   const userId = data.user;
 
-  const chatId = window.store.getState().currentChat.id;
+  const currentChat = window.store.getState().currentChat;
+  if (!currentChat) {
+    throw new Error("Current chat is not set.");
+  }
+  const chatId = currentChat.id;
+  if (chatId === null) {
+    throw new Error("Chat id is null.");
+  }
 
   try {
     console.log({ users: [userId], chatId: chatId });
@@ -80,7 +94,14 @@ export const AddUser = async (data: Record<string, number>) => {
 export const RemoveUser = async (data: Record<string, number>) => {
   const userId = data.user;
 
-  const chatId = window.store.getState().currentChat.id;
+  const currentChat = window.store.getState().currentChat;
+  if (!currentChat) {
+    throw new Error("Current chat is not set.");
+  }
+  const chatId = currentChat.id;
+  if (chatId === null) {
+    throw new Error("Chat id is null.");
+  }
 
   try {
     console.log({ users: [userId], chatId: chatId });
@@ -102,6 +123,15 @@ export const RemoveUser = async (data: Record<string, number>) => {
 
 export const SearchUser = async (data: { login: FormDataEntryValue }) => {
   const login = data.login;
+
+  const currentChat = window.store.getState().currentChat;
+  if (!currentChat) {
+    throw new Error("Current chat is not set.");
+  }
+  const chatId = currentChat.id;
+  if (chatId === null) {
+    throw new Error("Chat id is null.");
+  }
 
   try {
     console.log(login);
@@ -150,11 +180,18 @@ export const SearchChatUsers = async (data: Record<string, number>) => {
 export const UpdateChatAvatar = async (data: Record<string, Blob>) => {
   console.log(data);
 
-  const chatId = window.store.getState().currentChat.id;
+  const currentChat = window.store.getState().currentChat;
+  if (!currentChat) {
+    throw new Error("Current chat is not set.");
+  }
+  const chatId = currentChat.id;
+  if (chatId === null) {
+    throw new Error("Chat id is null.");
+  }
 
   const formData = new FormData();
   formData.append("avatar", data.avatar);
-  formData.append("chatId", chatId);
+  formData.append("chatId", String(chatId));
 
   try {
     const response = await ChatsApi.updateChatAvatar(formData);
@@ -166,7 +203,14 @@ export const UpdateChatAvatar = async (data: Record<string, Blob>) => {
 };
 
 export const GetChatToken = async () => {
-  const chatId = window.store.getState().currentChat.id;
+  const currentChat = window.store.getState().currentChat;
+  if (!currentChat) {
+    throw new Error("Current chat is not set.");
+  }
+  const chatId = currentChat.id;
+  if (chatId === null) {
+    throw new Error("Chat id is null.");
+  }
 
   try {
     const response = await ChatsApi.getChatToken({ chatId: chatId });

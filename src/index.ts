@@ -59,5 +59,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
     .start();
 
-  // Оно работает, но как фиксить ошибки типов я не знаю
 });

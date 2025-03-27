@@ -11,7 +11,7 @@ export interface ChatItemProps {
   unreadAmount?: number| null;
   lastTime: string| null;
   id: number| null;
-  events?: CustomEvent[]| null;
+  events?: CustomEvent[];
 }
 
 export default class ChatItem extends Block {
