@@ -8,6 +8,7 @@ import { connect } from "../../../utils/connect";
 import { ModalPfp } from "../../components/modalPfp";
 import { logoutController } from "../../../domain/auth/authController";
 import { updatePfp } from "../../../domain/profile/profileController";
+import { StoreTypes } from "../../../core/Store";
 export class ProfilePage extends Block {
   constructor(props = {}) {
     super("div", {
@@ -16,7 +17,7 @@ export class ProfilePage extends Block {
         {
           selector: ".logout",
           event: "click",
-          handler: (e) => {
+          handler: (e: Event) => {
             e.preventDefault();
             logoutController();
           },
@@ -67,7 +68,7 @@ export class ProfilePage extends Block {
         {
           selector: "p",
           event: "click",
-          handler: (e) => {
+          handler: () => {
             const modalContainer = document.querySelector(
               ".pfpmodal-wrapper"
             ) as HTMLDivElement;
@@ -81,7 +82,7 @@ export class ProfilePage extends Block {
     });
 
     const modalPfp = new ModalPfp({
-      isLoading: this.props.isLoading,
+      isLoading: this.props.isLoading as boolean,
       events: [
         {
           selector: ".pfpmodal-wrapper",
@@ -115,13 +116,6 @@ export class ProfilePage extends Block {
                 return;
               } else if (files?.length === 1) {
                 updatePfp({ avatar: files[0] });
-                // const modalContainer = document.querySelector(
-                //   ".pfpmodal-wrapper"
-                // ) as HTMLDivElement;
-                // setTimeout(() => {
-                //   modalContainer.style.opacity = "0";
-                //   modalContainer.style.visibility = "hidden";
-                // }, 1500);
               }
             }
           },
@@ -139,8 +133,14 @@ export class ProfilePage extends Block {
     this.registerChild("modalPfp", modalPfp);
   }
 
-  componentDidUpdate(oldProps, newProps) {
-    return true;
+  componentDidUpdate(oldProps: StoreTypes, newProps: StoreTypes) {
+    if (oldProps.user !== newProps.user && newProps.user) {
+      this._children.pfpBlock.props.pfpUrl = `https://ya-praktikum.tech/api/v2/resources${
+        window.store.getState().user.avatar
+      }`;
+      return true;
+    }
+    return false;
   }
 
   render(): string {
@@ -155,7 +155,7 @@ export class ProfilePage extends Block {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: StoreTypes) => {
   return {
     user: state.user,
     isLoading: state.isLoading,

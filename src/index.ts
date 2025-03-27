@@ -1,5 +1,7 @@
 import "./styles/main.scss";
 
+// Часть моментов из "можно лучше" не смог исправить из за логики работы кода(например касательно Block)
+
 import { Login } from "./views/pages/login";
 import { SignUp } from "./views/pages/signup";
 import { Error } from "./views/pages/error";
@@ -12,6 +14,13 @@ import Router from "./core/Router";
 import Store, { StoreEvents } from "./core/Store";
 import { getUserController } from "./domain/auth/authController";
 import { GetChats } from "./domain/chats/chatsController";
+import { BlockProps } from "./core/Block";
+
+// TODO: удалять из разметки элемент внутри chatListItem, отвечающий за число непрочитанных сообщений по нажатию на чат, так же адаптировать эту логику к текущей с учетом того, что самый первый чат будет выбираться автоматически при начальном рендере страницы месседжера
+// Или не удалять, а ставить на 0(или пустую строку с учетом шаблона hbs) и перерисовывать компонент, что будет более правильно\
+// Очищать input message при отправке формы message, что бы при отправке сообщения инпут становился пустым
+// Потенциально исправить косыль с получением новых сообщений
+// По скроллу вверх внутри чата рендерить более и более старые сообщения, что труднореализуемо с учетом текущего подхода
 
 window.router = new Router();
 window.store = new Store({
@@ -20,10 +29,12 @@ window.store = new Store({
   loginError: null,
   chats: null,
   currentChat: null,
+  searchResult: null,
+  messages: null,
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-  window.store.on(StoreEvents.Updated, (prevState, nextState) => {
+  window.store.on(StoreEvents.Updated, (prevState: BlockProps, nextState: BlockProps) => {
     console.log("prevState", prevState);
     console.log("nextState", nextState);
   });
@@ -45,5 +56,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
     .start();
 });
-
-// Has my judgement come so soon?

@@ -19,11 +19,10 @@ export default class EditPassword extends Block {
     super.init();
 
     this.props.events = [
-      ...(this.props.events || []),
       {
         selector: "#password-form",
         event: "submit",
-        handler: (e) => {
+        handler: (e: SubmitEvent) => {
           let isValid = true;
 
           e.preventDefault();
@@ -52,7 +51,7 @@ export default class EditPassword extends Block {
 
             formData.delete("password");
 
-            updatePassword(formData)
+            updatePassword(formData);
           }
         },
       } as const,

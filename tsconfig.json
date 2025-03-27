@@ -20,5 +20,6 @@
     "sourceMap": true,
     "strictNullChecks": true
   },
-  "include": ["src", "global.d.ts"]
+  "include": ["src", "global.d.ts"],
+  "exclude": ["src/utils/connect.ts"]
 }

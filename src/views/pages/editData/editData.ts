@@ -8,6 +8,7 @@ import { EditInput } from "../../components/editInput";
 import { PfpBlock } from "../../components/pfpBlock";
 import { connect } from "../../../utils/connect";
 import { updateData } from "../../../domain/profile/profileController";
+import { StoreTypes } from "../../../core/Store";
 
 export class EditData extends Block {
   constructor(props = {}) {
@@ -20,11 +21,10 @@ export class EditData extends Block {
     super.init();
 
     this.props.events = [
-      ...(this.props.events || []),
       {
         selector: "#edit-form",
         event: "submit",
-        handler: (e) => {
+        handler: (e: SubmitEvent) => {
           let isValid = true;
           let isEmpty = true;
 
@@ -355,9 +355,9 @@ export class EditData extends Block {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: StoreTypes) => {
   return {
-    user: state.user,
+    user: state .user,
   };
 };
 

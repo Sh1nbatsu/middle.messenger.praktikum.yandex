@@ -5,6 +5,16 @@ const METHODS = {
   DELETE: "DELETE",
 };
 
+interface Options {
+  headers?: Record<string, string> | Headers;
+  method?: string;
+  data?: Record<string, unknown> | unknown;
+  credentials?: "omit" | "same-origin" | "include";
+  mode?: "cors" | "no-cors" | "same-origin";
+  timeout?: number;
+}
+
+// Не знаю как типизировать data что бы избежать ошибок
 function queryStringify(data) {
   if (typeof data !== "object") {
     throw new Error("Data must be object");
@@ -17,7 +27,7 @@ function queryStringify(data) {
 }
 
 export default class HTTPTransport {
-  get = (url, options = {}): Promise<XMLHttpRequest> => {
+  get = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
     return this.request(
       url,
       { ...options, method: METHODS.GET },
@@ -25,7 +35,7 @@ export default class HTTPTransport {
     );
   };
 
-  post = (url, options = {}): Promise<XMLHttpRequest> => {
+  post = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
     return this.request(
       url,
       { ...options, method: METHODS.POST },
@@ -33,7 +43,7 @@ export default class HTTPTransport {
     );
   };
 
-  put = (url, options = {}): Promise<XMLHttpRequest> => {
+  put = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
     return this.request(
       url,
       { ...options, method: METHODS.PUT },
@@ -41,7 +51,7 @@ export default class HTTPTransport {
     );
   };
 
-  delete = (url, options = {}): Promise<XMLHttpRequest> => {
+  delete = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
     return this.request(
       url,
       { ...options, method: METHODS.DELETE },
@@ -51,16 +61,10 @@ export default class HTTPTransport {
 
   request = (
     url: string,
-    options = {},
+    options: Options = {},
     timeout = 5000
   ): Promise<XMLHttpRequest> => {
-    const {
-      headers = {},
-      method,
-      data,
-      credentials = "include",
-      mode = "cors",
-    } = options;
+    const { headers = {}, method, data, credentials = "include" } = options;
 
     return new Promise(function (resolve, reject) {
       if (!method) {
@@ -80,6 +84,7 @@ export default class HTTPTransport {
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
+      // Не знаю как типизировать это
 
       xhr.onload = function () {
         resolve(xhr);
@@ -97,12 +102,11 @@ export default class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        // Проверяем, является ли data объектом FormData
         if (data instanceof FormData) {
           console.log("formData");
-          xhr.send(data); // Отправляем FormData напрямую, Content-Type установится автоматически
+          xhr.send(data);
         } else {
-          // Для остальных данных (например, JSON) устанавливаем Content-Type и преобразуем в JSON
+
           xhr.setRequestHeader("Content-Type", "application/json");
           xhr.send(JSON.stringify(data));
         }

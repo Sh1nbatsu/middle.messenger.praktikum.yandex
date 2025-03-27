@@ -7,6 +7,7 @@ import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";
 import { connect } from "../../../utils/connect";
 import { signUpSerivce } from "../../../domain/auth/authController";
+import { StoreTypes } from "../../../core/Store";
 
 export class SignUp extends Block {
   constructor(props = {}) {
@@ -19,11 +20,10 @@ export class SignUp extends Block {
     super.init();
 
     this.props.events = [
-      ...(this.props.events || []),
       {
         selector: "#register-form",
         event: "submit",
-        handler: (e) => {
+        handler: (e: SubmitEvent) => {
           let isValid = true;
           e.preventDefault();
 
@@ -463,7 +463,7 @@ export class SignUp extends Block {
     this.registerChild("confirmPasswordInput", confirmPasswordInput);
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: StoreTypes, newProps: StoreTypes) {
     console.log("componentDidUpdate", oldProps, newProps);
     if (oldProps.isLoading !== newProps.isLoading) {
       console.log("Updating MainButton with isLoading:", newProps.isLoading);
@@ -486,7 +486,7 @@ export class SignUp extends Block {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: StoreTypes) => {
   return {
     isLoading: state.isLoading,
     loginError: state.loginError,

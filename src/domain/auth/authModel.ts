@@ -3,13 +3,13 @@ import HTTPTransport from "../../core/httpTransport";
 const authApi = new HTTPTransport();
 
 export default class Auth {
-  async login(data): Promise<XMLHttpRequest> {
+  async login(data: Record<string, string>): Promise<XMLHttpRequest> {
     return authApi.post("https://ya-praktikum.tech/api/v2/auth/signin", {
       data,
     });
   }
 
-  async signup(data): Promise<XMLHttpRequest> {
+  async signup(data: Record<string, string>): Promise<XMLHttpRequest> {
     return authApi.post("https://ya-praktikum.tech/api/v2/auth/signup", {
       data,
     });

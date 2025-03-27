@@ -2,7 +2,16 @@ import Profile from "./profileModel";
 
 const profileApi = new Profile();
 
-export const updatePfp = async (data) => {
+export interface updateData {
+  email: FormDataEntryValue;
+  login: FormDataEntryValue;
+  first_name: FormDataEntryValue;
+  second_name: FormDataEntryValue;
+  display_name: FormDataEntryValue;
+  phone: FormDataEntryValue;
+}
+
+export const updatePfp = async (data: Record<string, Blob>) => {
   window.store.setState({ isLoading: true });
 
   console.log(data);
@@ -17,6 +26,7 @@ export const updatePfp = async (data) => {
 
     if (response.status === 200) {
       console.log("success");
+      window.store.setState({ user: JSON.parse(response.responseText) });
     }
 
     console.log(response.responseText);
@@ -24,11 +34,10 @@ export const updatePfp = async (data) => {
     console.log(error);
   } finally {
     window.store.setState({ isLoading: false });
-    window.location.reload();
   }
 };
 
-export const updateData = async (data) => {
+export const updateData = async (data: updateData) => {
   console.log(data);
 
   try {
@@ -45,7 +54,7 @@ export const updateData = async (data) => {
   }
 };
 
-export const updatePassword = async (data) => {
+export const updatePassword = async (data: FormData) => {
   console.log(data);
 
   try {

@@ -7,6 +7,7 @@ import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";
 import { connect } from "../../../utils/connect";
 import { loginService } from "../../../domain/auth/authController";
+import { StoreTypes } from "../../../core/Store";
 
 export class Login extends Block {
   constructor(props = {}) {
@@ -18,29 +19,11 @@ export class Login extends Block {
   init() {
     super.init();
 
-    const handleError = (error) => {
-      const inputDiv = document
-        .querySelector("input[type='password']")
-        ?.closest("div") as HTMLInputElement;
-      const bottomText = inputDiv.querySelector(".bottom__text") as HTMLElement;
-      if (bottomText) {
-        bottomText.textContent = error;
-        bottomText.style.opacity = "1";
-        bottomText.style.transform = "translateY(0)";
-
-        setTimeout(() => {
-          bottomText.style.opacity = "0";
-          bottomText.style.transform = "translateY(-18px)";
-        }, 500);
-      }
-    };
-
     this.props.events = [
-      ...(this.props.events || []),
       {
         selector: "#login-form",
         event: "submit",
-        handler: (e) => {
+        handler: (e: SubmitEvent) => {
           e.preventDefault();
           const inputs = this.element.querySelectorAll("input");
           if (!validateLogin(inputs[0].value) || !inputs[1].value) {
@@ -61,7 +44,7 @@ export class Login extends Block {
     const mainButton = new MainButton({
       buttonType: "submit",
       buttonText: "Enter",
-      isLoading: this.props.isLoading as boolean | undefined,
+      isLoading: (this.props.isLoading as boolean) || false,
     });
 
     const loginInput = new LoginInput({
@@ -145,18 +128,6 @@ export class Login extends Block {
     console.log("Login component mounted");
   }
 
-  componentDidUpdate(oldProps, newProps) {
-    console.log("componentDidUpdate", oldProps, newProps);
-    if (oldProps.isLoading !== newProps.isLoading) {
-      console.log("Updating MainButton with isLoading:", newProps.isLoading);
-      this._children.mainButton.setProps({
-        isLoading: newProps.isLoading,
-      });
-    }
-    return true;
-    // Оно дожно работать без этого, но оно не работает. Пытался разобраться как исправить - ничего не вышло.
-  }
-
   render(): string {
     const context: Record<string, string> = {};
 
@@ -173,7 +144,7 @@ export class Login extends Block {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: StoreTypes) => {
   return {
     isLoading: state.isLoading,
     loginError: state.loginError,
@@ -181,3 +152,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Login);
+
+// Где то под самый конец процесса навешивания типов и фикса ошибок я понял что можно state вынести в отдельный интерфейс, где будет описано все...

@@ -1,4 +1,4 @@
-type PlainObject<T = any> = {
+type PlainObject<T = unknown> = {
   [k in string]: T;
 };
 
@@ -11,15 +11,7 @@ function isPlainObject(value: unknown): value is PlainObject {
   );
 }
 
-function isArray(value: unknown): value is [] {
-  return Array.isArray(value);
-}
-
-function isArrayOrObject(value: unknown): value is [] | PlainObject {
-  return isPlainObject(value) || isArray(value);
-}
-
-function isEqual(lhs: any, rhs: any): boolean {
+function isEqual(lhs: unknown, rhs: unknown): boolean {
   // Проверка на примитивы
   if (typeof lhs !== 'object' || lhs === null || typeof rhs !== 'object' || rhs === null) {
     return lhs === rhs;

@@ -1,12 +1,17 @@
-import Block from "../../../core/Block.ts";
+import Block, { BlockProps } from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import modalPfpPartial from "./modalPfp.partial.ts";
 import MainButton from "../mainButton/mainButton.ts";
 import { CustomEvent } from "../../../core/Block.ts";
 import { connect } from "../../../utils/connect.ts";
+import { StoreTypes } from "../../../core/Store.ts";
 export interface ModalProps {
   events?: CustomEvent[];
-  isLoading: boolean;
+  isLoading: boolean | null;
+}
+
+interface updateProps extends BlockProps {
+  isLoading: boolean | null;
 }
 
 export class ModalPfp extends Block {
@@ -28,7 +33,7 @@ export class ModalPfp extends Block {
     this.registerChild("MainButton", mainButton);
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: updateProps, newProps: updateProps) {
     console.log("componentDidUpdate", oldProps, newProps);
     if (oldProps.isLoading !== newProps.isLoading) {
       console.log("Updating MainButton with isLoading:", newProps.isLoading);
@@ -51,7 +56,7 @@ export class ModalPfp extends Block {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: StoreTypes) => {
   return {
     isLoading: state.isLoading,
   };

@@ -9,35 +9,78 @@ export default class Chats {
     return profileApi.get("https://ya-praktikum.tech/api/v2/chats", {
       data: {
         offset: data.offset || "0",
-        limit: data.limit || "10",
+        limit: data.limit || "30",
       },
     });
   }
 
-  async searchChats(data): Promise<XMLHttpRequest> {
+  async searchChats(data: Record<string, string>): Promise<XMLHttpRequest> {
     return profileApi.get("https://ya-praktikum.tech/api/v2/chats", {
-      offset: data.offset,
-      limit: data.limit,
-      title: data.title,
+      data: {
+        offset: data.offset,
+        limit: data.limit,
+        title: data.title,
+      },
     });
   }
 
-  async createChat(data): Promise<XMLHttpRequest> {
+  async createChat(data: {
+    title: FormDataEntryValue;
+  }): Promise<XMLHttpRequest> {
     return profileApi.post("https://ya-praktikum.tech/api/v2/chats", {
       data: { title: data.title },
     });
   }
 
-  async deleteChat(data): Promise<XMLHttpRequest> {
-    return profileApi.post("https://ya-praktikum.tech/api/v2/chats", {
-      chatId: data.chatId,
+  async deleteChat(data: Record<string, string>): Promise<XMLHttpRequest> {
+    return profileApi.delete("https://ya-praktikum.tech/api/v2/chats", {
+      data: { chatId: data },
     });
   }
 
-  async addUser(data): Promise<XMLHttpRequest> {
+  async addUser(data: Record<string, number>): Promise<XMLHttpRequest> {
     return profileApi.put("https://ya-praktikum.tech/api/v2/chats/users", {
-      users: data.users,
-      chatId: data.chatId,
+      data: {
+        users: data.users,
+        chatId: data.chatId,
+      },
     });
+  }
+
+  async removeUser(data: Record<string, string>): Promise<XMLHttpRequest> {
+    return profileApi.delete("https://ya-praktikum.tech/api/v2/chats/users", {
+      data: {
+        users: data.users,
+        chatId: data.chatId,
+      },
+    });
+  }
+
+  async searchUser(data: {
+    login: FormDataEntryValue;
+  }): Promise<XMLHttpRequest> {
+    return profileApi.post("https://ya-praktikum.tech/api/v2/user/search", {
+      data: {
+        login: data.login,
+      },
+    });
+  }
+
+  async getChatUsers(data: Record<string, number>): Promise<XMLHttpRequest> {
+    return profileApi.get(
+      `https://ya-praktikum.tech/api/v2/chats/${data.id}/users`
+    );
+  }
+
+  async updateChatAvatar(formData: FormData): Promise<XMLHttpRequest> {
+    return profileApi.put("https://ya-praktikum.tech/api/v2/chats/avatar", {
+      data: formData,
+    });
+  }
+
+  async getChatToken(data: Record<string, string>): Promise<XMLHttpRequest> {
+    return profileApi.post(
+      `https://ya-praktikum.tech/api/v2/chats/token/${data.chatId}`
+    );
   }
 }

@@ -54,6 +54,7 @@
     cursor: pointer;
     border-radius: 999px;
     height: 200px;
+    width: 200px;
 
     img {
       width: 200px;
@@ -146,10 +147,6 @@
   p:last-of-type {
     color: $secondary-font-color;
   }
-
-  // &:last-of-type span {
-  //   display: none;
-  // }
 
   a:last-child {
     color: $error-color;

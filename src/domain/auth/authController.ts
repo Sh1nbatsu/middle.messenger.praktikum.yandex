@@ -2,7 +2,7 @@ import Auth from "./authModel";
 
 const authApi = new Auth();
 
-export const loginService = async (data) => {
+export const loginService = async (data: Record<string, string>) => {
   window.store.setState({ isLoading: true });
 
   console.log(data);
@@ -28,7 +28,7 @@ export const loginService = async (data) => {
   }
 };
 
-export const signUpSerivce = async (data) => {
+export const signUpSerivce = async (data: Record<string, string>) => {
   window.store.setState({ isLoading: true });
 
   console.log(data);
