@@ -99,9 +99,9 @@ export class UserDropdown extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    searchResult: state.searchResult,
+    searchResult: (state as StoreTypes).searchResult,
   };
 };
 
