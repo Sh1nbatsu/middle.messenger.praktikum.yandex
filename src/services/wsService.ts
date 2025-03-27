@@ -19,7 +19,7 @@ class WSService {
       this.currentUrl === url &&
       this.transport?.socket?.readyState === WebSocket.OPEN
     ) {
-      console.log("WebSocket already connected to", url);
+      console.log("WebSocket already connected", url);
       return;
     }
 

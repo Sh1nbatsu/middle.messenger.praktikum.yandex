@@ -44,7 +44,7 @@ export const DeleteChat = async () => {
     const response = await ChatsApi.deleteChat(chatId);
 
     if (response.status == 200) {
-      console.log("success", response.responseText);
+      console.log("Success", response.responseText);
       GetChats();
     } else {
       console.log("error", response.responseText);
@@ -68,7 +68,7 @@ export const AddUser = async (data: Record<string, number>) => {
     });
 
     if (response.status == 200) {
-      console.log("success", response.responseText);
+      console.log("Success", response.responseText);
     } else {
       console.log("error", response.responseText);
     }
@@ -91,7 +91,7 @@ export const RemoveUser = async (data: Record<string, number>) => {
     });
 
     if (response.status == 200) {
-      console.log("success", response.responseText);
+      console.log("Success", response.responseText);
     } else {
       console.log("error", response.responseText);
     }
@@ -109,7 +109,7 @@ export const SearchUser = async (data: { login: FormDataEntryValue }) => {
     const response = await ChatsApi.searchUser({ login });
 
     if (response.status == 200) {
-      console.log("success", response.responseText);
+      console.log("Success", response.responseText);
       window.store.setState({
         searchResult: JSON.parse(response.responseText),
       });
@@ -166,8 +166,6 @@ export const UpdateChatAvatar = async (data: Record<string, Blob>) => {
 };
 
 export const GetChatToken = async () => {
-  console.log("dkpfojgdfopgkdfokpgdfgopkopkdgf");
-
   const chatId = window.store.getState().currentChat.id;
 
   try {

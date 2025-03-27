@@ -103,7 +103,7 @@ export default class HTTPTransport {
         xhr.send();
       } else {
         if (data instanceof FormData) {
-          console.log("formData");
+          console.log("FormData");
           xhr.send(data);
         } else {
 

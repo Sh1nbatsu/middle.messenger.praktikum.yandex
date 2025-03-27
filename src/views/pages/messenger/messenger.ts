@@ -203,7 +203,7 @@ export class Messenger extends Block {
           const targetDiv = target.closest("*") as HTMLElement;
           console.log(targetDiv);
           if (targetDiv?.id == "chat_create_popup") {
-            console.log("close", componentElement);
+            console.log("Close", componentElement);
             const popup = document.querySelector(
               "#chat_create_popup"
             ) as HTMLElement;
@@ -266,7 +266,7 @@ export class Messenger extends Block {
           ) {
             switch (action) {
               case "delete_chat":
-                console.log("deleting chat");
+                console.log("Deleting chat");
                 chats.DeleteChat();
                 modal.style.visibility = "hidden";
                 modal.style.opacity = "0";

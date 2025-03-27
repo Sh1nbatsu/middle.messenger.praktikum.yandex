@@ -25,7 +25,7 @@ export const updatePfp = async (data: Record<string, Blob>) => {
     const response = await profileApi.updateAvatar(formData);
 
     if (response.status === 200) {
-      console.log("success");
+      console.log("Success");
       window.store.setState({ user: JSON.parse(response.responseText) });
     }
 
@@ -44,7 +44,7 @@ export const updateData = async (data: updateData) => {
     const response = await profileApi.updateProfile(data);
 
     if (response.status === 200) {
-      console.log("success", response.responseText);
+      console.log("Success", response.responseText);
       window.router.go("settings");
       window.location.reload();
     }
@@ -61,7 +61,7 @@ export const updatePassword = async (data: FormData) => {
     const response = await profileApi.updatePassword(data);
 
     if (response.status === 200) {
-      console.log("success");
+      console.log("Success");
       console.log(response.responseText);
     }
     console.log(response.responseText);

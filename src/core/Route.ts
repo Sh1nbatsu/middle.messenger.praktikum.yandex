@@ -9,11 +9,17 @@ export default class Route {
   private _pathname: string;
   private _blockClass: typeof Block;
   public _block: Block | null;
+  private _props: unknown;
 
-  constructor(pathname: string, PageClass: typeof Block) {
+  constructor(
+    pathname: string,
+    PageClass: typeof Block,
+    props?: Record<string, unknown>
+  ) {
     this._pathname = pathname;
     this._blockClass = PageClass;
     this._block = null;
+    this._props = props;
   }
 
   public match(pathname: string): boolean {
@@ -24,7 +30,7 @@ export default class Route {
     if (this._block) {
       this._block.destroy();
     }
-    this._block = new this._blockClass();
+    this._block = new this._blockClass(this._props);
     renderDOM(this._block);
   }
 

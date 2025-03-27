@@ -114,8 +114,6 @@ export default class EditPassword extends Block {
               "input"
             ) as HTMLInputElement;
 
-            console.log("we are here", input, validateAll(input), input.value);
-
             if (!validateAll(input).isPassed && input.value) {
               input.className = "error";
               setTimeout(() => {

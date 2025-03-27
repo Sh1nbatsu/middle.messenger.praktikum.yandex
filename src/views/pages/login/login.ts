@@ -138,7 +138,7 @@ export class Login extends Block {
 
     context.loginError = this.props.loginError as string;
 
-    console.log("Context and props:", context, this.props.loginError);
+    console.log("Context and props", context, this.props.loginError);
 
     return Handlebars.compile(loginPageTemplate)(context);
   }

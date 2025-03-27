@@ -36,7 +36,7 @@ export class ModalPfp extends Block {
   componentDidUpdate(oldProps: updateProps, newProps: updateProps) {
     console.log("componentDidUpdate", oldProps, newProps);
     if (oldProps.isLoading !== newProps.isLoading) {
-      console.log("Updating MainButton with isLoading:", newProps.isLoading);
+      console.log(newProps.isLoading);
       this._children.MainButton.setProps({
         isLoading: newProps.isLoading,
       });

@@ -12,7 +12,6 @@ export const loginService = async (data: Record<string, string>) => {
 
     if (response.status == 401) {
       console.log(JSON.parse(response.responseText));
-      // errorHandler(response.responseText);
     }
     if (response.status >= 400) {
       const errorData = JSON.parse(response.responseText);

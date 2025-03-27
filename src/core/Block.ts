@@ -100,7 +100,7 @@ export default class Block {
   private _updateChildrenProps(newProps: BlockProps) {
     Object.entries(this._children).forEach(([name, child]) => {
       if (newProps[name]) {
-        child.setProps(newProps[name] as BlockProps); // Передаем пропсы вниз
+        child.setProps(newProps[name] as BlockProps);
       }
     });
   }

@@ -17,8 +17,9 @@ class Router {
   public use(
     pathname: string,
     PageClass: typeof Block,
+    props: Record<string, any> = {}
   ): this {
-    const route = new Route(pathname, PageClass);
+    const route = new Route(pathname, PageClass, props);
     this.routes.push(route);
     return this;
   }

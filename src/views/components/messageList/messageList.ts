@@ -61,17 +61,16 @@ export class MessageList extends Block {
 
       wsService.on(WSTransportEvents.MESSAGE, this.handleMessage.bind(this));
     } catch (error) {
-      console.error("WebSocket connection error:", error);
+      console.error("WebSocket connection error", error);
     }
   }
 
   private handleSingleMessage(item: WSResponse) {
-    console.log(item, "jpsdfgopjsdopdfsopdfokpdsfkosdfopksdfspodkf");
     if (item.content === '{"type":"ping"}' || item.type === "user connected") {
       return;
     }
 
-    console.log("Rendering single message: ", item);
+    console.log("Rendering single message ", item);
 
     const messageId = item.id || Date.now();
     const messageKey = `message_${messageId}`;
@@ -186,8 +185,6 @@ export class MessageList extends Block {
     });
 
     context.children = childrenList.reverse();
-
-    console.log(context, "conextinglk[psdfp[lasd");
 
     console.log(this._children);
 

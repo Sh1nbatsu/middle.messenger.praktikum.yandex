@@ -23,7 +23,7 @@ export class WSTransport {
     });
 
     this.socket.addEventListener("message", (event) => {
-      console.log(event.data, "socket message");
+      console.log(event.data, "Socket message");
       try {
         const data = JSON.parse(event.data);
         this.eventBus.emit(WSTransportEvents.MESSAGE, data);
