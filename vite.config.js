@@ -5,4 +5,9 @@ export default {
   preview: {
     port: 3000,
   },
+  css: {
+    preprocessorOptions: {
+      scss: {},
+    },
+  },
 };

@@ -15,7 +15,6 @@ import Store, { StoreEvents } from "./core/Store";
 import { getUserController } from "./domain/auth/authController";
 import { GetChats } from "./domain/chats/chatsController";
 import { BlockProps } from "./core/Block";
-import { ErrorView } from "./old/views/pages/errorView";
 
 // TODO: удалять из разметки элемент внутри chatListItem, отвечающий за число непрочитанных сообщений по нажатию на чат, так же адаптировать эту логику к текущей с учетом того, что самый первый чат будет выбираться автоматически при начальном рендере страницы месседжера
 // Или не удалять, а ставить на 0(или пустую строку с учетом шаблона hbs) и перерисовывать компонент, что будет более правильно\
@@ -26,7 +25,7 @@ import { ErrorView } from "./old/views/pages/errorView";
 window.router = new Router();
 window.store = new Store({
   isLoading: false,
-  user: await null,
+  user: null,
   loginError: null,
   chats: null,
   currentChat: null,

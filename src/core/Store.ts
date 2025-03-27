@@ -9,7 +9,7 @@ export default class Store extends EventBus {
   private state = {};
   private static __instance: Store | null = null;
 
-  constructor(defaultState: Record<string, unknown>) {
+  constructor(defaultState: StoreTypes) {
     if (Store.__instance) {
       return Store.__instance;
     }
@@ -75,9 +75,9 @@ export interface StoreTypes extends BlockProps {
     last_message: Record<string, string> | null;
     title: string | null;
     unread_count: number | null;
-  };
+  } | null;
   isLoading: boolean | null;
   loginError: string | null;
-  searchResult: SearchItem[];
-  user: User;
+  searchResult: SearchItem[] | null;
+  user: User | null;
 }

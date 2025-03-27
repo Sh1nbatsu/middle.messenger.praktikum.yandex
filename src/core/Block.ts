@@ -27,7 +27,7 @@ export default class Block {
   private _isComponentMounted: boolean = false;
   _children: Record<string, Block> = {};
 
-  constructor(tagName = "div", props = {}) {
+  constructor(tagName: string = "div", props: BlockProps = {}) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,

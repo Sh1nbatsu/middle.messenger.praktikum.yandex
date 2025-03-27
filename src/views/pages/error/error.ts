@@ -1,15 +1,15 @@
-import Block from "../../../core/Block";
+import Block, { BlockProps } from "../../../core/Block";
 import errorPageTemplate from "./errorPage.template";
 import Handlebars from "handlebars";
 
-interface ErrorProps {
+interface ErrorProps extends BlockProps {
   errorType?: number | string;
   errorDesc?: string;
 }
 
 export default class Error extends Block {
-  constructor(props: ErrorProps = {}) {
-    super("div", {
+  constructor(tagName: string = "div", props: ErrorProps = {}) {
+    super(tagName, {
       errorType: props.errorType ?? "500",
       errorDesc: props.errorDesc ?? "Something went wrong",
     });
