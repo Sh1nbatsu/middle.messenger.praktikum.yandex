@@ -15,7 +15,7 @@ declare global {
     store: {
       getState(): State;
       setState(state: Partial<State>): void;
-      on(StoreEvents, unknown): void
+      on(StoreEvents, unknown): void;
     };
   }
 }
