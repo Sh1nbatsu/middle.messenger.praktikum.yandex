@@ -362,10 +362,10 @@ export class Messenger extends Block {
   }
 }
 
-const mapStateToProps = (state: StoreTypes) => {
+const mapStateToProps = (state: unknown) => {
   return {
-    chats: state.chats,
-    currentChat: state.currentChat,
+    chats: (state as StoreTypes).chats,
+    currentChat: (state as StoreTypes).currentChat,
   };
 };
 
