@@ -14,6 +14,7 @@ export default `
           {{{ secondNameInput }}}
           {{{ displayNameInput }}}
           {{{ phoneNumberInput }}}
+          {{{ modalPfp }}}
           </div>
         {{{ mainButton }}}
       </form>

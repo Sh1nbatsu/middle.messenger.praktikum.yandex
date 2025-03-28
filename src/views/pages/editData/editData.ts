@@ -7,9 +7,13 @@ import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";
 import { PfpBlock } from "../../components/pfpBlock";
 import { connect } from "../../../utils/connect";
-import { updateData } from "../../../domain/profile/profileController";
+import {
+  updateData,
+  updatePfp,
+} from "../../../domain/profile/profileController";
 import { StoreTypes } from "../../../core/Store";
 import coreDomain from "../../../domain/coreDomain";
+import { ModalPfp } from "../../components/modalPfp";
 
 export class EditData extends Block {
   constructor(props = {}) {
@@ -327,13 +331,62 @@ export class EditData extends Block {
         {
           selector: "p",
           event: "click",
-          handler: (e) => {
-            console.log(e);
+          handler: () => {
+            const modalContainer = document.querySelector(
+              ".pfpmodal-wrapper"
+            ) as HTMLDivElement;
+            if (modalContainer) {
+              modalContainer.style.opacity = "1";
+              modalContainer.style.visibility = "visible";
+            }
           },
         },
       ],
     });
 
+    const modalPfp = new ModalPfp({
+      isLoading: this.props.isLoading as boolean,
+      events: [
+        {
+          selector: ".pfpmodal-wrapper",
+          event: "click",
+          handler: (e) => {
+            const eventTarget = e.target as HTMLElement;
+            console.log("here");
+            if (eventTarget && eventTarget.className == "pfpmodal-wrapper") {
+              const modalContainer = document.querySelector(
+                ".pfpmodal-wrapper"
+              ) as HTMLDivElement;
+              modalContainer.style.opacity = "0";
+              modalContainer.style.visibility = "hidden";
+            }
+          },
+        },
+        {
+          selector: "form",
+          event: "submit",
+          handler: (e, componentElement) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileInput = componentElement.querySelector(
+              "input[type=file]"
+            ) as HTMLInputElement;
+            if (fileInput) {
+              const files = fileInput.files as FileList;
+              console.log(formData, files);
+              if (files?.length > 1) {
+                alert("More than one image loaded, abort");
+                return;
+              } else if (files?.length === 1) {
+                updatePfp({ avatar: files[0] });
+              }
+            }
+          },
+        },
+      ],
+    });
+
+    this.registerChild("modalPfp", modalPfp);
     this.registerChild("pfpBlock", pfpBlock);
     this.registerChild("emailInput", emailInput);
     this.registerChild("loginInput", loginInput);
@@ -367,3 +420,7 @@ export default connect(mapStateToProps)(EditData);
 // Поведение инпутов можно поменять. Можно вынести логику в контроллер, и отсутствующие поля formdata заполнять через window.store, таким образом можно поменять одно поле, не заполняя остальные.
 // Можно вставить текущие значения в плейсхолдеры.
 // Пока оставлю так
+
+// "Realtime" обновление аватрки пользователя реализовано на profile странице - при обновлении аватарки она сразу отображается на странице без перезагрузки.
+// Но насколько я помню для этого нет жесткого требования, так что добавлять эту логику на все страницы я не стану.
+// Я не совсем понял комментарий касательно не работающего функционала обновления аватарки пользователя, но предполагаю что от меня ожидалось что данная функция будет реализована на всех страницах(profile, /edit-data, /edit-password)

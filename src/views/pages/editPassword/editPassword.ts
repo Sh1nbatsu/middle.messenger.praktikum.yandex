@@ -2,12 +2,13 @@ import Block from "../../../core/Block";
 import editPasswordTemplate from "./editPassword.template";
 import Handlebars from "handlebars";
 import { validateAll } from "../../../services/validation";
-import { updatePassword } from "../../../domain/profile/profileController";
+import { updatePassword, updatePfp } from "../../../domain/profile/profileController";
 
 import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";
 import { PfpBlock } from "../../components/pfpBlock";
 import coreDomain from "../../../domain/coreDomain";
+import { ModalPfp } from "../../components/modalPfp";
 
 export default class EditPassword extends Block {
   constructor(props = {}) {
@@ -141,13 +142,62 @@ export default class EditPassword extends Block {
         {
           selector: "p",
           event: "click",
-          handler: (e) => {
-            console.log(e);
+          handler: () => {
+            const modalContainer = document.querySelector(
+              ".pfpmodal-wrapper"
+            ) as HTMLDivElement;
+            if (modalContainer) {
+              modalContainer.style.opacity = "1";
+              modalContainer.style.visibility = "visible";
+            }
           },
         },
       ],
     });
 
+    const modalPfp = new ModalPfp({
+      isLoading: this.props.isLoading as boolean,
+      events: [
+        {
+          selector: ".pfpmodal-wrapper",
+          event: "click",
+          handler: (e) => {
+            const eventTarget = e.target as HTMLElement;
+            console.log("here");
+            if (eventTarget && eventTarget.className == "pfpmodal-wrapper") {
+              const modalContainer = document.querySelector(
+                ".pfpmodal-wrapper"
+              ) as HTMLDivElement;
+              modalContainer.style.opacity = "0";
+              modalContainer.style.visibility = "hidden";
+            }
+          },
+        },
+        {
+          selector: "form",
+          event: "submit",
+          handler: (e, componentElement) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileInput = componentElement.querySelector(
+              "input[type=file]"
+            ) as HTMLInputElement;
+            if (fileInput) {
+              const files = fileInput.files as FileList;
+              console.log(formData, files);
+              if (files?.length > 1) {
+                alert("More than one image loaded, abort");
+                return;
+              } else if (files?.length === 1) {
+                updatePfp({ avatar: files[0] });
+              }
+            }
+          },
+        },
+      ],
+    });
+
+    this.registerChild("modalPfp", modalPfp);
     this.registerChild("pfpBlock", pfpBlock);
     this.registerChild("mainButton", mainButton);
     this.registerChild("oldPasswordInput", oldPasswordInput);

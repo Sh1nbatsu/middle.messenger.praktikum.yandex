@@ -11,6 +11,7 @@ export default `
           {{{ oldPasswordInput }}}
           {{{ newPasswordInput }}}
           {{{ confirmPasswordInput}}}
+          {{{ modalPfp }}}
         </div>
         {{{ mainButton }}}
       </form>

@@ -50,7 +50,7 @@ export const updateData = async (data: updateData) => {
 
     if (response.status === 200) {
       console.log("Success", response.responseText);
-      window.router.go("settings");
+      window.router.go("/settings");
       window.location.reload();
     }
     console.log(response.responseText);
