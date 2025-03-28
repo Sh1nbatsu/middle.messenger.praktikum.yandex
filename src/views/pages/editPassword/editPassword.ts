@@ -49,10 +49,16 @@ export default class EditPassword extends Block {
             alert("Wrong.");
           } else {
             const formData = new FormData(e.target as HTMLFormElement);
-
             formData.delete("password");
-
-            updatePassword(formData);
+            const oldPassword = formData.get("old_password");
+            const newPassword = formData.get("confirm_password");
+            console.log({ oldPassword, newPassword });
+            if (oldPassword && newPassword) {
+              updatePassword({
+                oldPassword: oldPassword as string,
+                newPassword: newPassword as string
+              });
+            }
           }
         },
       } as const,

@@ -11,6 +11,11 @@ export interface updateData {
   phone: FormDataEntryValue;
 }
 
+export interface passwordData {
+  oldPassword: FormDataEntryValue;
+  newPassword: FormDataEntryValue;
+}
+
 export const updatePfp = async (data: Record<string, Blob>) => {
   window.store.setState({ isLoading: true });
 
@@ -54,7 +59,7 @@ export const updateData = async (data: updateData) => {
   }
 };
 
-export const updatePassword = async (data: FormData) => {
+export const updatePassword = async (data: passwordData) => {
   console.log(data);
 
   try {
