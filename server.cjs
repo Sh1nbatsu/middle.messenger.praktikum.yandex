@@ -1,21 +1,23 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 
 const app = express();
 const PORT = 3000;
 
 app.use((req, res, next) => {
   res.setHeader(
-    'Content-Security-Policy',
+    "Content-Security-Policy",
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
   );
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
   next();
 });
 
-app.use(express.static('./dist'));
+app.use(express.static("./dist"));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./index.html"));
 });
 
 app.listen(PORT, () => {
