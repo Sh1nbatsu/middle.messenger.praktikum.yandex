@@ -6,6 +6,7 @@ import userDropdownPartial from "./userDropdown.partial.ts";
 import { connect } from "../../../utils/connect.ts";
 import { AddUser } from "../../../domain/chats/chatsController.ts";
 import { StoreTypes } from "../../../core/Store.ts";
+import coreDomain from "../../../domain/coreDomain.ts";
 
 export class UserDropdown extends Block {
   constructor(props: BlockProps = {}) {
@@ -37,7 +38,7 @@ export class UserDropdown extends Block {
         let avatar: string;
 
         if (item.avatar) {
-          avatar = `https://ya-praktikum.tech/api/v2/resources${item.avatar}`;
+          avatar = `https://${coreDomain}/api/v2/resources${item.avatar}`;
         } else {
           avatar = "./mock_pfp1.jpg";
         }

@@ -4,7 +4,7 @@ import Block from "../core/Block";
 
 type BlockConstructor<T extends Block = Block> = new (...args: any[]) => T;
 
-// Не знаю как ее исправить, так как тип any[] там необходим. Если убрать any - будет другая ошибка - a mixing class constructor should have one argument with any[] type. Тайпскрипт сам запрашивает аргумент типа any[], а линтер жалуется на него из за правила no explicit any.(насколько я понимаю)
+// Не знаю как ее исправить, так как тип any[] там необходим. Если убрать any - будет другая ошибка - a mixing class constructor should have one argument with any[] type. Тайпскрипт сам запрашивает аргумент типа any[] в аргументах класса, а линтер жалуется на него из за правила no explicit any.(насколько я понимаю) Исходя из обсуждений на официальной странице github, я предполагаю что это недочет typescript. 
 // https://github.com/microsoft/TypeScript/issues/37142 последний пост 28 дней назад. По всей видимости все еще не исправлено.
 // Прошу обратить внимание
 

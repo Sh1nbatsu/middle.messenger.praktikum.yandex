@@ -9,6 +9,7 @@ import { ModalPfp } from "../../components/modalPfp";
 import { logoutController } from "../../../domain/auth/authController";
 import { updatePfp } from "../../../domain/profile/profileController";
 import { StoreTypes } from "../../../core/Store";
+import coreDomain from "../../../domain/coreDomain";
 export class ProfilePage extends Block {
   constructor(props = {}) {
     super("div", {
@@ -60,7 +61,7 @@ export class ProfilePage extends Block {
     });
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: `https://ya-praktikum.tech/api/v2/resources${
+      pfpUrl: `https://${coreDomain}/api/v2/resources${
         window.store.getState().user.avatar
       }`,
       username: "John",
@@ -135,7 +136,7 @@ export class ProfilePage extends Block {
 
   componentDidUpdate(oldProps: StoreTypes, newProps: StoreTypes) {
     if (oldProps.user !== newProps.user && newProps.user) {
-      this._children.pfpBlock.props.pfpUrl = `https://ya-praktikum.tech/api/v2/resources${
+      this._children.pfpBlock.props.pfpUrl = `https://${coreDomain}/api/v2/resources${
         window.store.getState().user.avatar
       }`;
       return true;

@@ -4,6 +4,7 @@ import chatTopPartial from "./chatTop.partial.ts";
 import { CustomEvent } from "../../../core/Block.ts";
 import { connect } from "../../../utils/connect.ts";
 import { StoreTypes } from "../../../core/Store.ts";
+import coreDomain from "../../../domain/coreDomain.ts";
 
 export interface ChatTopProps extends BlockProps {
   name: string;
@@ -84,7 +85,7 @@ export class ChatTop extends Block {
       this.setProps({
         name: newProps.currentChat?.title || "",
         pfpUrl: newProps.currentChat
-          ? `https://ya-praktikum.tech/api/v2/resources${newProps.currentChat.avatar}`
+          ? `https://${coreDomain}/api/v2/resources${newProps.currentChat.avatar}`
           : "",
       });
       return true;

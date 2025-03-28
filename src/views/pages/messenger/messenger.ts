@@ -14,6 +14,7 @@ import modalPfp from "../../components/modalPfp/modalPfp";
 import { wsService } from "../../../services/wsService";
 import { StoreTypes } from "../../../core/Store";
 import sanitizeInput from "../../../utils/sanitizeUserInput";
+import coreDomain from "../../../domain/coreDomain";
 
 export class Messenger extends Block {
   constructor(props = {}) {
@@ -301,7 +302,7 @@ export class Messenger extends Block {
     if (window.store.getState().currentChat) {
       chatTop = new ChatTop({
         name: window.store.getState().currentChat.title,
-        pfpUrl: `https://ya-praktikum.tech/api/v2/resources${
+        pfpUrl: `https://${coreDomain}/api/v2/resources${
           window.store.getState().currentChat.avatar
         }`,
       });

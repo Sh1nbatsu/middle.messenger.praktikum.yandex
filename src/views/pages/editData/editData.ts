@@ -9,6 +9,7 @@ import { PfpBlock } from "../../components/pfpBlock";
 import { connect } from "../../../utils/connect";
 import { updateData } from "../../../domain/profile/profileController";
 import { StoreTypes } from "../../../core/Store";
+import coreDomain from "../../../domain/coreDomain";
 
 export class EditData extends Block {
   constructor(props = {}) {
@@ -318,7 +319,7 @@ export class EditData extends Block {
     } as const);
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: `https://ya-praktikum.tech/api/v2/resources${
+      pfpUrl: `https://${coreDomain}/api/v2/resources${
         window.store.getState().user.avatar
       }`,
       username: "John",

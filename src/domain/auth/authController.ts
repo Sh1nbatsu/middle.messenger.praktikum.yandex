@@ -80,5 +80,3 @@ export const logoutController = async () => {
     window.router.go("/");
   }
 };
-
-// Я запутался в моменте с неймингом

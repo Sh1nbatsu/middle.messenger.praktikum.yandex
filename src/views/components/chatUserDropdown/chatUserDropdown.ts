@@ -9,6 +9,7 @@ import {
 
 import { connect } from "../../../utils/connect.ts";
 import { StoreTypes } from "../../../core/Store.ts";
+import coreDomain from "../../../domain/coreDomain.ts";
 
 export class ChatUserDropdown extends Block {
   constructor(props?: BlockProps) {
@@ -52,7 +53,7 @@ export class ChatUserDropdown extends Block {
         let avatar: string;
 
         if (item.avatar) {
-          avatar = `https://ya-praktikum.tech/api/v2/resources${item.avatar}`;
+          avatar = `https://${coreDomain}/api/v2/resources${item.avatar}`;
         } else {
           avatar = "./mock_pfp1.jpg";
         }

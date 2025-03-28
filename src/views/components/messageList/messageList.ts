@@ -9,6 +9,7 @@ import Message from "../message/message.ts";
 import { GetChatToken } from "../../../domain/chats/chatsController.ts";
 import { connect } from "../../../utils/connect.ts";
 import { StoreTypes } from "../../../core/Store.ts";
+import coreDomain from "../../../domain/coreDomain.ts";
 
 interface WSResponse {
   chat_id: number;
@@ -55,7 +56,7 @@ export class MessageList extends Block {
         return;
       }
 
-      const url = `wss://ya-praktikum.tech/ws/chats/${user.id}/${currentChat.id}/${token}`;
+      const url = `wss://${coreDomain}/ws/chats/${user.id}/${currentChat.id}/${token}`;
 
       await wsService.connect(url);
 
@@ -109,7 +110,7 @@ export class MessageList extends Block {
 
     if (Array.isArray(data)) {
       const realdata = data.reverse();
-      
+
       realdata.forEach((item) => {
         this.handleSingleMessage(item);
       });

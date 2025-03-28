@@ -7,6 +7,7 @@ import { updatePassword } from "../../../domain/profile/profileController";
 import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";
 import { PfpBlock } from "../../components/pfpBlock";
+import coreDomain from "../../../domain/coreDomain";
 
 export default class EditPassword extends Block {
   constructor(props = {}) {
@@ -126,7 +127,7 @@ export default class EditPassword extends Block {
     } as const);
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: `https://ya-praktikum.tech/api/v2/resources${
+      pfpUrl: `https://${coreDomain}/api/v2/resources${
         window.store.getState().user.avatar
       }`,
       username: "John",

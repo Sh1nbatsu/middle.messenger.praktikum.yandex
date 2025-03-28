@@ -11,9 +11,10 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/connect.ts'],
+    files: ["**/connect.ts"],
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off'
-    }
+      "@typescript-eslint/no-explicit-any": "off",
+    },
   }
 );
+// Обратил внимание на ошибки eslint касательно файла connect.ts (две ошибки, о которых упоминалось в код ревью). Более подробные объяснения находятся в connect.ts
