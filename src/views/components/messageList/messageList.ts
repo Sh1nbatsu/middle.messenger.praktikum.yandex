@@ -14,7 +14,7 @@ interface WSResponse {
   chat_id: number;
   content: { type?: string; message?: string } | string;
   file: Blob | null;
-  id: 20;
+  id: number;
   is_read: boolean;
   time: number;
   type: string;
@@ -60,6 +60,10 @@ export class MessageList extends Block {
       await wsService.connect(url);
 
       wsService.on(WSTransportEvents.MESSAGE, this.handleMessage.bind(this));
+
+      wsService.on(WSTransportEvents.ERROR, () => {
+        throw new Error("Websocket connection error");
+      });
     } catch (error) {
       console.error("WebSocket connection error", error);
     }
@@ -93,6 +97,7 @@ export class MessageList extends Block {
     if (!this._children[messageKey]) {
       const messageComponent = new Message(messageProps);
       this.registerChild(messageKey, messageComponent);
+      this.setProps({ __forceUpdate: Date.now() });
     } else {
       this._children[messageKey].setProps(messageProps);
     }
@@ -103,16 +108,18 @@ export class MessageList extends Block {
     console.log("New message", data);
 
     if (Array.isArray(data)) {
-      data.forEach((item) => {
+      const realdata = data.reverse();
+
+      // Хитрость
+
+      realdata.forEach((item) => {
         this.handleSingleMessage(item);
       });
-      this.setProps({ __forceUpdate: Date.now() });
       return;
     }
 
     if (typeof data === "object" && data !== null) {
       this.handleSingleMessage(data);
-      this.setProps({ __forceUpdate: Date.now() });
       return;
     }
 
@@ -120,6 +127,7 @@ export class MessageList extends Block {
   }
 
   componentWillUnmount() {
+    wsService.close();
     wsService.off(WSTransportEvents.MESSAGE, this.handleMessage);
     return true;
   }
@@ -185,8 +193,6 @@ export class MessageList extends Block {
     });
 
     context.children = childrenList.reverse();
-
-    console.log(this._children);
 
     return Handlebars.compile(messageListPartial)(context);
   }

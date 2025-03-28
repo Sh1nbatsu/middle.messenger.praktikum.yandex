@@ -13,6 +13,7 @@ import { ChatUserDropdown } from "../../components/chatUserDropdown";
 import modalPfp from "../../components/modalPfp/modalPfp";
 import { wsService } from "../../../services/wsService";
 import { StoreTypes } from "../../../core/Store";
+import sanitizeInput from "../../../utils/sanitizeUserInput";
 
 export class Messenger extends Block {
   constructor(props = {}) {
@@ -143,8 +144,8 @@ export class Messenger extends Block {
           if (!message) {
             alert("empty");
           } else {
-            wsService.send(message);
-            console.log(input);
+            const safeMessage = sanitizeInput(message);
+            wsService.send(safeMessage);
             input.value = "";
           }
         },

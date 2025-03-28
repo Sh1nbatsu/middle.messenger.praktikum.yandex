@@ -36,8 +36,8 @@ export class WSTransport {
       this.eventBus.emit(WSTransportEvents.CLOSED);
     });
 
-    this.socket.addEventListener("error", (e) => {
-      this.eventBus.emit(WSTransportEvents.ERROR, e);
+    this.socket.addEventListener("error", (error) => {
+      this.eventBus.emit(WSTransportEvents.ERROR, error);
     });
   }
 

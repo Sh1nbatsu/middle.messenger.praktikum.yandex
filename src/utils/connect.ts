@@ -33,12 +33,11 @@ export function connect<P extends Record<string, unknown>>(
         super.setProps(nextProps);
       }
 
-      // componentWillUnmount(): void {
-      //   if (super.componentWillUnmount) {
-      //     super.componentWillUnmount();
-      //   }
-      //   window.store.off(StoreEvents.Updated, this.onChangeStoreCallback);
-      // }
+      componentWillUnmount() {
+        super.componentWillUnmount();
+        window.store.off(StoreEvents.Updated, this.onChangeStoreCallback);
+        return true;
+      }
     } as T;
   };
 }
