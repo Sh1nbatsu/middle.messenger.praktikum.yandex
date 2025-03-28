@@ -152,5 +152,3 @@ const mapStateToProps = (state: unknown) => {
 };
 
 export default connect(mapStateToProps)(Login);
-
-// Где то под самый конец процесса навешивания типов и фикса ошибок я понял что можно state вынести в отдельный интерфейс, где будет описано все...
