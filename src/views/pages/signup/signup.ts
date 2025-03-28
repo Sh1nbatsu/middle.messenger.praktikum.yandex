@@ -117,7 +117,6 @@ export class SignUp extends Block {
                 bottomText.style.opacity = "0";
                 bottomText.style.transform = "translateY(-18px)";
               }, 2000);
-              // Пришлось адаптировать логику от старых файлов, в когда я разрабатывал валидацию, оно работает, в принципе так же как и до этого, только несколько костыльно.
             }
           },
         },

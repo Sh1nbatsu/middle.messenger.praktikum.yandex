@@ -12,7 +12,6 @@ function isPlainObject(value: unknown): value is PlainObject {
 }
 
 function isEqual(lhs: unknown, rhs: unknown): boolean {
-  // Проверка на примитивы
   if (
     typeof lhs !== "object" ||
     lhs === null ||
@@ -22,7 +21,6 @@ function isEqual(lhs: unknown, rhs: unknown): boolean {
     return lhs === rhs;
   }
 
-  // Проверка на массивы
   if (Array.isArray(lhs) && Array.isArray(rhs)) {
     if (lhs.length !== rhs.length) {
       return false;
@@ -37,7 +35,6 @@ function isEqual(lhs: unknown, rhs: unknown): boolean {
     return true;
   }
 
-  // Объекты проверяем только если оба значения - объекты
   if (isPlainObject(lhs) && isPlainObject(rhs)) {
     const lhsKeys = Object.keys(lhs);
     const rhsKeys = Object.keys(rhs);
@@ -46,12 +43,10 @@ function isEqual(lhs: unknown, rhs: unknown): boolean {
       return false;
     }
 
-    // Проверяем, что все ключи из lhs существуют в rhs
     if (!lhsKeys.every((key) => key in rhs)) {
       return false;
     }
 
-    // Проверяем значения для каждого ключа
     for (const key of lhsKeys) {
       if (!isEqual(lhs[key], rhs[key])) {
         return false;
@@ -61,7 +56,6 @@ function isEqual(lhs: unknown, rhs: unknown): boolean {
     return true;
   }
 
-  // Если один объект, а другой массив - они не равны
   return false;
 }
 

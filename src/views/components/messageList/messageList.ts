@@ -109,9 +109,7 @@ export class MessageList extends Block {
 
     if (Array.isArray(data)) {
       const realdata = data.reverse();
-
-      // Хитрость
-
+      
       realdata.forEach((item) => {
         this.handleSingleMessage(item);
       });

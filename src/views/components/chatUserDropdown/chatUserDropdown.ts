@@ -2,7 +2,10 @@ import Block, { BlockProps } from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import userDropdownItem from "../userDropdownItem/userDropdownItem.ts";
 import chatUserDropdownPartial from "./chatUserDropdown.partial.ts";
-import { SearchChatUsers } from "../../../domain/chats/chatsController.ts";
+import {
+  AddUser,
+  SearchChatUsers,
+} from "../../../domain/chats/chatsController.ts";
 
 import { connect } from "../../../utils/connect.ts";
 import { StoreTypes } from "../../../core/Store.ts";
@@ -67,7 +70,7 @@ export class ChatUserDropdown extends Block {
                   `.dropdown-item[data-id="${item.id}"]`
                 ) as HTMLElement;
                 console.log(divForId.dataset.id);
-                // AddUser({ user: divForId.dataset.id });
+                AddUser({ user: Number(divForId.dataset.id) });
               },
             },
           ],

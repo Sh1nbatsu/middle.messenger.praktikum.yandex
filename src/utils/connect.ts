@@ -2,7 +2,6 @@ import { StoreEvents } from "../core/Store";
 import isEqual from "./isEqual";
 import Block from "../core/Block";
 
-// Определяем конструктор компонента: пропсы — объект с произвольными свойствами или отсутствуют
 type BlockConstructor<T extends Block = Block> = new (...args: any[]) => T;
 
 export function connect<P extends Record<string, unknown>>(

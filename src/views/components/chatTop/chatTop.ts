@@ -74,8 +74,6 @@ export class ChatTop extends Block {
     });
   }
 
-  // Реализация ну, не реализация, но вместо создания множественных модалок написал так
-
   render(): string {
     const compiledTemplate = Handlebars.compile(chatTopPartial);
     return compiledTemplate(this.props);
