@@ -4,6 +4,10 @@ import Block from "../core/Block";
 
 type BlockConstructor<T extends Block = Block> = new (...args: any[]) => T;
 
+// Не знаю как ее исправить, так как тип any[] там необходим. Если убрать any - будет другая ошибка - a mixing class constructor should have one argument with any[] type. Тайпскрипт сам запрашивает аргумент типа any[], а линтер жалуется на него из за жесткого правила no explicit any.
+// Прошу обратить внимание, что тесты workflow так же имеют свою проверку на any, 
+
+
 export function connect<P extends Record<string, unknown>>(
   mapStateToProps: (state: unknown) => P
 ) {
