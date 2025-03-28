@@ -106,7 +106,7 @@ export const RemoveUser = async (data: Record<string, number>) => {
   try {
     console.log({ users: [userId], chatId: chatId });
 
-    const response = await ChatsApi.addUser({
+    const response = await ChatsApi.removeUser({
       users: userId,
       chatId: chatId,
     });
