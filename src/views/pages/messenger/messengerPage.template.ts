@@ -2,7 +2,7 @@ export default `
     <div class="messenger__wrapper">
       <nav class="navigation__wrapper">
         <div class="profile-link">
-          <div id="chat_create">
+          <div id="chat-create">
             <p>Create chat</p>
           </div>
           <a href="/settings">Profile<img src="/arrow_gray.svg" alt="arrow"></a>
@@ -35,13 +35,13 @@ export default `
             </form>
           </div>
         </div>
-        <div id="chat_create_popup">
+        <div id="chat-create-popup">
           <form id="chat_create_form">
             <input type="text" placeholder="Enter chat name" name="title">
             <button>Create chat</button>
           </form>
         </div>
-        <div id="chat-option_popup">
+        <div id="chat-create-popup">
           <form id="chatoptionform">
             <input type="text" name="user" placeholder="Enter username">
             <button type="submit">Add user</button>

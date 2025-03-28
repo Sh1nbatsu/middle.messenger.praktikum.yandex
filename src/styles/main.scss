@@ -19,6 +19,7 @@ button[disabled] {
     cursor: not-allowed;
     background-color: gray;
   }
+
   background-color: gray;
 }
 
@@ -52,18 +53,23 @@ button[disabled] {
     transform: translateY(0);
     color: $error-color;
   }
+
   10% {
     transform: translateY(2px);
   }
+
   25% {
     transform: translateY(-3px);
   }
+
   50% {
     transform: translateY(3px);
   }
+
   75% {
     transform: translateY(-3px);
   }
+
   100% {
     transform: translateY(0);
     color: unset;

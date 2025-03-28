@@ -24,7 +24,7 @@
     width: 10px;
   }
 
-  #chat_create {
+  #chat-create {
     background-color: $shadow-color;
     padding: 5px;
     border-radius: 5px;
@@ -203,7 +203,6 @@
 
   p {
     white-space: initial;
-
     word-wrap: break-word;
   }
 }
@@ -313,14 +312,14 @@
   border-bottom: 1px solid $secondary-color;
   padding-bottom: 10px;
 
-  div:not(.chat-dropdown):not(.chat-dropdown div) {
+  div:not(.chat-dropdown, .chat-dropdown div) {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
   }
 
-  div img:not(.options):not(.chat-dropdown img) {
+  div img:not(.options, .chat-dropdown img) {
     width: 34px;
     border-radius: 100%;
     height: 34px;

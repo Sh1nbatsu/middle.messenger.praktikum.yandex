@@ -1,6 +1,6 @@
 .pfpmodal-wrapper {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(0 0 0 / 50%);
   top: 0;
   right: 0;
   width: 100vw;
@@ -102,57 +102,9 @@
   }
 }
 
-#chat_create_popup {
+#chat-create-popup {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 100ms;
-  visibility: hidden;
-  opacity: 0;
-  z-index: 2;
-
-  form {
-    background-color: $shadow-color;
-    padding: 35px 25px;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    input {
-      padding: 4px;
-      outline: none;
-      border: none;
-      font-size: 16px;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    button {
-      border: none;
-      background-color: $base-color;
-      padding: 4px;
-      color: white;
-      font-size: 16px;
-      border-radius: 8px;
-      transition: 150ms;
-
-      &:hover {
-        background-color: color.adjust($base-color, $blackness: 45%);
-      }
-    }
-  }
-}
-
-#chat-option_popup {
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgb(0 0 0 / 40%);
   width: 100vw;
   height: 100vh;
   display: flex;

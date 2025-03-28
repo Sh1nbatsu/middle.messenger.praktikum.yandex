@@ -186,9 +186,9 @@ export class Messenger extends Block {
 
           if (target) {
             const targetDiv = target.closest("div") as HTMLElement;
-            if (targetDiv.id == "chat_create") {
+            if (targetDiv.id == "chat-create") {
               const popup = document.querySelector(
-                "#chat_create_popup"
+                "#chat-create-popup"
               ) as HTMLElement;
               popup.style.opacity = "1";
               popup.style.visibility = "inherit";
@@ -197,16 +197,16 @@ export class Messenger extends Block {
         },
       },
       {
-        selector: "#chat_create_popup",
+        selector: "#chat-create-popup",
         event: "click",
         handler: (e: Event, componentElement: HTMLElement) => {
           const target = e.target as HTMLElement;
           const targetDiv = target.closest("*") as HTMLElement;
           console.log(targetDiv);
-          if (targetDiv?.id == "chat_create_popup") {
+          if (targetDiv?.id == "chat-create-popup") {
             console.log("Close", componentElement);
             const popup = document.querySelector(
-              "#chat_create_popup"
+              "#chat-create-popup"
             ) as HTMLElement;
             popup.style.opacity = "0";
             popup.style.visibility = "hidden";
@@ -219,7 +219,7 @@ export class Messenger extends Block {
         handler: (e: SubmitEvent) => {
           e.preventDefault();
           const popup = document.querySelector(
-            "#chat_create_popup"
+            "#chat-create-popup"
           ) as HTMLElement;
           const form = e.target as HTMLFormElement;
           const formData = new FormData(form);
@@ -240,11 +240,11 @@ export class Messenger extends Block {
         },
       },
       {
-        selector: "#chat-option_popup",
+        selector: "#chat-create-popup",
         event: "click",
         handler: (e: Event) => {
           const target = e.target as HTMLElement;
-          if (target.id == "chat-option_popup") {
+          if (target.id == "chat-create-popup") {
             target.style.opacity = "0";
             target.style.visibility = "hidden";
           }
@@ -259,7 +259,7 @@ export class Messenger extends Block {
           const formData = new FormData(target);
           const action = target.dataset.action;
           const modal = document.getElementById(
-            "chat-option_popup"
+            "chat-create-popup"
           ) as HTMLElement;
           if (
             (formData.get("user") && action != "delete_chat") ||
