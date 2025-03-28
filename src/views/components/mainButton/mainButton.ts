@@ -6,10 +6,10 @@ import { connect } from "../../../utils/connect.ts";
 import { StoreTypes } from "../../../core/Store.ts";
 
 export interface MainButtonProps extends BlockProps {
-  buttonType: string;
-  buttonText: string;
-  isLoading?: boolean;
-  events?: CustomEvent[];
+  buttonType: any;
+  buttonText: any;
+  isLoading?: any;
+  events?: any[];
 }
 
 export class MainButton extends Block {

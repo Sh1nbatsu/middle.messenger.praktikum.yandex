@@ -9,10 +9,10 @@ export interface CustomEvent {
 
 export interface BlockProps {
   events?: CustomEvent[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
-abstract class Block {
+export default class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -230,5 +230,3 @@ abstract class Block {
     this._element.remove();
   }
 }
-
-export default Block;
