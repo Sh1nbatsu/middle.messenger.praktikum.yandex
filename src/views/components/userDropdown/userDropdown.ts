@@ -57,7 +57,7 @@ export class UserDropdown extends Block {
                 ) as HTMLElement;
                 console.log(divForId.dataset.id);
                 if (divForId.dataset.id) {
-                  AddUser({ user: divForId.dataset.id });
+                  AddUser({ user: Number(divForId.dataset.id) });
                 }
               },
             },
