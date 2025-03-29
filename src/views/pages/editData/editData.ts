@@ -49,7 +49,7 @@ export class EditData extends Block {
             if (input) {
               if (input.value && !validateAll(input).isPassed) {
                 isValid = false;
-                console.log(input, isValid)
+                console.log(input, isValid);
               } else if (input.value) {
                 isEmpty = false;
               }
@@ -58,7 +58,7 @@ export class EditData extends Block {
 
           const formData = new FormData(e.target as HTMLFormElement);
 
-          console.log(isValid, isEmpty)
+          console.log(isValid, isEmpty);
 
           if (isValid && !isEmpty) {
             console.log("here");
