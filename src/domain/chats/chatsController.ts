@@ -77,7 +77,7 @@ export const AddUser = async (data: Record<string, number>) => {
     console.log({ users: [userId], chatId: chatId });
 
     const response = await ChatsApi.addUser({
-      users: userId,
+      users: [userId],
       chatId: chatId,
     });
 
@@ -107,7 +107,7 @@ export const RemoveUser = async (data: Record<string, number>) => {
     console.log({ users: [userId], chatId: chatId });
 
     const response = await ChatsApi.removeUser({
-      users: userId,
+      users: [userId],
       chatId: chatId,
     });
 

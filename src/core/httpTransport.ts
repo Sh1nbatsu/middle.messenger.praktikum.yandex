@@ -78,7 +78,12 @@ export default class HTTPTransport {
         xhr.withCredentials = true;
       }
 
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data as Record<string, unknown>)}` : url);
+      xhr.open(
+        method,
+        isGet && !!data
+          ? `${url}${queryStringify(data as Record<string, unknown>)}`
+          : url
+      );
 
       if (headers instanceof Headers) {
         headers.forEach((value, key) => {
@@ -110,7 +115,7 @@ export default class HTTPTransport {
           console.log("FormData");
           xhr.send(data);
         } else {
-
+          console.log("here");
           xhr.setRequestHeader("Content-Type", "application/json");
           xhr.send(JSON.stringify(data));
         }

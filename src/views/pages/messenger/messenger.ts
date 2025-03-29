@@ -241,11 +241,11 @@ export class Messenger extends Block {
         },
       },
       {
-        selector: "#chat-create-popup",
+        selector: "#chat-option-popup",
         event: "click",
         handler: (e: Event) => {
           const target = e.target as HTMLElement;
-          if (target.id == "chat-create-popup") {
+          if (target.id == "chat-option-popup") {
             target.style.opacity = "0";
             target.style.visibility = "hidden";
           }

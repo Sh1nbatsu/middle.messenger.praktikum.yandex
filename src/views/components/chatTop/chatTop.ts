@@ -30,8 +30,10 @@ export class ChatTop extends Block {
             ) as HTMLElement;
 
             const modal = document.querySelector(
-              "#chat-create-popup"
+              "#chat-option-popup"
             ) as HTMLElement;
+
+            console.log(modal);
 
             const input = modal.querySelector("input") as HTMLInputElement;
             const button = modal.querySelector("button") as HTMLButtonElement;

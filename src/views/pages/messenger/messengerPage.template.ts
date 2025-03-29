@@ -41,7 +41,7 @@ export default `
             <button>Create chat</button>
           </form>
         </div>
-        <div id="chat-create-popup">
+        <div id="chat-option-popup">
           <form id="chatoptionform">
             <input type="text" name="user" placeholder="Enter username">
             <button type="submit">Add user</button>

@@ -39,7 +39,7 @@ export default class Chats {
     });
   }
 
-  async addUser(data: Record<string, number>): Promise<XMLHttpRequest> {
+  async addUser(data: Record<string, number[]>): Promise<XMLHttpRequest> {
     return profileApi.put(`https://${coreDomain}/api/v2/chats/users`, {
       data: {
         users: data.users,
@@ -48,7 +48,7 @@ export default class Chats {
     });
   }
 
-  async removeUser(data: Record<string, number>): Promise<XMLHttpRequest> {
+  async removeUser(data: Record<string, number[]>): Promise<XMLHttpRequest> {
     return profileApi.delete(`https://${coreDomain}/api/v2/chats/users`, {
       data: {
         users: data.users,

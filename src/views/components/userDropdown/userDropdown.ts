@@ -56,7 +56,9 @@ export class UserDropdown extends Block {
                   `.dropdown-item[data-id="${item.id}"]`
                 ) as HTMLElement;
                 console.log(divForId.dataset.id);
-                AddUser({ user: parseInt(divForId.dataset.id || "") });
+                if (divForId.dataset.id) {
+                  AddUser({ user: divForId.dataset.id });
+                }
               },
             },
           ],

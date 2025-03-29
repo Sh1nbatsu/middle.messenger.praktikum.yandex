@@ -3,7 +3,7 @@ import Handlebars from "handlebars";
 import userDropdownItem from "../userDropdownItem/userDropdownItem.ts";
 import chatUserDropdownPartial from "./chatUserDropdown.partial.ts";
 import {
-  AddUser,
+  RemoveUser,
   SearchChatUsers,
 } from "../../../domain/chats/chatsController.ts";
 
@@ -71,7 +71,7 @@ export class ChatUserDropdown extends Block {
                   `.dropdown-item[data-id="${item.id}"]`
                 ) as HTMLElement;
                 console.log(divForId.dataset.id);
-                AddUser({ user: Number(divForId.dataset.id) });
+                RemoveUser({ user: Number(divForId.dataset.id) });
               },
             },
           ],
