@@ -1,3 +1,7 @@
+import "./styles/main.scss";
+
+// Часть моментов из "можно лучше" не смог исправить из за логики работы кода(например касательно Block)
+
 import { Login } from "./views/pages/login";
 import { SignUp } from "./views/pages/signup";
 import { Error } from "./views/pages/error";
@@ -6,90 +10,47 @@ import { EditPassword } from "./views/pages/editPassword";
 import { ProfilePage } from "./views/pages/profile";
 import { Messenger } from "./views/pages/messenger";
 
-import renderDOM from "./core/RenderDom";
+import Router from "./core/Router";
+import Store, { StoreEvents } from "./core/Store";
+import { getUserController } from "./domain/auth/authController";
+import { GetChats } from "./domain/chats/chatsController";
+import { BlockProps } from "./core/Block";
 
-import "./styles/main.scss";
+window.router = new Router();
+window.store = new Store({
+  isLoading: false,
+  user: null,
+  loginError: null,
+  chats: null,
+  currentChat: null,
+  searchResult: null,
+  messages: null,
+});
 
-import HTTPTransport from "./services/fetch";
+document.addEventListener("DOMContentLoaded", async () => {
+  window.store.on(
+    StoreEvents.Updated,
+    (prevState: BlockProps, nextState: BlockProps) => {
+      console.log("prevState", prevState);
+      console.log("nextState", nextState);
+    }
+  );
 
-const transport = new HTTPTransport();
+  await getUserController();
 
-transport
-  .get("https://jsonplaceholder.typicode.com/posts/1")
-  .then((value: unknown) => {
-    const xhr = value as XMLHttpRequest;
-    console.log(xhr.responseText);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+  await GetChats();
 
-const pages: Record<string, unknown> = {
-  login: [Login],
-  signUp: [SignUp],
-  error: [
-    Error,
-    {
-      errorType: 500,
-      errorDesc: "Something went wrong",
-    },
-  ],
-  notFound: [
-    Error,
-    {
+  window.router
+    .use("/", Login)
+    .use("/sign-up", SignUp)
+    .use("/settings", ProfilePage)
+    .use("/settings/edit-data", EditData)
+    .use("/settings/edit-password", EditPassword)
+    .use("/messenger", Messenger)
+    .use("/404", Error, {
       errorType: 404,
       errorDesc: "How did you get here?",
-    },
-  ],
-  editData: [EditData],
-  editPassword: [EditPassword],
-  profilePage: [ProfilePage],
-  messenger: [Messenger],
-};
+    })
+    .start();
 
-function navigate(page: string) {
-  console.log("navigate");
-  const Page = pages[page];
-  const Component = Array.isArray(Page) ? Page[0] : Page;
-  const context = Array.isArray(Page) ? Page[1] : undefined;
-
-  if (typeof Component === "function") {
-    const componentInstance = context
-      ? new Component(context)
-      : new Component();
-
-    renderDOM(componentInstance);
-
-    if (context) {
-      console.log(context);
-    }
-  }
-}
-document.addEventListener("DOMContentLoaded", () => {
-  switch (window.location.pathname) {
-    case "/":
-      navigate("login");
-      break;
-    case "/signup":
-      navigate("signUp");
-      break;
-    case "/500":
-      navigate("error");
-      break;
-    case "/im":
-      navigate("messenger");
-      break;
-    case "/profile":
-      navigate("profilePage");
-      break;
-    case "/edit_data":
-      navigate("editData");
-      break;
-    case "/edit_password":
-      navigate("editPassword");
-      break;
-    default:
-      navigate("notFound");
-      break;
-  }
 });

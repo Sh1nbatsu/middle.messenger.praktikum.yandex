@@ -1,8 +1,8 @@
-import Block from "../../../core/Block.ts";
+import Block, { BlockProps } from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import userDataPartial from "./userData.partial.ts";
 
-export interface UserDataProps {
+export interface UserDataProps extends BlockProps {
   desc: string;
   data: string;
 }

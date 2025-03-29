@@ -12,6 +12,7 @@ export interface EditInputProps {
   errorMessage?: string;
   listeningElement?: string;
   required?: boolean;
+  value?: string;
   events?: CustomEvent[];
 }
 

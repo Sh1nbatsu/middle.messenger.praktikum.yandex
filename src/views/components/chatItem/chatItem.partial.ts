@@ -1,9 +1,9 @@
 export default `
-          <li class="chat-select__item">
+          <li class="chat-select__item" data-id={{id}}>
             <div class="chat-pfp">
               <img src="{{pfpUrl}}" alt="profile picture">
             </div>
-            <div class="chat-info">
+            <div class="chat-info" >
               <div class="chat-paylod">
                 <h2>{{chatName}}</h2>
                 <p>{{#if youSend}}<span>You: </span>{{/if}}{{lastData}}</p>

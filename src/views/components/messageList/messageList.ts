@@ -1,43 +1,173 @@
-import Block from "../../../core/Block.ts";
+import Block, { BlockProps } from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import messageListPartial from "./messageList.partial.ts";
+import { wsService } from "../../../services/wsService.ts";
+import { WSTransportEvents } from "../../../core/websocketTransport.ts";
 
 import Message from "../message/message.ts";
 
-import { MessageProps } from "../message/message.ts";
-export default class MessageList extends Block {
-  constructor(props?: MessageProps[]) {
+import { GetChatToken } from "../../../domain/chats/chatsController.ts";
+import { connect } from "../../../utils/connect.ts";
+import { StoreTypes } from "../../../core/Store.ts";
+import coreDomain from "../../../domain/coreDomain.ts";
+
+interface WSResponse {
+  chat_id: number;
+  content: { type?: string; message?: string } | string;
+  file: Blob | null;
+  id: number;
+  is_read: boolean;
+  time: number;
+  type: string;
+  user_id: number;
+}
+
+interface UpdateProps extends BlockProps {
+  __forceUpdate: string | null;
+  currentChat: {
+    id?: string | null;
+    chatToken: {
+      token: string | null;
+    } | null;
+  };
+}
+
+export class MessageList extends Block {
+  constructor(props: BlockProps = {}) {
     super("div", props);
+  }
+
+  async connectWebSocket() {
+    const { currentChat, user } = window.store.getState();
+
+    if (!currentChat?.id || !user?.id) {
+      console.error("Missing chat ID or user ID");
+      return;
+    }
+
+    try {
+      if (!currentChat.chatToken?.token) {
+        await GetChatToken();
+      }
+
+      const token = currentChat.chatToken?.token;
+      if (!token) {
+        console.error("Failed to get chat token");
+        return;
+      }
+
+      const url = `wss://${coreDomain}/ws/chats/${user.id}/${currentChat.id}/${token}`;
+
+      await wsService.connect(url);
+
+      wsService.on(WSTransportEvents.MESSAGE, this.handleMessage.bind(this));
+
+      wsService.on(WSTransportEvents.ERROR, () => {
+        throw new Error("Websocket connection error");
+      });
+    } catch (error) {
+      console.error("WebSocket connection error", error);
+    }
+  }
+
+  private handleSingleMessage(item: WSResponse) {
+    if (item.content === '{"type":"ping"}' || item.type === "user connected") {
+      return;
+    }
+
+    console.log("Rendering single message ", item);
+
+    const messageId = item.id || Date.now();
+    const messageKey = `message_${messageId}`;
+
+    const date = new Date(item.time);
+    const options: Intl.DateTimeFormatOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+
+    const messageProps = {
+      youSend: item.user_id === window.store.getState().user?.id,
+      messageText:
+        typeof item.content === "string"
+          ? item.content
+          : JSON.stringify(item.content),
+      messageTime: date.toLocaleTimeString("ru-RU", options),
+    };
+
+    if (!this._children[messageKey]) {
+      const messageComponent = new Message(messageProps);
+      this.registerChild(messageKey, messageComponent);
+      this.setProps({ __forceUpdate: Date.now() });
+    } else {
+      this._children[messageKey].setProps(messageProps);
+    }
+  }
+
+  private handleMessage(...args: unknown[]) {
+    const data = args[0] as WSResponse;
+    console.log("New message", data);
+
+    if (Array.isArray(data)) {
+      const realdata = data.reverse();
+
+      realdata.forEach((item) => {
+        this.handleSingleMessage(item);
+      });
+      return;
+    }
+
+    if (typeof data === "object" && data !== null) {
+      this.handleSingleMessage(data);
+      return;
+    }
+
+    console.log("Received non array data", data);
+  }
+
+  componentWillUnmount() {
+    wsService.close();
+    wsService.off(WSTransportEvents.MESSAGE, this.handleMessage);
+    return true;
   }
 
   init() {
     super.init();
+  }
 
-    const messages = [
-      {
-        date: "17 may",
-      },
-      {
-        youSend: true,
-        messageTime: "13:37",
-        messageText: "loremkp[aodsp[kosdasakod[",
-      },
-      {
-        messageTime: "13:37",
-        messageText: "loremkp[aodsp[kosdasakod[",
-      },
-    ];
+  componentDidUpdate(oldProps: UpdateProps, newProps: UpdateProps): boolean {
+    if (oldProps.__forceUpdate !== newProps.__forceUpdate) {
+      return true;
+    }
 
-    messages.forEach((item, index) => {
-      const message = new Message({
-        date: item.date,
-        youSend: item.youSend,
-        messageText: item.messageText,
-        messageTime: item.messageTime,
-      });
+    if (oldProps.currentChat.id !== newProps.currentChat.id) {
+      this._children = {};
+      this.connectWebSocket();
+      return true;
+    }
 
-      this.registerChild(`Message${index}`, message);
+    if (!oldProps.currentChat || !newProps.currentChat) {
+      return false;
+    }
+
+    const oldToken = oldProps.currentChat.chatToken?.token;
+    const newToken = newProps.currentChat.chatToken?.token;
+
+    const chatIdChanged = oldProps.currentChat.id !== newProps.currentChat.id;
+
+    console.log("WebSocket update", {
+      oldToken,
+      newToken,
+      chatIdChanged,
     });
+
+    if (chatIdChanged || oldToken !== newToken) {
+      console.log("Connecting webSocket");
+      this.connectWebSocket();
+      return true;
+    }
+
+    return false;
   }
 
   render(): string {
@@ -61,12 +191,16 @@ export default class MessageList extends Block {
       }
     });
 
-    // Ненужная логика из за устаревшего подхода, я разберусь с ней потом, надеюсь
-
-    context.children = childrenList;
-
-    console.log(context);
+    context.children = childrenList.reverse();
 
     return Handlebars.compile(messageListPartial)(context);
   }
 }
+
+const mapStateToProps = (state: unknown) => {
+  return {
+    currentChat: (state as StoreTypes).currentChat,
+  };
+};
+
+export default connect(mapStateToProps)(MessageList);

@@ -1,3 +1,4 @@
+import isEqual from "../utils/isEqual";
 import EventBus from "./EventBus";
 
 export interface CustomEvent {
@@ -6,12 +7,11 @@ export interface CustomEvent {
   handler: (e: SubmitEvent | InputEvent, componentElement: HTMLElement) => void;
 }
 
-// Я пытался билдится на осове базового блока, данного в учебнике, но из за особенностей рендера(встаки элементов как html строк, а не node элементов) функционал event listenerов вообще не работал(на моменте монтирования компонента по логике блока из теории пытались вешаться эвенты - по понятой причине оно не работало). Так же нужно будет убрать логику с созданием обертки div для каждого компонента, но сейчас я не считаю это срочным
-
-interface BlockProps {
+export interface BlockProps {
   events?: CustomEvent[];
   [key: string]: unknown;
 }
+
 export default class Block {
   static EVENTS = {
     INIT: "init",
@@ -23,11 +23,11 @@ export default class Block {
   private _element: HTMLElement;
   private _meta;
   eventBus: EventBus;
-  props;
+  props: Record<string, unknown>;
   private _isComponentMounted: boolean = false;
   _children: Record<string, Block> = {};
 
-  constructor(tagName = "div", props = {}) {
+  constructor(tagName: string = "div", props: BlockProps = {}) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
@@ -85,59 +85,68 @@ export default class Block {
   }
 
   private _componentDidUpdate(...args: unknown[]) {
-    const [oldProps, newProps] = args as [BlockProps, BlockProps];
     if (!this._isComponentMounted) {
       return;
     }
 
-    const response = this.componentDidUpdate(oldProps, newProps);
-    if (!response) {
-      return;
+    const [oldProps, newProps] = args as [BlockProps, BlockProps];
+    const shouldUpdate = this.componentDidUpdate(oldProps, newProps);
+    if (shouldUpdate) {
+      this._render();
+      this._updateChildrenProps(newProps);
     }
-    this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
+  }
+
+  private _updateChildrenProps(newProps: BlockProps) {
+    Object.entries(this._children).forEach(([name, child]) => {
+      if (newProps[name]) {
+        child.setProps(newProps[name] as BlockProps);
+      }
+    });
   }
 
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
-    return { oldProps, newProps };
+    return !isEqual(oldProps, newProps);
   }
-
-  setProps = (nextProps: BlockProps) => {
+  setProps(nextProps: BlockProps) {
     if (!nextProps) return;
 
     const oldProps = { ...this.props };
-
     Object.assign(this.props, nextProps);
 
     if (this._isComponentMounted) {
       this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
     }
-  };
-
+  }
   get element() {
     return this._element;
   }
 
   private _render() {
     console.log(`Rendering ${this.constructor.name}`);
-
     this._removeEvents();
     const block = this.render();
     this._element.innerHTML = block;
 
     Object.entries(this._children).forEach(([name, child]) => {
+      child.dispatchComponentDidMount();
       const container = this._element.querySelector(
         `[data-component-id="${name}"]`
       );
-      console.log(name, child);
-      console.log(container, child.getContent());
       if (container) {
-        container.replaceWith(child.getContent());
+        const childContent = child.getContent();
+        if (childContent) {
+          container.replaceWith(childContent);
+        } else {
+          console.warn(`Child ${name} have no content to render`);
+        }
+      } else {
+        console.warn(`No container for child ${name}`);
       }
     });
 
     this._addEvents();
   }
-
   private _addEvents() {
     const { events = [] } = this.props;
 
@@ -181,24 +190,22 @@ export default class Block {
   }
 
   private _makePropsProxy(props: BlockProps) {
-    const self = JSON.parse(JSON.stringify(this));
-
     return new Proxy(props, {
-      get(target, prop) {
+      get: (target, prop) => {
         const value = target[prop as keyof typeof target];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target, prop, value) {
+      set: (target, prop, value) => {
         const oldValue = target[prop as keyof typeof target];
         target[prop as keyof typeof target] = value;
 
-        if (oldValue !== value && self._isComponentMounted) {
-          self.eventBus.emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        if (oldValue !== value && this._isComponentMounted) {
+          this.eventBus.emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         }
         return true;
       },
       deleteProperty() {
-        throw new Error("Нет доступа");
+        throw new Error("No access");
       },
     });
   }
@@ -207,8 +214,13 @@ export default class Block {
     return document.createElement(tagName);
   }
 
+  componentWillUnmount(): boolean {
+    return true;
+  }
+
   destroy() {
     this._removeEvents();
+    this.componentWillUnmount();
 
     Object.values(this._children).forEach((child) => {
       child.destroy();

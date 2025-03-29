@@ -1,10 +1,10 @@
-import Block from "../../../core/Block.ts";
+import Block, { BlockProps } from "../../../core/Block.ts";
 import Handlebars from "handlebars";
 import pfpBlockPartial from "./pfpBlock.partial.ts";
 import { CustomEvent } from "../../../core/Block.ts";
 
 
-export interface PfpBlockProps {
+export interface PfpBlockProps extends BlockProps {
   pfpUrl: string;
   username: string;
   events?: CustomEvent[];

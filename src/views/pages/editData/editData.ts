@@ -6,10 +6,16 @@ import { validateAll } from "../../../services/validation";
 import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";
 import { PfpBlock } from "../../components/pfpBlock";
+import { connect } from "../../../utils/connect";
+import {
+  updateData,
+  updatePfp,
+} from "../../../domain/profile/profileController";
+import { StoreTypes } from "../../../core/Store";
+import coreDomain from "../../../domain/coreDomain";
+import { ModalPfp } from "../../components/modalPfp";
 
-// Вынести смену аватарки в отдельный компонент
-
-export default class EditData extends Block {
+export class EditData extends Block {
   constructor(props = {}) {
     super("div", {
       ...props,
@@ -20,11 +26,10 @@ export default class EditData extends Block {
     super.init();
 
     this.props.events = [
-      ...(this.props.events || []),
       {
         selector: "#edit-form",
         event: "submit",
-        handler: (e) => {
+        handler: (e: SubmitEvent) => {
           let isValid = true;
           let isEmpty = true;
 
@@ -44,6 +49,7 @@ export default class EditData extends Block {
             if (input) {
               if (input.value && !validateAll(input).isPassed) {
                 isValid = false;
+                console.log(input, isValid);
               } else if (input.value) {
                 isEmpty = false;
               }
@@ -52,16 +58,25 @@ export default class EditData extends Block {
 
           const formData = new FormData(e.target as HTMLFormElement);
 
+          console.log(isValid, isEmpty);
+
           if (isValid && !isEmpty) {
-            const formValues: Record<string, string> = {};
+            console.log("here");
+            const data = {
+              email: formData.get("email") || "",
+              login: formData.get("login") || "",
+              first_name: formData.get("first_name") || "",
+              second_name: formData.get("second_name") || "",
+              display_name: formData.get("display_name") || "",
+              phone: formData.get("phone") || "",
+            };
 
-            formData.forEach((value, key) => {
-              if (value) {
-                formValues[key] = value as string;
-              }
-            });
-
-            console.log(formValues);
+            console.log(data);
+            try {
+              updateData(data);
+            } catch (error) {
+              console.log(error);
+            }
           } else if (isValid && isEmpty) {
             alert("Заполните хотя бы одно поле");
           }
@@ -75,6 +90,7 @@ export default class EditData extends Block {
       inputName: "email",
       errorMessage: "Invalid email",
       placeholder: "mymail@mail.com",
+      value: window.store.getState().user.email || "",
       events: [
         {
           selector: 'input[name="email"]',
@@ -113,6 +129,7 @@ export default class EditData extends Block {
       inputName: "login",
       errorMessage: "Invalid login",
       placeholder: "John Doe",
+      value: window.store.getState().user.login || "",
       events: [
         {
           selector: 'input[name="login"]',
@@ -151,6 +168,7 @@ export default class EditData extends Block {
       inputName: "first_name",
       errorMessage: "Invalid first name",
       placeholder: "John",
+      value: window.store.getState().user.first_name || "",
       events: [
         {
           selector: 'input[name="first_name"]',
@@ -189,6 +207,7 @@ export default class EditData extends Block {
       inputName: "second_name",
       errorMessage: "Invalid second name",
       placeholder: "Doe",
+      value: window.store.getState().user.second_name || "",
       events: [
         {
           selector: 'input[name="second_name"]',
@@ -229,6 +248,7 @@ export default class EditData extends Block {
       inputName: "display_name",
       errorMessage: "Invalid name",
       placeholder: "Will, i guess",
+      value: window.store.getState().user.display_name || "",
       events: [
         {
           selector: 'input[name="display_name"]',
@@ -269,6 +289,7 @@ export default class EditData extends Block {
       inputName: "phone",
       errorMessage: "Invalid phone number",
       placeholder: "8-800-555-35-35",
+      value: window.store.getState().user.phone || "",
       events: [
         {
           selector: 'input[name="phone"]',
@@ -309,19 +330,70 @@ export default class EditData extends Block {
     } as const);
 
     const pfpBlock = new PfpBlock({
-      pfpUrl: "./mock_pfp1.jpg",
+      pfpUrl: `https://${coreDomain}/api/v2/resources${
+        window.store.getState().user.avatar
+      }`,
       username: "John",
       events: [
         {
           selector: "p",
           event: "click",
-          handler: (e) => {
-            console.log(e);
+          handler: () => {
+            const modalContainer = document.querySelector(
+              ".pfpmodal-wrapper"
+            ) as HTMLDivElement;
+            if (modalContainer) {
+              modalContainer.style.opacity = "1";
+              modalContainer.style.visibility = "visible";
+            }
           },
         },
       ],
     });
 
+    const modalPfp = new ModalPfp({
+      isLoading: this.props.isLoading as boolean,
+      events: [
+        {
+          selector: ".pfpmodal-wrapper",
+          event: "click",
+          handler: (e) => {
+            const eventTarget = e.target as HTMLElement;
+            console.log("here");
+            if (eventTarget && eventTarget.className == "pfpmodal-wrapper") {
+              const modalContainer = document.querySelector(
+                ".pfpmodal-wrapper"
+              ) as HTMLDivElement;
+              modalContainer.style.opacity = "0";
+              modalContainer.style.visibility = "hidden";
+            }
+          },
+        },
+        {
+          selector: "form",
+          event: "submit",
+          handler: (e, componentElement) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileInput = componentElement.querySelector(
+              "input[type=file]"
+            ) as HTMLInputElement;
+            if (fileInput) {
+              const files = fileInput.files as FileList;
+              console.log(formData, files);
+              if (files?.length > 1) {
+                alert("More than one image loaded, abort");
+                return;
+              } else if (files?.length === 1) {
+                updatePfp({ avatar: files[0] });
+              }
+            }
+          },
+        },
+      ],
+    });
+
+    this.registerChild("modalPfp", modalPfp);
     this.registerChild("pfpBlock", pfpBlock);
     this.registerChild("emailInput", emailInput);
     this.registerChild("loginInput", loginInput);
@@ -343,3 +415,11 @@ export default class EditData extends Block {
     return Handlebars.compile(editDataTemplate)(context);
   }
 }
+
+const mapStateToProps = (state: unknown) => {
+  return {
+    user: (state as StoreTypes).user,
+  };
+};
+
+export default connect(mapStateToProps)(EditData);

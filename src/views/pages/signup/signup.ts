@@ -5,8 +5,11 @@ import { validateAll } from "../../../services/validation";
 
 import { MainButton } from "../../components/mainButton/";
 import { LoginInput } from "../../components/loginInput/";
+import { connect } from "../../../utils/connect";
+import { signUpSerivce } from "../../../domain/auth/authController";
+import { StoreTypes } from "../../../core/Store";
 
-export default class SignUp extends Block {
+export class SignUp extends Block {
   constructor(props = {}) {
     super("div", {
       ...props,
@@ -17,11 +20,10 @@ export default class SignUp extends Block {
     super.init();
 
     this.props.events = [
-      ...(this.props.events || []),
       {
         selector: "#register-form",
         event: "submit",
-        handler: (e) => {
+        handler: (e: SubmitEvent) => {
           let isValid = true;
           e.preventDefault();
 
@@ -55,13 +57,22 @@ export default class SignUp extends Block {
             }
           });
 
-          console.log(isValid);
-
           if (isValid) {
             const formData = new FormData(e.target as HTMLFormElement);
-            const login = formData.get("login");
-            const password = formData.get("password");
-            console.log("Login:", login, "Password:", password);
+            const data = {
+              first_name: formData.get("first_name") as string,
+              second_name: formData.get("second_name") as string,
+              login: formData.get("login") as string,
+              email: formData.get("email") as string,
+              password: formData.get("password") as string,
+              phone: formData.get("phone") as string,
+            };
+            console.log(JSON.stringify(data));
+            try {
+              signUpSerivce(data);
+            } catch (error) {
+              console.log(error);
+            }
           } else {
             console.log("Form is not valid");
           }
@@ -110,7 +121,6 @@ export default class SignUp extends Block {
                 bottomText.style.opacity = "0";
                 bottomText.style.transform = "translateY(-18px)";
               }, 2000);
-              // Пришлось адаптировать логику от старых файлов, в когда я разрабатывал валидацию, оно работает, в принципе так же как и до этого, только несколько костыльно.
             }
           },
         },
@@ -456,6 +466,17 @@ export default class SignUp extends Block {
     this.registerChild("confirmPasswordInput", confirmPasswordInput);
   }
 
+  componentDidUpdate(oldProps: StoreTypes, newProps: StoreTypes) {
+    console.log("componentDidUpdate", oldProps, newProps);
+    if (oldProps.isLoading !== newProps.isLoading) {
+      console.log("Updating MainButton with isLoading:", newProps.isLoading);
+      this._children.mainButton.setProps({
+        isLoading: newProps.isLoading,
+      });
+    }
+    return true;
+  }
+
   render(): string {
     const context: { [key: string]: string } = {};
 
@@ -467,3 +488,12 @@ export default class SignUp extends Block {
     return Handlebars.compile(signinPageTemplate)(context);
   }
 }
+
+const mapStateToProps = (state: unknown) => {
+  return {
+    isLoading: (state as StoreTypes).isLoading,
+    loginError: (state as StoreTypes).loginError,
+  };
+};
+
+export default connect(mapStateToProps)(SignUp);

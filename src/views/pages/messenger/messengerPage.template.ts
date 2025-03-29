@@ -2,18 +2,22 @@ export default `
     <div class="messenger__wrapper">
       <nav class="navigation__wrapper">
         <div class="profile-link">
-          <a href="/profile">Profile<img src="/arrow_gray.svg" alt="arrow"></a>
+          <div id="chat-create">
+            <p>Create chat</p>
+          </div>
+          <a href="/settings">Profile<img src="/arrow_gray.svg" alt="arrow"></a>
         </div>
         <form class="search-bar" id="search-bar">
           <input type="text" placeholder="Search" name="chat_search">
           <button type="submit">
             <img src="/search_icon.svg" class="search_icon" alt="search icon" id="search_icon">
           </button>
+            {{{UserDropdown}}}
         </form>
         <ul class="chat-select__wrapper">
           {{{ ChatList }}}
         </ul>
-      </nav>
+        </nav>
         <div class="chat-main">
           <div class="top-block">
             {{{ ChatTop }}}
@@ -31,4 +35,20 @@ export default `
             </form>
           </div>
         </div>
-    </div>`;
+        <div id="chat-create-popup">
+          <form id="chat_create_form">
+            <input type="text" placeholder="Enter chat name" name="title">
+            <button>Create chat</button>
+          </form>
+        </div>
+        <div id="chat-option-popup">
+          <form id="chatoptionform">
+            <input type="text" name="user" placeholder="Enter username">
+            <button type="submit">Add user</button>
+            {{{ ChatUserDropdown }}}
+          </form>
+        </div>
+        <div class="chat-avatar-popup">
+          {{{ chatPfp }}}
+        </div>
+      </div>`;

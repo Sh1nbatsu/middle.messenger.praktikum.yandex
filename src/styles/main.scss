@@ -4,12 +4,23 @@
 @import "login";
 @import "messenger";
 @import "profile";
+@import "modal";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Inter, sans-serif;
+}
+
+button:disabled,
+button[disabled] {
+  &:hover {
+    cursor: not-allowed;
+    background-color: gray;
+  }
+
+  background-color: gray;
 }
 
 .error__container {
@@ -42,18 +53,23 @@
     transform: translateY(0);
     color: $error-color;
   }
+
   10% {
     transform: translateY(2px);
   }
+
   25% {
     transform: translateY(-3px);
   }
+
   50% {
     transform: translateY(3px);
   }
+
   75% {
     transform: translateY(-3px);
   }
+
   100% {
     transform: translateY(0);
     color: unset;

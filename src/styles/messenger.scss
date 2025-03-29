@@ -15,13 +15,29 @@
 
 .profile-link {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 23px;
   padding: 0 10px;
 
   img {
     width: 10px;
+  }
+
+  #chat-create {
+    background-color: $shadow-color;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 150ms;
+
+    p {
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: color.adjust($shadow-color, $blackness: 10%);
+    }
   }
 
   a {
@@ -78,7 +94,6 @@
     h2 {
       font-size: 16px;
       font-weight: 500;
-      line-height: 16px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -164,15 +179,15 @@
     width: fit-content;
   }
 
-  // Im sorry
-
   div > div:has(.sent-message):not(.messages) {
     align-self: flex-end;
   }
 
   & > div {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    gap: 1rem;
+    padding-bottom: 40px;
   }
 
   .sent-message {
@@ -183,6 +198,12 @@
     max-width: 400px;
     align-self: flex-end;
     position: relative;
+    min-width: 100px;
+  }
+
+  p {
+    white-space: initial;
+    word-wrap: break-word;
   }
 }
 
@@ -193,6 +214,7 @@
   bottom: 5px;
   right: 5px;
   width: 83%;
+  background-color: white;
 
   form {
     display: flex;
@@ -267,7 +289,7 @@
     opacity: 0;
   }
 
-  img {
+  > button img {
     position: absolute;
     top: 6px;
     width: 20px;
@@ -279,7 +301,7 @@
     transform: translateX(-92px);
   }
 
-  button {
+  > button {
     outline: none;
     border: none;
   }
@@ -290,20 +312,33 @@
   border-bottom: 1px solid $secondary-color;
   padding-bottom: 10px;
 
-  div {
+  div:not(.chat-dropdown, .chat-dropdown div) {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
   }
 
-  div img:not(.options) {
+  div img:not(.options, .chat-dropdown img) {
     width: 34px;
     border-radius: 100%;
+    height: 34px;
+    background-color: gray;
+    cursor: pointer;
   }
 
   .options {
     cursor: pointer;
-    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 999px;
+    height: 24px;
+    padding: 0 10px;
+    position: relative;
+
+    &:hover {
+      background-color: $shadow-color;
+    }
   }
 }
