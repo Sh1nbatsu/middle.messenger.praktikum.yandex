@@ -113,7 +113,7 @@
   transition: 100ms;
   visibility: hidden;
   opacity: 0;
-  z-index: 2;
+  z-index: 3;
 
   form {
     background-color: $shadow-color;
@@ -275,7 +275,7 @@ div:has(> .search-result) {
 
 #chat-option-popup {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgb(0 0 0 / 40%);
   width: 100vw;
   height: 100vh;
   display: flex;

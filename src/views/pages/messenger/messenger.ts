@@ -146,7 +146,11 @@ export class Messenger extends Block {
             alert("empty");
           } else {
             const safeMessage = sanitizeInput(message);
-            wsService.send(safeMessage);
+            try {
+              wsService.send(safeMessage);
+            } catch (error) {
+              console.log(error);
+            }
             input.value = "";
           }
         },
@@ -234,7 +238,11 @@ export class Messenger extends Block {
             const data = {
               title: formData.get("title"),
             };
-            CreateChat(data as { title: FormDataEntryValue });
+            try {
+              CreateChat(data as { title: FormDataEntryValue });
+            } catch (error) {
+              console.log(error);
+            }
             popup.style.opacity = "0";
             popup.style.visibility = "hidden";
           }
@@ -269,7 +277,11 @@ export class Messenger extends Block {
             switch (action) {
               case "delete_chat":
                 console.log("Deleting chat");
-                chats.DeleteChat();
+                try {
+                  chats.DeleteChat();
+                } catch (error) {
+                  console.log(error);
+                }
                 modal.style.visibility = "hidden";
                 modal.style.opacity = "0";
                 break;

@@ -68,8 +68,11 @@ export class EditData extends Block {
             };
 
             console.log(data);
-
-            updateData(data);
+            try {
+              updateData(data);
+            } catch (error) {
+              console.log(error);
+            }
           } else if (isValid && isEmpty) {
             alert("Заполните хотя бы одно поле");
           }

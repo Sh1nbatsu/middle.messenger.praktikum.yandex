@@ -68,7 +68,11 @@ export class SignUp extends Block {
               phone: formData.get("phone") as string,
             };
             console.log(JSON.stringify(data));
-            signUpSerivce(data);
+            try {
+              signUpSerivce(data);
+            } catch (error) {
+              console.log(error);
+            }
           } else {
             console.log("Form is not valid");
           }

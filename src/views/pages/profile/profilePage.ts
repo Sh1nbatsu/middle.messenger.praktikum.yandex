@@ -64,7 +64,7 @@ export class ProfilePage extends Block {
       pfpUrl: `https://${coreDomain}/api/v2/resources${
         window.store.getState().user.avatar
       }`,
-      username: "John",
+      username: window.store.getState().user.display_name || "John1",
       events: [
         {
           selector: "p",
@@ -116,7 +116,11 @@ export class ProfilePage extends Block {
                 alert("More than one image loaded, abort");
                 return;
               } else if (files?.length === 1) {
-                updatePfp({ avatar: files[0] });
+                try {
+                  updatePfp({ avatar: files[0] });
+                } catch (error) {
+                  console.log(error);
+                }
               }
             }
           },

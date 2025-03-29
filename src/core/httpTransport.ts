@@ -15,16 +15,18 @@ interface Options {
 }
 
 function queryStringify(data: Record<string, unknown>) {
-  if (typeof data !== "object") {
+  if (typeof data !== "object" || data === null) {
     throw new Error("Data must be object");
   }
 
   const keys = Object.keys(data);
-  return keys.reduce((result, key, index) => {
-    return `${result}${key}=${data[key]}${index < keys.length - 1 ? "&" : ""}`;
-  }, "?");
+  const pairs = keys.map((key) => {
+    const encodedKey = encodeURIComponent(key);
+    const encodedValue = encodeURIComponent(String(data[key]));
+    return `${encodedKey}=${encodedValue}`;
+  });
+  return "?" + pairs.join("&");
 }
-
 export default class HTTPTransport {
   get = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
     return this.request(

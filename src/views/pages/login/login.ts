@@ -35,7 +35,11 @@ export class Login extends Block {
               login: formData.get("login") as string,
               password: formData.get("password") as string,
             };
-            loginService(data);
+            try {
+              loginService(data);
+            } catch (error) {
+              console.log(error);
+            }
           }
         },
       },

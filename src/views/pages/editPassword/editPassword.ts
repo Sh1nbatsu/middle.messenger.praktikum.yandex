@@ -2,7 +2,10 @@ import Block from "../../../core/Block";
 import editPasswordTemplate from "./editPassword.template";
 import Handlebars from "handlebars";
 import { validateAll } from "../../../services/validation";
-import { updatePassword, updatePfp } from "../../../domain/profile/profileController";
+import {
+  updatePassword,
+  updatePfp,
+} from "../../../domain/profile/profileController";
 
 import { MainButton } from "../../components/mainButton/";
 import { EditInput } from "../../components/editInput";
@@ -55,10 +58,14 @@ export default class EditPassword extends Block {
             const newPassword = formData.get("confirm_password");
             console.log({ oldPassword, newPassword });
             if (oldPassword && newPassword) {
-              updatePassword({
-                oldPassword: oldPassword as string,
-                newPassword: newPassword as string
-              });
+              try {
+                updatePassword({
+                  oldPassword: oldPassword as string,
+                  newPassword: newPassword as string,
+                });
+              } catch (error) {
+                console.log(error);
+              }
             }
           }
         },
