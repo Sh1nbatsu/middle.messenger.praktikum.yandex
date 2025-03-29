@@ -1,0 +1,26 @@
+import HTTPTransport from "../../core/httpTransport";
+import coreDomain from "../coreDomain";
+
+const authApi = new HTTPTransport();
+
+export default class Auth {
+  async login(data: Record<string, string>): Promise<XMLHttpRequest> {
+    return authApi.post(`https://${coreDomain}/api/v2/auth/signin`, {
+      data,
+    });
+  }
+
+  async signup(data: Record<string, string>): Promise<XMLHttpRequest> {
+    return authApi.post(`https://${coreDomain}/api/v2/auth/signup`, {
+      data,
+    });
+  }
+
+  async profile(): Promise<XMLHttpRequest> {
+    return authApi.get(`https://${coreDomain}/api/v2/auth/user`);
+  }
+
+  async logout(): Promise<XMLHttpRequest> {
+    return authApi.post(`https://${coreDomain}/api/v2/auth/logout`);
+  }
+}

@@ -38,7 +38,7 @@
       transition: 150ms;
 
       &:hover {
-        background-color: darken($base-color, 10%);
+        background-color: color.adjust($base-color, $lightness: -10%);
       }
     }
   }
@@ -52,6 +52,9 @@
   div {
     position: relative;
     cursor: pointer;
+    border-radius: 999px;
+    height: 200px;
+    width: 200px;
 
     img {
       width: 200px;
@@ -65,7 +68,7 @@
       transition: 150ms;
       color: white;
       font-size: 1.2rem;
-      background-color: transparentize($color: #000000, $amount: 0.7);
+      background-color: color.adjust(#000, $alpha: -0.7);
       inset: 0;
       padding: 39% 20%;
       border-radius: 50%;
@@ -87,12 +90,43 @@
   flex-direction: column;
   align-items: center;
   gap: 4rem;
+  position: relative;
 
   .data__wrapper {
     width: 510px;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
+  }
+
+  button {
+    outline: none;
+    border: none;
+    padding: 12px 5rem;
+    border-radius: 12px;
+    background-color: $base-color;
+    transition: 200ms;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background: color.adjust($base-color, $lightness: -10%);
+    }
+  }
+}
+
+.edit__wrapper {
+  width: 510px;
+
+  a {
+    text-decoration: none;
+    color: $base-color;
+    transition: 150ms;
+
+    &:hover {
+      color: color.adjust($base-color, $lightness: -20%);
+    }
   }
 }
 
@@ -114,42 +148,18 @@
     color: $secondary-font-color;
   }
 
-  &:last-of-type span {
-    display: none;
-  }
-}
-
-.edit__wrapper {
-  width: 510px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-
-  a {
-    text-decoration: none;
-    color: $base-color;
-  }
-
-  .data-item:last-of-type a {
+  a:last-child {
     color: $error-color;
-  }
-}
-
-.main__wrapper {
-  button {
-    outline: none;
-    border: none;
-    padding: 12px 5rem;
-    border-radius: 12px;
-    background-color: $base-color;
-    transition: 200ms;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
 
     &:hover {
-      background: darken($base-color, 5%);
+      color: color.adjust($error-color, $lightness: -30%);
     }
+  }
+}
+
+.data__wrapper div:last-child:not(.data-item) {
+  span {
+    display: none;
   }
 }
 
@@ -164,7 +174,6 @@
   .top__text {
     font-size: 16px;
     margin-bottom: 2px;
-    // transform: translateY(21px);
     pointer-events: none;
     transition: 150ms;
     padding-left: 4px;
@@ -179,6 +188,10 @@
     &::placeholder {
       text-align: right;
     }
+
+    &.error {
+      animation: error-shake 300ms;
+    }
   }
 
   .bottom__text {
@@ -191,5 +204,20 @@
     z-index: -1;
     transition: 150ms;
     width: 310px;
+  }
+}
+
+form .pfp__wrapper {
+  div {
+    cursor: default;
+  }
+
+  p {
+    cursor: pointer;
+  }
+
+  img {
+    pointer-events: none;
+    cursor: default;
   }
 }

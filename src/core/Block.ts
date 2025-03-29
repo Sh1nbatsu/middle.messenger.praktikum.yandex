@@ -1,0 +1,232 @@
+import isEqual from "../utils/isEqual";
+import EventBus from "./EventBus";
+
+export interface CustomEvent {
+  selector: string;
+  event: string;
+  handler: (e: SubmitEvent | InputEvent, componentElement: HTMLElement) => void;
+}
+
+export interface BlockProps {
+  events?: CustomEvent[];
+  [key: string]: unknown;
+}
+
+export default class Block {
+  static EVENTS = {
+    INIT: "init",
+    FLOW_CDM: "flow:component-did-mount",
+    FLOW_CDU: "flow:component-did-update",
+    FLOW_RENDER: "flow:render",
+  };
+
+  private _element: HTMLElement;
+  private _meta;
+  eventBus: EventBus;
+  props: Record<string, unknown>;
+  private _isComponentMounted: boolean = false;
+  _children: Record<string, Block> = {};
+
+  constructor(tagName: string = "div", props: BlockProps = {}) {
+    const eventBus = new EventBus();
+    this._meta = {
+      tagName,
+      props,
+    };
+
+    this.props = this._makePropsProxy(props);
+    this._element = this._createDocumentElement(tagName);
+    this.eventBus = eventBus;
+
+    this._registerEvents(eventBus);
+    eventBus.emit(Block.EVENTS.INIT);
+  }
+
+  private _registerEvents(eventBus: EventBus) {
+    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+  }
+
+  private _createResources() {
+    const { tagName } = this._meta;
+    this._element = this._createDocumentElement(tagName);
+  }
+
+  init() {
+    this._createResources();
+  }
+
+  registerChild(name: string, component: Block) {
+    this._children[name] = component;
+    this.props[name] = component;
+  }
+
+  private _componentDidMount() {
+    if (this._isComponentMounted) {
+      return;
+    }
+
+    this._isComponentMounted = true;
+    this.componentDidMount();
+
+    this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
+  }
+
+  componentDidMount() {}
+
+  dispatchComponentDidMount() {
+    Object.values(this._children).forEach((child) => {
+      child.dispatchComponentDidMount();
+    });
+
+    this.eventBus.emit(Block.EVENTS.FLOW_CDM);
+  }
+
+  private _componentDidUpdate(...args: unknown[]) {
+    if (!this._isComponentMounted) {
+      return;
+    }
+
+    const [oldProps, newProps] = args as [BlockProps, BlockProps];
+    const shouldUpdate = this.componentDidUpdate(oldProps, newProps);
+    if (shouldUpdate) {
+      this._render();
+      this._updateChildrenProps(newProps);
+    }
+  }
+
+  private _updateChildrenProps(newProps: BlockProps) {
+    Object.entries(this._children).forEach(([name, child]) => {
+      if (newProps[name]) {
+        child.setProps(newProps[name] as BlockProps);
+      }
+    });
+  }
+
+  componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
+    return !isEqual(oldProps, newProps);
+  }
+  setProps(nextProps: BlockProps) {
+    if (!nextProps) return;
+
+    const oldProps = { ...this.props };
+    Object.assign(this.props, nextProps);
+
+    if (this._isComponentMounted) {
+      this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
+    }
+  }
+  get element() {
+    return this._element;
+  }
+
+  private _render() {
+    console.log(`Rendering ${this.constructor.name}`);
+    this._removeEvents();
+    const block = this.render();
+    this._element.innerHTML = block;
+
+    Object.entries(this._children).forEach(([name, child]) => {
+      child.dispatchComponentDidMount();
+      const container = this._element.querySelector(
+        `[data-component-id="${name}"]`
+      );
+      if (container) {
+        const childContent = child.getContent();
+        if (childContent) {
+          container.replaceWith(childContent);
+        } else {
+          console.warn(`Child ${name} have no content to render`);
+        }
+      } else {
+        console.warn(`No container for child ${name}`);
+      }
+    });
+
+    this._addEvents();
+  }
+  private _addEvents() {
+    const { events = [] } = this.props;
+
+    if (Array.isArray(events)) {
+      events.forEach(({ selector, event, handler }) => {
+        const boundHandler = (e: SubmitEvent | InputEvent) => {
+          handler.call(this, e, this._element);
+        };
+
+        const elements = this._element.querySelectorAll(selector);
+        elements.forEach((element) => {
+          element.addEventListener(event, boundHandler as EventListener);
+        });
+      });
+    }
+  }
+
+  private _removeEvents() {
+    const { events = [] } = this.props;
+
+    if (Array.isArray(events)) {
+      events.forEach(({ selector, event, handler }) => {
+        const boundHandler = (e: SubmitEvent | InputEvent) => {
+          handler.call(this, e, this._element);
+        };
+
+        const elements = this._element.querySelectorAll(selector);
+        elements.forEach((element) => {
+          element.removeEventListener(event, boundHandler as EventListener);
+        });
+      });
+    }
+  }
+
+  render(): string {
+    return "";
+  }
+
+  getContent() {
+    return this.element;
+  }
+
+  private _makePropsProxy(props: BlockProps) {
+    return new Proxy(props, {
+      get: (target, prop) => {
+        const value = target[prop as keyof typeof target];
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+      set: (target, prop, value) => {
+        const oldValue = target[prop as keyof typeof target];
+        target[prop as keyof typeof target] = value;
+
+        if (oldValue !== value && this._isComponentMounted) {
+          this.eventBus.emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        }
+        return true;
+      },
+      deleteProperty() {
+        throw new Error("No access");
+      },
+    });
+  }
+
+  private _createDocumentElement(tagName: string) {
+    return document.createElement(tagName);
+  }
+
+  componentWillUnmount(): boolean {
+    return true;
+  }
+
+  destroy() {
+    this._removeEvents();
+    this.componentWillUnmount();
+
+    Object.values(this._children).forEach((child) => {
+      child.destroy();
+    });
+
+    this._children = {};
+    this._element.remove();
+  }
+}
