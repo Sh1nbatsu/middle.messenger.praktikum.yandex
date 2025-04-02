@@ -377,7 +377,7 @@ export class Messenger extends Block {
     return Handlebars.compile(messengerPageTemplate)(context);
   }
 
-  componentDidUpdate(oldProps: BlockProps, newProps: BlockProps): boolean {
+  componentDidUpdate(_oldProps: BlockProps, newProps: BlockProps): boolean {
     if (Array.isArray(newProps.chats)) {
       if (!newProps.chats[0]) {
         this.props.mainChatState = "invisible";
