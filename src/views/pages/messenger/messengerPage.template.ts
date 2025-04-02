@@ -18,7 +18,7 @@ export default `
           {{{ ChatList }}}
         </ul>
         </nav>
-        <div class="chat-main">
+        <div class="chat-main {{mainVisibility}}">
           <div class="top-block">
             {{{ ChatTop }}}
           </div>
