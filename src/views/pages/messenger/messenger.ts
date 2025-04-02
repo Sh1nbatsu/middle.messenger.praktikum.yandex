@@ -386,6 +386,8 @@ export class Messenger extends Block {
         this.props.mainChatState = "";
         return true;
       }
+    } else {
+      return false;
     }
   }
 }
