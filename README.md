@@ -1,6 +1,7 @@
 ### **Overview**
 
-Sprint_3, finished basic functional, including authorization, registration, real-time messaging, profile customization.
+Sprint_4, finished basic functional, including authorization, registration, real-time messaging, profile customization.
+Added tests for HTTPTransport, Block(view) and Router.
 
 To install dependencies use `npm install`
 
@@ -10,9 +11,11 @@ To build and start project locally `npm run start`
 
 To run linters use `npm run lint`
 
+To run tests use `npm run test`
+
 ### **Routing**
 
-This is SPA. Created Router instance to offhand default browser actions to.
+This is SPA. Created Router instance to offhand default browser navigation to.
 
 / - login page
 

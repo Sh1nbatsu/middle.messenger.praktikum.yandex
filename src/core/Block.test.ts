@@ -93,7 +93,7 @@ describe("Block", () => {
   });
 });
 
-describe("CustomMock", () => {
+describe("Component with children", () => {
   let MockComponent: new (props: BlockProps) => Block;
 
   before(() => {
@@ -119,7 +119,6 @@ describe("CustomMock", () => {
         const context: Record<string, string> = {};
 
         Object.entries(this._children).forEach(([name]) => {
-          console.log(name);
           context[name] = `<div data-component-id="${name}"></div>`;
         });
 
@@ -138,8 +137,6 @@ describe("CustomMock", () => {
     const component = new MockComponent({ event: {} });
 
     const input = component.element.querySelector("input");
-
-    console.log(input);
 
     if (input) {
       input.value = "Value";

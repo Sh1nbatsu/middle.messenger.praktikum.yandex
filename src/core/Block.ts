@@ -126,7 +126,7 @@ export default class Block {
   }
 
   private _render() {
-    console.log(`Rendering ${this.constructor.name}`);
+    // console.log(`Rendering ${this.constructor.name}`);
     this._removeEvents();
     const block = this.render();
     this._element.innerHTML = block;

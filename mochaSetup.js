@@ -8,6 +8,7 @@ global.document = jsdom.window.document;
 global.FormData = jsdom.window.FormData;
 global.MouseEvent = jsdom.window.MouseEvent;
 global.InputEvent = jsdom.window.InputEvent;
+global.XMLHttpRequest = jsdom.window.XMLHttpRequest;
 
 // global.window.store = new Store({
 //   isLoading: false,

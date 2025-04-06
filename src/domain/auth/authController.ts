@@ -42,6 +42,7 @@ export const signUpSerivce = async (data: Record<string, string>) => {
       console.log(errorData);
     } else if (response.status === 200) {
       await getUserController();
+      await new Promise((resolve) => setTimeout(resolve, 10));
       window.router.go("/messenger");
     }
 
@@ -64,10 +65,6 @@ export const getUserController = async () => {
       const user = JSON.parse(response.responseText);
       console.log(user);
       window.store.setState({ user });
-    } else {
-      const user = {};
-      window.store.setState({ user });
-      window.router.go("/");
     }
   } catch (error) {
     console.error(error);
