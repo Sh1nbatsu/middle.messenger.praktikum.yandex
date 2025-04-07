@@ -128,10 +128,6 @@ export class Login extends Block {
     this.registerChild("passwordInput", passwordInput);
   }
 
-  componentDidMount() {
-    console.log("Login component mounted");
-  }
-
   render(): string {
     const context: Record<string, string> = {};
 

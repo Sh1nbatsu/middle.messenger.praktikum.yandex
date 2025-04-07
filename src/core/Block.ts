@@ -40,6 +40,7 @@ export default class Block {
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
+    this.dispatchComponentDidMount();
   }
 
   private _registerEvents(eventBus: EventBus) {
@@ -108,6 +109,7 @@ export default class Block {
   componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
     return !isEqual(oldProps, newProps);
   }
+
   setProps(nextProps: BlockProps) {
     if (!nextProps) return;
 
@@ -118,12 +120,13 @@ export default class Block {
       this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
     }
   }
+
   get element() {
     return this._element;
   }
 
   private _render() {
-    console.log(`Rendering ${this.constructor.name}`);
+    // console.log(`Rendering ${this.constructor.name}`);
     this._removeEvents();
     const block = this.render();
     this._element.innerHTML = block;
@@ -147,6 +150,7 @@ export default class Block {
 
     this._addEvents();
   }
+
   private _addEvents() {
     const { events = [] } = this.props;
 

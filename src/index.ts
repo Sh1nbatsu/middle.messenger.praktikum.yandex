@@ -27,30 +27,27 @@ window.store = new Store({
   messages: null,
 });
 
-document.addEventListener("DOMContentLoaded", async () => {
-  window.store.on(
-    StoreEvents.Updated,
-    (prevState: BlockProps, nextState: BlockProps) => {
-      console.log("prevState", prevState);
-      console.log("nextState", nextState);
-    }
-  );
+window.store.on(
+  StoreEvents.Updated,
+  (prevState: BlockProps, nextState: BlockProps) => {
+    console.log("prevState", prevState);
+    console.log("nextState", nextState);
+  }
+);
 
-  await getUserController();
+await getUserController();
 
-  await GetChats();
+await GetChats();
 
-  window.router
-    .use("/", Login)
-    .use("/sign-up", SignUp)
-    .use("/settings", ProfilePage)
-    .use("/settings/edit-data", EditData)
-    .use("/settings/edit-password", EditPassword)
-    .use("/messenger", Messenger)
-    .use("/404", Error, {
-      errorType: 404,
-      errorDesc: "How did you get here?",
-    })
-    .start();
-
-});
+window.router
+  .use("/", Login)
+  .use("/sign-up", SignUp)
+  .use("/settings", ProfilePage)
+  .use("/settings/edit-data", EditData)
+  .use("/settings/edit-password", EditPassword)
+  .use("/messenger", Messenger)
+  .use("/404", Error, {
+    errorType: 404,
+    errorDesc: "How did you get here?",
+  })
+  .start();

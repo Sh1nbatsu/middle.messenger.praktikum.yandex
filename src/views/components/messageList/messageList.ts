@@ -140,6 +140,12 @@ export class MessageList extends Block {
       return true;
     }
 
+    if (!oldProps.currentChat && newProps.currentChat.id) {
+      this._children = {};
+      this.connectWebSocket();
+      return true;
+    }
+
     if (oldProps.currentChat.id !== newProps.currentChat.id) {
       this._children = {};
       this.connectWebSocket();

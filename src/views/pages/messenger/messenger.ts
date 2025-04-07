@@ -1,4 +1,4 @@
-import Block from "../../../core/Block";
+import Block, { BlockProps } from "../../../core/Block";
 import Handlebars from "handlebars";
 import messengerPageTemplate from "./messengerPage.template";
 
@@ -25,6 +25,8 @@ export class Messenger extends Block {
 
   init() {
     super.init();
+
+    this.props.mainChatState = "invisible";
 
     this.props.events = [
       {
@@ -370,9 +372,23 @@ export class Messenger extends Block {
       context[name] = `<div data-component-id="${name}"></div>`;
     });
 
-    console.log(context);
+    context.mainVisibility = this.props.mainChatState as string;
 
     return Handlebars.compile(messengerPageTemplate)(context);
+  }
+
+  componentDidUpdate(_oldProps: BlockProps, newProps: BlockProps): boolean {
+    if (Array.isArray(newProps.chats)) {
+      if (!newProps.chats[0]) {
+        this.props.mainChatState = "invisible";
+        return true;
+      } else {
+        this.props.mainChatState = "";
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 }
 

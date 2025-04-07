@@ -52,6 +52,7 @@ export const DeleteChat = async () => {
 
     if (response.status == 200) {
       console.log("Success", response.responseText);
+      // window.store.setState({ currentChat: null });
       GetChats();
     } else {
       console.log("error", response.responseText);

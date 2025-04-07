@@ -41,7 +41,9 @@ export const signUpSerivce = async (data: Record<string, string>) => {
       const errorData = JSON.parse(response.responseText);
       console.log(errorData);
     } else if (response.status === 200) {
-      window.router.go("messenger");
+      await getUserController();
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      window.router.go("/messenger");
     }
 
     console.log(response);

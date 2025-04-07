@@ -29,9 +29,14 @@ function queryStringify(data: Record<string, unknown>) {
 }
 export default class HTTPTransport {
   get = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
+    const { data, ...restOptions } = options;
+    const requestUrl = data
+      ? `${url}${queryStringify(data as Record<string, unknown>)}`
+      : url;
+
     return this.request(
-      url,
-      { ...options, method: METHODS.GET },
+      requestUrl,
+      { ...restOptions, method: METHODS.GET },
       options.timeout
     );
   };
@@ -60,7 +65,7 @@ export default class HTTPTransport {
     );
   };
 
-  request = (
+  private request = (
     url: string,
     options: Options = {},
     timeout = 5000
